@@ -1,12 +1,17 @@
 package com.tyganeutronics.myratecalculator.utils
 
 import android.content.Context
+import android.os.Build
 import com.tyganeutronics.myratecalculator.AppZimRate
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 object TokenUtils {
+
+    fun canLoadAds(context: Context): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+    }
 
     fun canShowAds(context: Context): Boolean {
         return hasNoPaidTokens() && installOlderThan(context)
