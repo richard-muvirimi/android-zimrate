@@ -5,6 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -24,7 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
         (findViewById<View>(R.id.ctb_layout) as CollapsingToolbarLayout).title = title
     }
 
-    override fun setContentView(view: View) {
+    override fun setContentView(view: View?) {
         super.setContentView(view)
         onViewCreated()
     }
@@ -34,13 +38,27 @@ abstract class BaseActivity : AppCompatActivity() {
         onViewCreated()
     }
 
-    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
+    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         super.setContentView(view, params)
         onViewCreated()
     }
 
     open fun onViewCreated() {
         bindViews()
+
+        // https://developer.android.com/develop/ui/views/layout/edge-to-edge#kotlin
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById<CoordinatorLayout>(R.id.layout_container)) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     public override fun onStart() {

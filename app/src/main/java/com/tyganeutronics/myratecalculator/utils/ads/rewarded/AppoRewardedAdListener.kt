@@ -27,7 +27,7 @@ object AppoRewardedAdListener : RewardedVideoCallbacks {
         // Called when rewarded video is loaded
 
         adSubscriberRef.get()?.let {
-            it.requireShowAdButton().isEnabled = true
+            it.requireShowAdButton().isEnabled = Appodeal.isInitialized(Appodeal.REWARDED_VIDEO)
         }
     }
 

@@ -25,16 +25,19 @@ abstract class BaseAdActivity : BaseActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
 
-            Appodeal.initialize(
-                this@BaseAdActivity,
-                getString(R.string.ads_appodeal_app_id),
-                Appodeal.BANNER or Appodeal.INTERSTITIAL or Appodeal.REWARDED_VIDEO
-            ) {
-                // Appodeal initialization finished
+            if (TokenUtils.canLoadAds(baseContext)) {
+                Appodeal.initialize(
+                    this@BaseAdActivity,
+                    getString(R.string.ads_appodeal_app_id),
+                    Appodeal.BANNER or Appodeal.INTERSTITIAL or Appodeal.REWARDED_VIDEO
+                ) {
+                    // Appodeal initialization finished
+                }
             }
 
             Appodeal.setTesting(!BaseUtils.isProductionBuild)
             Appodeal.muteVideosIfCallsMuted(true)
+
         }
     }
 
@@ -54,7 +57,7 @@ abstract class BaseAdActivity : BaseActivity() {
 
             adView.post {
 
-                if (TokenUtils.canShowAds(baseContext)) {
+                if (Appodeal.isInitialized(Appodeal.BANNER) && TokenUtils.canShowAds(baseContext)) {
 
                     AppoBannerAdListener.apply {
                         contextRef = WeakReference(baseContext)
@@ -85,7 +88,10 @@ abstract class BaseAdActivity : BaseActivity() {
 
         Appodeal.setInterstitialCallbacks(AppoInterstitialListener)
 
-        if (TokenUtils.hasLowTokenBalance() && Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+        if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)
+            && TokenUtils.hasLowTokenBalance()
+            && Appodeal.isLoaded(Appodeal.INTERSTITIAL)
+        ) {
             Appodeal.show(this, Appodeal.INTERSTITIAL)
         }
     }
