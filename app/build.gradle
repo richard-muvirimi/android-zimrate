@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 35
-    buildToolsVersion = '35.0.0'
+    compileSdkVersion 36
+    buildToolsVersion = '36.0.0'
     defaultConfig {
         applicationId "com.tyganeutronics.myratecalculator"
         minSdk 23
-        targetSdk 35
+        targetSdk 36
         versionCode 49
         versionName "2.0.15"
         multiDexEnabled true
@@ -69,14 +69,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'androidx.core:core-ktx:1.16.0'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation "androidx.core:core-splashscreen:1.0.1"
 
     // Appodeal Ads
-    implementation("com.appodeal.ads:sdk:3.7.0.0") {
+    implementation("com.appodeal.ads:sdk:3.10.0.0") {
         exclude group: "com.appodeal.ads.sdk.services", module: "adjust"
         exclude group: "com.appodeal.ads.sdk.services", module: "appsflyer"
         exclude group: "com.appodeal.ads.sdk.services", module: "firebase"
@@ -87,7 +87,7 @@ dependencies {
 
     //Crashlytics
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:33.15.0')
+    implementation platform('com.google.firebase:firebase-bom:34.5.0')
     // Declare the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
@@ -101,7 +101,7 @@ dependencies {
     //multi dex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation 'org.jetbrains:annotations:26.0.2'
+    implementation 'org.jetbrains:annotations:26.0.2-1'
 
     //preferences
     implementation 'androidx.preference:preference-ktx:1.2.1'
@@ -113,12 +113,12 @@ dependencies {
     implementation "com.maltaisn:calcdialog:2.2.2"
 
     //https://developer.android.com/training/data-storage/room
-    def room_version = '2.7.2'
+    def room_version = '2.8.3'
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4'
 
     //play licensing
     def billing_version = '7.1.1'
