@@ -3,6 +3,8 @@ package com.tyganeutronics.myratecalculator.ui.base
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.appodeal.ads.Appodeal
@@ -19,6 +21,8 @@ import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 abstract class BaseAdActivity : BaseActivity() {
+
+    val interstitialRunnable = Runnable { showInterstitialAd() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,14 @@ abstract class BaseAdActivity : BaseActivity() {
 
             Appodeal.setTesting(!BaseUtils.isProductionBuild)
             Appodeal.muteVideosIfCallsMuted(true)
+
+            if (TokenUtils.canShowAds(baseContext)) {
+                Appodeal.cache(
+                    this@BaseAdActivity,
+                    Appodeal.REWARDED_VIDEO or Appodeal.INTERSTITIAL,
+                    2
+                )
+            }
 
         }
     }
@@ -83,16 +95,36 @@ abstract class BaseAdActivity : BaseActivity() {
 
     private fun setupInterstitial() {
         AppoInterstitialListener.apply {
-            contextRef = WeakReference(this@BaseAdActivity)
+            contextRef = WeakReference(baseContext)
         }
 
         Appodeal.setInterstitialCallbacks(AppoInterstitialListener)
 
-        if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)
-            && TokenUtils.hasLowTokenBalance()
-            && Appodeal.isLoaded(Appodeal.INTERSTITIAL)
-        ) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL)
+        showInterstitialAd()
+    }
+
+    private fun showInterstitialAd() {
+        if (TokenUtils.hasLowTokenBalance()) {
+
+            Toast.makeText(
+                this,
+                R.string.rewards_earn_advert_loading,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            findViewById<CoordinatorLayout>(R.id.layout_container).let {
+                if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+                    Appodeal.show(this, Appodeal.INTERSTITIAL)
+                } else {
+                    it.postDelayed(interstitialRunnable, 3000)
+                }
+            }
         }
+    }
+
+    override fun onDestroy() {
+        findViewById<CoordinatorLayout>(R.id.layout_container)?.removeCallbacks(interstitialRunnable)
+
+        super.onDestroy()
     }
 }

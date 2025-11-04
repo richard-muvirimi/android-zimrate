@@ -19,6 +19,8 @@ object AppoRewardedAdListener : RewardedVideoCallbacks {
 
             if (Appodeal.isLoaded(Appodeal.REWARDED_VIDEO)) {
                 Appodeal.show(it.requireActivity(), Appodeal.REWARDED_VIDEO)
+            } else {
+                it.requireShowAdButton().postDelayed({ showAd() }, 3000)
             }
         }
     }
