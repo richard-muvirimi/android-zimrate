@@ -89,26 +89,6 @@ jobs:
             echo "Tag $TAG does not exist"
           fi
 
-      - name: Set up JDK 17
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Initialize git submodules
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive
-
-      - name: Grant execute permission for gradlew
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        run: chmod +x gradlew
-
-      - name: Build release variants
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        run: ./gradlew clean assembleRelease -x lint --stacktrace
 
       - name: Generate changelog
         id: changelog
@@ -128,7 +108,6 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        id: create_release
         if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
         uses: actions/create-release@v1
         env:
@@ -143,38 +122,3 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Playstore release APK
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/playstore/release/app-playstore-release.apk
-          asset_name: zimrate-playstore-release-${{ steps.current_version.outputs.version_name }}+${{ steps.current_version.outputs.version_code }}.apk
-          asset_content_type: application/vnd.android.package-archive
-        continue-on-error: true
-
-      - name: Upload Samsungstore release APK
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/samsungstore/release/app-samsungstore-release.apk
-          asset_name: zimrate-samsungstore-release-${{ steps.current_version.outputs.version_name }}+${{ steps.current_version.outputs.version_code }}.apk
-          asset_content_type: application/vnd.android.package-archive
-        continue-on-error: true
-
-      - name: Upload Otherstore release APK
-        if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/otherstore/release/app-otherstore-release.apk
-          asset_name: zimrate-otherstore-release-${{ steps.current_version.outputs.version_name }}+${{ steps.current_version.outputs.version_code }}.apk
-          asset_content_type: application/vnd.android.package-archive
-        continue-on-error: true
