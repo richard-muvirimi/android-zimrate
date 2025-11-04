@@ -2,6 +2,9 @@ package com.tyganeutronics.myratecalculator.database.models
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -73,6 +76,14 @@ object RewardModel {
                         .getString(R.string.rewards_award_daily_clock_in, reward.amount)
 
                     reward.save()
+
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.rewards_award_daily_clock_in, reward.amount),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
 
                     val bundle = Bundle()
                     bundle.putInt("day", streak)

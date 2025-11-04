@@ -3,6 +3,8 @@ package com.tyganeutronics.myratecalculator.ui.base
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.appodeal.ads.Appodeal
@@ -20,21 +22,34 @@ import java.lang.ref.WeakReference
 
 abstract class BaseAdActivity : BaseActivity() {
 
+    val interstitialRunnable = Runnable { showInterstitialAd() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         CoroutineScope(Dispatchers.Main).launch {
 
-            Appodeal.initialize(
-                this@BaseAdActivity,
-                getString(R.string.ads_appodeal_app_id),
-                Appodeal.BANNER or Appodeal.INTERSTITIAL or Appodeal.REWARDED_VIDEO
-            ) {
-                // Appodeal initialization finished
+            if (TokenUtils.canLoadAds(baseContext)) {
+                Appodeal.initialize(
+                    this@BaseAdActivity,
+                    getString(R.string.ads_appodeal_app_id),
+                    Appodeal.BANNER or Appodeal.INTERSTITIAL or Appodeal.REWARDED_VIDEO
+                ) {
+                    // Appodeal initialization finished
+                }
             }
 
             Appodeal.setTesting(!BaseUtils.isProductionBuild)
             Appodeal.muteVideosIfCallsMuted(true)
+
+            if (TokenUtils.canShowAds(baseContext)) {
+                Appodeal.cache(
+                    this@BaseAdActivity,
+                    Appodeal.REWARDED_VIDEO or Appodeal.INTERSTITIAL,
+                    2
+                )
+            }
+
         }
     }
 
@@ -54,7 +69,7 @@ abstract class BaseAdActivity : BaseActivity() {
 
             adView.post {
 
-                if (TokenUtils.canShowAds(baseContext)) {
+                if (Appodeal.isInitialized(Appodeal.BANNER) && TokenUtils.canShowAds(baseContext)) {
 
                     AppoBannerAdListener.apply {
                         contextRef = WeakReference(baseContext)
@@ -80,13 +95,36 @@ abstract class BaseAdActivity : BaseActivity() {
 
     private fun setupInterstitial() {
         AppoInterstitialListener.apply {
-            contextRef = WeakReference(this@BaseAdActivity)
+            contextRef = WeakReference(baseContext)
         }
 
         Appodeal.setInterstitialCallbacks(AppoInterstitialListener)
 
-        if (TokenUtils.hasLowTokenBalance() && Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL)
+        showInterstitialAd()
+    }
+
+    private fun showInterstitialAd() {
+        if (TokenUtils.hasLowTokenBalance()) {
+
+            Toast.makeText(
+                this,
+                R.string.rewards_earn_advert_loading,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            findViewById<CoordinatorLayout>(R.id.layout_container).let {
+                if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+                    Appodeal.show(this, Appodeal.INTERSTITIAL)
+                } else {
+                    it.postDelayed(interstitialRunnable, 3000)
+                }
+            }
         }
+    }
+
+    override fun onDestroy() {
+        findViewById<CoordinatorLayout>(R.id.layout_container)?.removeCallbacks(interstitialRunnable)
+
+        super.onDestroy()
     }
 }
