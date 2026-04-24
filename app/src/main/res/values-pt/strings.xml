@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Taxa de câmbio preferida</string>
+    <string name="preferred_currency_summary">Obter valor %s</string>
+    <string name="preferred_mean">Média</string>
+    <string name="preferred_median">Mediana</string>
+    <string name="preferred_random">Aleatório</string>
+    <string name="preferred_mode">Moda</string>
+    <string name="preferred_min">Mais baixo</string>
+    <string name="preferred_max">Mais alto</string>
+
+    <string name="update_interval">Intervalo de atualização</string>
+    <string name="update_hourly">Por hora</string>
+    <string name="update_hour_two">A cada duas horas</string>
+    <string name="update_hour_six">A cada seis horas</string>
+    <string name="update_hour_twelve">A cada doze horas</string>
+    <string name="update_daily">Diariamente</string>
+
+    <string name="auto_update">Atualização automática</string>
+    <string name="auto_update_summary_on">Atualizar automaticamente com as taxas de câmbio recebidas</string>
+    <string name="auto_update_summary_off">Clique manualmente para atualizar as taxas de câmbio</string>
+
+    <string name="auto_check">Verificar atualizações</string>
+    <string name="auto_check_summary_on">Verificar automaticamente as atualizações de câmbio</string>
+    <string name="auto_check_summary_off">Atualizar as taxas de câmbio manualmente</string>
+
+    <string name="menu_settings">Configurações</string>
+    <string name="menu_info">Dicas</string>
+    <string name="menu_close">Fechar</string>
+
+    <string name="menu_history">Histórico</string>
+    <string name="menu_home">Início</string>
+    <string name="menu_calculator">Calculadora</string>
+
+    <string name="info_message">1. Para atualizar as taxas a qualquer momento, pode deslizar de cima neste ecrã.\n\n2. Também pode adicionar um widget ao seu ecrã inicial para ver as últimas taxas carregadas sem abrir a aplicação. (As taxas não são carregadas em segundo plano)\n\n3. Pode usar instantaneamente o resultado calculado para cálculos adicionais premindo o resultado pretendido.</string>
+    <string name="info_dismiss">OK</string>
+    <string name="about">Sobre</string>
+    <string name="author">Autor</string>
+    <string name="rates_source_title">Taxas de</string>
+
+    <string name="pref_dev_brief">Sinta-se à vontade para me contactar abaixo se tiver algum problema, dúvida, sugestão ou simplesmente quiser ver o que mais trabalhei.</string>
+
+    <string name="pref_app_version">Versão %s</string>
+
+    <string name="update_available">Novas taxas disponíveis</string>
+    <string name="update_apply">Aplicar</string>
+
+    <string name="license">Licenças de código aberto</string>
+
+    <string name="widget_add_desc">Selecionar taxa para adicionar</string>
+    <string name="widget_add">Adicionar</string>
+
+    <string name="prefs_misc">Diversos</string>
+    <string name="prefs_analytics_title">Análise</string>
+    <string name="prefs_analytics_on">Permitir a recolha de estatísticas de utilização anónimas</string>
+    <string name="prefs_analytics_off">Recusar a recolha de estatísticas de utilização anónimas</string>
+
+    <string name="calculator_answer">Res</string>
+    <string name="calculator_dialog_cancel">Cancelar</string>
+    <string name="calculator_dialog_clear">Limpar</string>
+    <string name="calculator_dialog_erase">Apagar</string>
+    <string name="calculator_dialog_ok">OK</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>Divisão por zero</item>
+        <item>Fora dos limites</item>
+        <item>O resultado deve ser positivo</item>
+        <item>O resultado deve ser negativo</item>
+    </string-array>
+
+    <string name="list_nothing_found">Nada aqui.</string>
+    <string name="list_search_nothing_found">Nada corresponde aos critérios de pesquisa.</string>
+
+    <string name="app_update_downloaded">Uma atualização acabou de ser transferida.</string>
+    <string name="app_update_update">Reiniciar</string>
+
+    <string name="hint_rate">Taxa</string>
+    <string name="hint_amount">Valor</string>
+    <string name="content_description_flag">Bandeira da moeda</string>
+    <string name="content_description_pin">Fixar moeda</string>
+    <string name="content_description_refresh">Atualizar taxa de câmbio</string>
+    <string name="menu_refresh_all">Atualizar tudo</string>
+
+</resources>

@@ -56,6 +56,11 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".widget.MultipleRateRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver
             android:name=".widget.MultipleRateProvider"
             android:exported="false">

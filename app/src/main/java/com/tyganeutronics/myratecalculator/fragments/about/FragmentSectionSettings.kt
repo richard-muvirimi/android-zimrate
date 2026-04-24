@@ -6,6 +6,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.tyganeutronics.myratecalculator.BuildConfig
 import com.tyganeutronics.myratecalculator.R
+import com.tyganeutronics.myratecalculator.utils.BrowserUtils
 import de.psdev.licensesdialog.LicensesDialog
 
 
@@ -25,19 +26,37 @@ class FragmentSectionSettings : PreferenceFragmentCompat(), Preference.OnPrefere
 
         findPreference<Preference>(getString(R.string.license))?.onPreferenceClickListener = this
 
+        listOf(
+            getString(R.string.pref_dev_name),
+            getString(R.string.pref_dev_url),
+            getString(R.string.rates_source),
+        ).forEach { key ->
+            findPreference<Preference>(key)?.onPreferenceClickListener = this
+        }
     }
 
     override fun onPreferenceClick(preference: Preference): Boolean {
-        when (preference.key) {
+        val devUrl = getString(R.string.pref_dev_url)
+        val ratesUrl = getString(R.string.rates_source)
+
+        return when (preference.key) {
             getString(R.string.license) -> {
                 LicensesDialog.Builder(activity)
                     .setNotices(R.raw.licenses)
                     .setIncludeOwnLicense(true)
                     .build()
                     .show()
-                return true
+                true
             }
+            getString(R.string.pref_dev_name), devUrl -> {
+                BrowserUtils.openUrl(requireContext(), devUrl)
+                true
+            }
+            ratesUrl -> {
+                BrowserUtils.openUrl(requireContext(), ratesUrl)
+                true
+            }
+            else -> false
         }
-        return false
     }
 }

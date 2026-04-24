@@ -10,6 +10,10 @@
         <item name="ic_check">@drawable/ic_check</item>
         <item name="ic_analytics">@drawable/ic_analytics</item>
 
+        <item name="ic_refresh">@drawable/ic_refresh</item>
+        <item name="ic_star_filled">@drawable/ic_star_filled</item>
+        <item name="ic_star_outline">@drawable/ic_star_outline</item>
+
         <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
 
     </style>

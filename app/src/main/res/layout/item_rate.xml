@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/padding_8"
+    android:layout_marginVertical="@dimen/padding_4"
+    app:cardCornerRadius="@dimen/padding_8"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_8">
+
+        <!-- Main row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Flag + currency code stacked -->
+            <LinearLayout
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/img_flag"
+                    android:layout_width="40dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/content_description_flag"
+                    android:scaleType="fitCenter"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/txt_currency_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textStyle="bold"
+                    android:textSize="10sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="ZAR" />
+
+            </LinearLayout>
+
+            <!-- Rate input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_rate"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_marginStart="@dimen/padding_4"
+                android:layout_marginEnd="@dimen/padding_4"
+                android:hint="@string/hint_rate"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calculator"
+                app:endIconContentDescription="@string/menu_calculator">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:textSize="11sp"
+                    tools:text="37 000" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Amount input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_amount"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginEnd="@dimen/padding_4"
+                android:hint="@string/hint_amount"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calculator"
+                app:endIconContentDescription="@string/menu_calculator">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="1.00" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Pin / favourite toggle -->
+            <ImageButton
+                android:id="@+id/btn_pin"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/content_description_pin"
+                android:src="?attr/ic_star_outline"
+                tools:src="@drawable/ic_star_outline" />
+
+            <!-- Per-row refresh -->
+            <ImageButton
+                android:id="@+id/btn_refresh"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/content_description_refresh"
+                android:src="?attr/ic_refresh" />
+
+        </LinearLayout>
+
+        <!-- Footnote: name (left, marquee) · date (right, after sync) -->
+        <LinearLayout
+            android:id="@+id/ll_footnote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="52dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txt_currency_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="11sp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                tools:text="South African Rand" />
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_8"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                android:textColor="?android:attr/textColorSecondary"
+                android:visibility="gone"
+                tools:text="3 hours ago"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

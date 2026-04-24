@@ -47,7 +47,8 @@ abstract class BaseActivity : AppCompatActivity() {
         bindViews()
 
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge#kotlin
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById<CoordinatorLayout>(R.id.layout_container)) { v, windowInsets ->
+        val container = findViewById<CoordinatorLayout>(R.id.layout_container) ?: return
+        ViewCompat.setOnApplyWindowInsetsListener(container) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {

@@ -119,6 +119,13 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.4'
+
+    // FlagKit — offline country flag drawables
+    implementation("com.github.murgupluoglu:flagkit-android:1.0.2")
+
+    // Chrome Custom Tabs — in-app browser
+    implementation("androidx.browser:browser:1.8.0")
 
     //play licensing
     def billing_version = '7.1.1'

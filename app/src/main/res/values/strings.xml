@@ -2,16 +2,6 @@
 <resources>
     <string name="app_name" translatable="false">ZimRate</string>
 
-    <string name="calc_amount">Amount</string>
-    <string name="amount_info">Amount to Rate</string>
-
-    <string name="currency_usd" translatable="false">USD</string>
-    <string name="currency_bond" translatable="false">BOND</string>
-    <string name="currency_rtgs" translatable="false">RTGS</string>
-    <string name="currency_omir" translatable="false">OMIR</string>
-    <string name="currency_rbz" translatable="false">RBZ</string>
-    <string name="currency_zar" translatable="false">ZAR</string>
-
     <string name="preferred_currency">Preferred Currency Value</string>
     <string name="preferred_currency_summary">Fetch %s Value</string>
 
@@ -57,7 +47,7 @@
     <string name="about">About</string>
     <string name="author">Author</string>
     <string name="rates_source_title">Rates from</string>
-    <string name="rates_source" translatable="false">http://zimrate.tyganeutronics.com/</string>
+    <string name="rates_source" translatable="false">https://zimrate.tyganeutronics.com/</string>
 
     <string name="pref_dev_brief">Please feel free to contact me below if you have any issue, query, suggestions or simply want to view what else I have worked on.</string>
     <string name="pref_dev_name" translatable="false">Richard Muvirimi</string>
@@ -68,15 +58,31 @@
     <string name="update_available">New Rates Available</string>
     <string name="update_apply">Apply</string>
 
-    <string name="result" translatable="false">%1$s%2$,10.2f</string>
-    <string name="current_rate" translatable="false">$1 USD =</string>
-
     <string name="license">Open source Licenses</string>
 
     <string name="widget_add_desc">Select rate to add</string>
     <string name="widget_add">Add</string>
 
     <string name="prefs_misc">Miscellaneous</string>
+
+    <!-- Empty state -->
+    <string name="empty_rates_title">No rates yet</string>
+    <string name="empty_rates_subtitle">Pull down or tap refresh to load the latest exchange rates.</string>
+
+    <!-- Hidden rates -->
+    <string name="menu_hidden_rates">Hidden rates</string>
+    <string name="rate_hidden">%s hidden</string>
+    <string name="no_hidden_rates">No hidden rates</string>
+    <string name="no_pinned_rates">No favourited rates</string>
+    <string name="restore">Restore</string>
+
+    <!-- Rates list / calculator -->
+    <string name="hint_rate">Rate</string>
+    <string name="hint_amount">Amount</string>
+    <string name="content_description_flag">Currency flag</string>
+    <string name="content_description_pin">Pin currency</string>
+    <string name="content_description_refresh">Refresh currency rate</string>
+    <string name="menu_refresh_all">Refresh All</string>
     <string name="prefs_analytics_title">Analytics</string>
     <string name="prefs_analytics_on">Allow collection of anonymous usage statistics</string>
     <string name="prefs_analytics_off">Opt out of collection of anonymous usage statistics</string>

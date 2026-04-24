@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Tipo de cambio preferido</string>
+    <string name="preferred_currency_summary">Obtener valor %s</string>
+    <string name="preferred_mean">Media</string>
+    <string name="preferred_median">Mediana</string>
+    <string name="preferred_random">Aleatorio</string>
+    <string name="preferred_mode">Moda</string>
+    <string name="preferred_min">Más bajo</string>
+    <string name="preferred_max">Más alto</string>
+
+    <string name="update_interval">Intervalo de actualización</string>
+    <string name="update_hourly">Cada hora</string>
+    <string name="update_hour_two">Cada dos horas</string>
+    <string name="update_hour_six">Cada seis horas</string>
+    <string name="update_hour_twelve">Cada doce horas</string>
+    <string name="update_daily">Diariamente</string>
+
+    <string name="auto_update">Actualización automática</string>
+    <string name="auto_update_summary_on">Actualizar automáticamente con los tipos de cambio recibidos</string>
+    <string name="auto_update_summary_off">Haga clic manualmente para actualizar los tipos de cambio</string>
+
+    <string name="auto_check">Verificar actualizaciones</string>
+    <string name="auto_check_summary_on">Verificar automáticamente las actualizaciones de tipos de cambio</string>
+    <string name="auto_check_summary_off">Actualizar tipos de cambio manualmente</string>
+
+    <string name="menu_settings">Configuración</string>
+    <string name="menu_info">Consejos</string>
+    <string name="menu_close">Cerrar</string>
+
+    <string name="menu_history">Historial</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_calculator">Calculadora</string>
+
+    <string name="info_message">1. Para actualizar los tipos en cualquier momento, puede deslizar desde la parte superior de esta pantalla.\n\n2. También puede agregar un widget a su pantalla de inicio para ver los últimos tipos cargados sin abrir la aplicación. (Los tipos no se cargan en segundo plano)\n\n3. Puede usar instantáneamente el resultado calculado para más cálculos presionando el resultado deseado.</string>
+    <string name="info_dismiss">OK</string>
+    <string name="about">Acerca de</string>
+    <string name="author">Autor</string>
+    <string name="rates_source_title">Tipos de</string>
+
+    <string name="pref_dev_brief">No dude en contactarme a continuación si tiene algún problema, consulta, sugerencias o simplemente desea ver en qué más he trabajado.</string>
+
+    <string name="pref_app_version">Versión %s</string>
+
+    <string name="update_available">Nuevos tipos disponibles</string>
+    <string name="update_apply">Aplicar</string>
+
+    <string name="license">Licencias de código abierto</string>
+
+    <string name="widget_add_desc">Seleccionar tipo para agregar</string>
+    <string name="widget_add">Agregar</string>
+
+    <string name="prefs_misc">Varios</string>
+    <string name="prefs_analytics_title">Analítica</string>
+    <string name="prefs_analytics_on">Permitir la recopilación de estadísticas de uso anónimas</string>
+    <string name="prefs_analytics_off">Rechazar la recopilación de estadísticas de uso anónimas</string>
+
+    <string name="calculator_answer">Res</string>
+    <string name="calculator_dialog_cancel">Cancelar</string>
+    <string name="calculator_dialog_clear">Limpiar</string>
+    <string name="calculator_dialog_erase">Borrar</string>
+    <string name="calculator_dialog_ok">OK</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>División por cero</item>
+        <item>Fuera de límites</item>
+        <item>El resultado debe ser positivo</item>
+        <item>El resultado debe ser negativo</item>
+    </string-array>
+
+    <string name="list_nothing_found">Nada aquí.</string>
+    <string name="list_search_nothing_found">Nada coincide con los criterios de búsqueda.</string>
+
+    <string name="app_update_downloaded">Se acaba de descargar una actualización.</string>
+    <string name="app_update_update">Reiniciar</string>
+
+    <string name="hint_rate">Tipo</string>
+    <string name="hint_amount">Monto</string>
+    <string name="content_description_flag">Bandera de moneda</string>
+    <string name="content_description_pin">Fijar moneda</string>
+    <string name="content_description_refresh">Actualizar tipo de cambio</string>
+    <string name="menu_refresh_all">Actualizar todo</string>
+
+</resources>

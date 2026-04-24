@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Voorkeur wisselkoers</string>
+    <string name="preferred_currency_summary">Haal %s-waarde op</string>
+    <string name="preferred_mean">Gemiddeld</string>
+    <string name="preferred_median">Mediaan</string>
+    <string name="preferred_random">Willekeurig</string>
+    <string name="preferred_mode">Modus</string>
+    <string name="preferred_min">Laagste</string>
+    <string name="preferred_max">Hoogste</string>
+
+    <string name="update_interval">Opdateringsinterval</string>
+    <string name="update_hourly">Elke uur</string>
+    <string name="update_hour_two">Elke twee uur</string>
+    <string name="update_hour_six">Elke ses uur</string>
+    <string name="update_hour_twelve">Elke twaalf uur</string>
+    <string name="update_daily">Daagliks</string>
+
+    <string name="auto_update">Outomatiese opdatering</string>
+    <string name="auto_update_summary_on">Opdateer outomaties met ontvange wisselkoerse</string>
+    <string name="auto_update_summary_off">Klik handmatig om wisselkoerse op te dateer</string>
+
+    <string name="auto_check">Kyk vir opdaterings</string>
+    <string name="auto_check_summary_on">Kyk outomaties vir wisselkoers-opdaterings</string>
+    <string name="auto_check_summary_off">Dateer wisselkoerse handmatig op</string>
+
+    <string name="menu_settings">Instellings</string>
+    <string name="menu_info">Wenke</string>
+    <string name="menu_close">Sluit</string>
+
+    <string name="menu_history">Geskiedenis</string>
+    <string name="menu_home">Tuis</string>
+    <string name="menu_calculator">Sakrekenaar</string>
+
+    <string name="info_message">1. Om koerse te enige tyd te verfris, kan u van bo-af op hierdie skerm swiep.\n\n2. U kan ook \'n widget by u tuisskerm voeg om laas gelaaide koerse te sien sonder om die program te open. (Koerse word nie op die agtergrond gelaai nie)\n\n3. U kan die berekende resultaat onmiddellik vir verdere berekening gebruik deur op die gewenste resultaat te druk.</string>
+    <string name="info_dismiss">OK</string>
+    <string name="about">Oor</string>
+    <string name="author">Outeur</string>
+    <string name="rates_source_title">Koerse van</string>
+
+    <string name="pref_dev_brief">Voel vry om my hieronder te kontak as u enige probleem, navraag, voorstelle het of eenvoudig wil sien waaraan ek nog gewerk het.</string>
+
+    <string name="pref_app_version">Weergawe %s</string>
+
+    <string name="update_available">Nuwe koerse beskikbaar</string>
+    <string name="update_apply">Toepas</string>
+
+    <string name="license">Oopbron-lisensies</string>
+
+    <string name="widget_add_desc">Kies koers om by te voeg</string>
+    <string name="widget_add">Voeg by</string>
+
+    <string name="prefs_misc">Diverse</string>
+    <string name="prefs_analytics_title">Analitiek</string>
+    <string name="prefs_analytics_on">Laat insameling van anonieme gebruiksstatistieke toe</string>
+    <string name="prefs_analytics_off">Weier insameling van anonieme gebruiksstatistieke</string>
+
+    <string name="calculator_answer">Ans</string>
+    <string name="calculator_dialog_cancel">Kanselleer</string>
+    <string name="calculator_dialog_clear">Maak skoon</string>
+    <string name="calculator_dialog_erase">Vee uit</string>
+    <string name="calculator_dialog_ok">OK</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>Deling deur nul</item>
+        <item>Buite perke</item>
+        <item>Resultaat moet positief wees</item>
+        <item>Resultaat moet negatief wees</item>
+    </string-array>
+
+    <string name="list_nothing_found">Niks hier nie.</string>
+    <string name="list_search_nothing_found">Niks pas by die soekkriteriums nie.</string>
+
+    <string name="app_update_downloaded">\'n Opdatering is pas afgelaai.</string>
+    <string name="app_update_update">Herbegin</string>
+
+    <string name="hint_rate">Koers</string>
+    <string name="hint_amount">Bedrag</string>
+    <string name="content_description_flag">Geldeenheid vlag</string>
+    <string name="content_description_pin">Vaspen geldeenheid</string>
+    <string name="content_description_refresh">Verfris wisselkoers</string>
+    <string name="menu_refresh_all">Verfris alles</string>
+
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">سعر الصرف المفضل</string>
+    <string name="preferred_currency_summary">احصل على قيمة %s</string>
+    <string name="preferred_mean">المتوسط</string>
+    <string name="preferred_median">الوسيط</string>
+    <string name="preferred_random">عشوائي</string>
+    <string name="preferred_mode">المنوال</string>
+    <string name="preferred_min">الأدنى</string>
+    <string name="preferred_max">الأعلى</string>
+
+    <string name="update_interval">فترة التحديث</string>
+    <string name="update_hourly">كل ساعة</string>
+    <string name="update_hour_two">كل ساعتين</string>
+    <string name="update_hour_six">كل ست ساعات</string>
+    <string name="update_hour_twelve">كل اثنتي عشرة ساعة</string>
+    <string name="update_daily">يومياً</string>
+
+    <string name="auto_update">تحديث تلقائي</string>
+    <string name="auto_update_summary_on">التحديث التلقائي بأسعار الصرف المستلمة</string>
+    <string name="auto_update_summary_off">انقر يدوياً لتحديث أسعار الصرف</string>
+
+    <string name="auto_check">التحقق من التحديثات</string>
+    <string name="auto_check_summary_on">التحقق تلقائياً من تحديثات أسعار الصرف</string>
+    <string name="auto_check_summary_off">تحديث أسعار الصرف يدوياً</string>
+
+    <string name="menu_settings">الإعدادات</string>
+    <string name="menu_info">نصائح</string>
+    <string name="menu_close">إغلاق</string>
+
+    <string name="menu_history">التاريخ</string>
+    <string name="menu_home">الرئيسية</string>
+    <string name="menu_calculator">الآلة الحاسبة</string>
+
+    <string name="info_message">١. لتحديث الأسعار في أي وقت، يمكنك السحب من أعلى هذه الشاشة.\n\n٢. يمكنك أيضاً إضافة أداة إلى شاشتك الرئيسية لعرض آخر الأسعار المحملة دون فتح التطبيق. (لا يتم تحميل الأسعار في الخلفية)\n\n٣. يمكنك استخدام النتيجة المحسوبة فوراً لإجراء مزيد من العمليات الحسابية بالضغط على النتيجة المرغوبة.</string>
+    <string name="info_dismiss">موافق</string>
+    <string name="about">حول</string>
+    <string name="author">المؤلف</string>
+    <string name="rates_source_title">الأسعار من</string>
+
+    <string name="pref_dev_brief">لا تتردد في التواصل معي أدناه إذا كان لديك أي مشكلة أو استفسار أو اقتراحات أو تريد ببساطة الاطلاع على ما عملت عليه.</string>
+
+    <string name="pref_app_version">الإصدار %s</string>
+
+    <string name="update_available">أسعار جديدة متاحة</string>
+    <string name="update_apply">تطبيق</string>
+
+    <string name="license">تراخيص المصدر المفتوح</string>
+
+    <string name="widget_add_desc">اختر السعر للإضافة</string>
+    <string name="widget_add">إضافة</string>
+
+    <string name="prefs_misc">متنوعات</string>
+    <string name="prefs_analytics_title">التحليلات</string>
+    <string name="prefs_analytics_on">السماح بجمع إحصاءات الاستخدام المجهولة</string>
+    <string name="prefs_analytics_off">رفض جمع إحصاءات الاستخدام المجهولة</string>
+
+    <string name="calculator_answer">ناتج</string>
+    <string name="calculator_dialog_cancel">إلغاء</string>
+    <string name="calculator_dialog_clear">مسح</string>
+    <string name="calculator_dialog_erase">حذف</string>
+    <string name="calculator_dialog_ok">موافق</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>القسمة على صفر</item>
+        <item>خارج الحدود</item>
+        <item>يجب أن تكون النتيجة موجبة</item>
+        <item>يجب أن تكون النتيجة سالبة</item>
+    </string-array>
+
+    <string name="list_nothing_found">لا شيء هنا.</string>
+    <string name="list_search_nothing_found">لا شيء يطابق معايير البحث.</string>
+
+    <string name="app_update_downloaded">تم تنزيل تحديث للتو.</string>
+    <string name="app_update_update">إعادة التشغيل</string>
+
+    <string name="hint_rate">السعر</string>
+    <string name="hint_amount">المبلغ</string>
+    <string name="content_description_flag">علم العملة</string>
+    <string name="content_description_pin">تثبيت العملة</string>
+    <string name="content_description_refresh">تحديث سعر الصرف</string>
+    <string name="menu_refresh_all">تحديث الكل</string>
+
+</resources>

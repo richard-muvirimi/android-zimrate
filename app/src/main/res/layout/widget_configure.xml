@@ -11,44 +11,12 @@
         android:layout_height="wrap_content"
         android:text="@string/widget_add_desc" />
 
-    <RadioGroup
-        android:id="@+id/rg_widget"
+    <ListView
+        android:id="@+id/lv_currencies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_8">
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rbtn_bond"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/currency_bond" />
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rbtn_omir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/currency_omir" />
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rbtn_rbz"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/currency_rbz" />
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rbtn_rtgs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/currency_rtgs" />
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rbtn_zar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/currency_zar" />
-
-    </RadioGroup>
+        android:layout_margin="@dimen/padding_8"
+        android:choiceMode="singleChoice" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_add"

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">首选汇率</string>
+    <string name="preferred_currency_summary">获取%s汇率</string>
+    <string name="preferred_mean">平均值</string>
+    <string name="preferred_median">中位数</string>
+    <string name="preferred_random">随机</string>
+    <string name="preferred_mode">众数</string>
+    <string name="preferred_min">最低</string>
+    <string name="preferred_max">最高</string>
+
+    <string name="update_interval">更新间隔</string>
+    <string name="update_hourly">每小时</string>
+    <string name="update_hour_two">每两小时</string>
+    <string name="update_hour_six">每六小时</string>
+    <string name="update_hour_twelve">每十二小时</string>
+    <string name="update_daily">每天</string>
+
+    <string name="auto_update">自动更新</string>
+    <string name="auto_update_summary_on">自动更新接收到的汇率</string>
+    <string name="auto_update_summary_off">手动点击更新汇率</string>
+
+    <string name="auto_check">检查更新</string>
+    <string name="auto_check_summary_on">自动检查汇率更新</string>
+    <string name="auto_check_summary_off">手动更新汇率</string>
+
+    <string name="menu_settings">设置</string>
+    <string name="menu_info">提示</string>
+    <string name="menu_close">关闭</string>
+
+    <string name="menu_history">历史</string>
+    <string name="menu_home">首页</string>
+    <string name="menu_calculator">计算器</string>
+
+    <string name="info_message">1. 要随时刷新汇率，您可以从此屏幕顶部向下滑动。\n\n2. 您还可以将小部件添加到主屏幕，无需打开应用即可查看最新加载的汇率。（汇率不会在后台加载）\n\n3. 您可以通过按下所需结果，立即将计算结果用于进一步计算。</string>
+    <string name="info_dismiss">确定</string>
+    <string name="about">关于</string>
+    <string name="author">作者</string>
+    <string name="rates_source_title">汇率来源</string>
+
+    <string name="pref_dev_brief">如果您有任何问题、查询、建议，或只是想查看我还做了什么，请随时在下方联系我。</string>
+
+    <string name="pref_app_version">版本 %s</string>
+
+    <string name="update_available">新汇率可用</string>
+    <string name="update_apply">应用</string>
+
+    <string name="license">开源许可证</string>
+
+    <string name="widget_add_desc">选择要添加的汇率</string>
+    <string name="widget_add">添加</string>
+
+    <string name="prefs_misc">其他</string>
+    <string name="prefs_analytics_title">分析</string>
+    <string name="prefs_analytics_on">允许收集匿名使用统计数据</string>
+    <string name="prefs_analytics_off">拒绝收集匿名使用统计数据</string>
+
+    <string name="calculator_answer">结果</string>
+    <string name="calculator_dialog_cancel">取消</string>
+    <string name="calculator_dialog_clear">清除</string>
+    <string name="calculator_dialog_erase">删除</string>
+    <string name="calculator_dialog_ok">确定</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>除以零</item>
+        <item>超出范围</item>
+        <item>结果必须为正数</item>
+        <item>结果必须为负数</item>
+    </string-array>
+
+    <string name="list_nothing_found">没有内容。</string>
+    <string name="list_search_nothing_found">没有符合搜索条件的内容。</string>
+
+    <string name="app_update_downloaded">刚刚下载了一个更新。</string>
+    <string name="app_update_update">重启</string>
+
+    <string name="hint_rate">汇率</string>
+    <string name="hint_amount">金额</string>
+    <string name="content_description_flag">货币旗帜</string>
+    <string name="content_description_pin">固定货币</string>
+    <string name="content_description_refresh">刷新汇率</string>
+    <string name="menu_refresh_all">全部刷新</string>
+
+</resources>

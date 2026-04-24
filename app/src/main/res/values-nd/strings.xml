@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Intengo yemali</string>
+    <string name="preferred_currency_summary">Thola intengo ye%s</string>
+    <string name="preferred_mean">Phakathi (Mean)</string>
+    <string name="preferred_median">Phakathi (Median)</string>
+    <string name="preferred_random">Noma yiphi (Random)</string>
+    <string name="preferred_mode">Evame kuvela (Mode)</string>
+    <string name="preferred_min">Ephansi</string>
+    <string name="preferred_max">Ephezulu</string>
+
+    <string name="update_interval">Isikhathi sokuvuselela</string>
+    <string name="update_hourly">Ihora ngalinye</string>
+    <string name="update_hour_two">Amahora amabili</string>
+    <string name="update_hour_six">Amahora ayisithupha</string>
+    <string name="update_hour_twelve">Amahora alishumi lambili</string>
+    <string name="update_daily">Nsuku zonke</string>
+
+    <string name="auto_update">Vuselela ngokwangokoqobo</string>
+    <string name="auto_update_summary_on">Vuselela ngokwangokoqobo ngemali emukelwayo</string>
+    <string name="auto_update_summary_off">Chofoza ukuvuselela intengo yemali</string>
+
+    <string name="auto_check">Hlola ukuvuselela</string>
+    <string name="auto_check_summary_on">Hlola ngokwangokoqobo ukuvuselela kwemali</string>
+    <string name="auto_check_summary_off">Vuselela intengo yemali ngokwakho</string>
+
+    <string name="menu_settings">Izilungiselelo</string>
+    <string name="menu_info">Amacebo</string>
+    <string name="menu_close">Vala</string>
+
+    <string name="menu_history">Umlando</string>
+    <string name="menu_home">Ikhaya</string>
+    <string name="menu_calculator">Isibali</string>
+
+    <string name="info_message">1. Ukuvuselela izintengo nganoma yisiphi isikhathi, ungaswepa usuka phezulu kulesiskrini.\n\n2. Ungengeza iwidget kusikrini sakho sekhaya ukuze ubone izintengo ezilodiwe zokugcina ngaphandle kokuvula uhlelo lokusebenza. (Izintengo azilodiwa emvakwemvelo)\n\n3. Ungasebenzisa ngokushesha umphumela ohesabiwayo wokuqhubeka ngehesabu ngokucindezela umphumela ofunekayo.</string>
+    <string name="info_dismiss">Kulungile</string>
+    <string name="about">Mayelana</string>
+    <string name="author">Umbhali</string>
+    <string name="rates_source_title">Izintengo ezivela</string>
+
+    <string name="pref_dev_brief">Zizwe ukhululekile ukukhumbulana lami ngezansi uma ulenoma yiluphi udaba, umbuzo, iziphakamiso noma ufuna ukubona lokho engikolile.</string>
+
+    <string name="pref_app_version">Inguqulo %s</string>
+
+    <string name="update_available">Izintengo Ezintsha Zikhona</string>
+    <string name="update_apply">Faka</string>
+
+    <string name="license">Amalayisensi womthombo ovulekile</string>
+
+    <string name="widget_add_desc">Khetha intengo yokengeza</string>
+    <string name="widget_add">Engeza</string>
+
+    <string name="prefs_misc">Okunye</string>
+    <string name="prefs_analytics_title">Uhlalutyo</string>
+    <string name="prefs_analytics_on">Vumela ukuqoqwa kwezistatistiki zokusebenzisa ezingaziwa</string>
+    <string name="prefs_analytics_off">Phuma ekuqoqweni kwezistatistiki zokusebenzisa</string>
+
+    <string name="calculator_answer">Imp</string>
+    <string name="calculator_dialog_cancel">Khansela</string>
+    <string name="calculator_dialog_clear">Sula</string>
+    <string name="calculator_dialog_erase">Sula konke</string>
+    <string name="calculator_dialog_ok">Kulungile</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>Ukuhlela ngenumber elingaphezulu kuzero</item>
+        <item>Ingaphezulu kwemikhawulo</item>
+        <item>Umphumela kumele ube phezulu kwezero</item>
+        <item>Umphumela kumele ube ngezansi kwezero</item>
+    </string-array>
+
+    <string name="list_nothing_found">Akukho Lutho.</string>
+    <string name="list_search_nothing_found">Akukho okufanele izixwayiso zokusesha.</string>
+
+    <string name="app_update_downloaded">Ukuvuselela kusanda kulodwa.</string>
+    <string name="app_update_update">Qala kabusha</string>
+
+    <string name="hint_rate">Intengo</string>
+    <string name="hint_amount">Imali</string>
+    <string name="content_description_flag">Iflegi yemali</string>
+    <string name="content_description_pin">Phina imali</string>
+    <string name="content_description_refresh">Vuselela intengo yemali</string>
+    <string name="menu_refresh_all">Vuselela Konke</string>
+
+</resources>

@@ -17,8 +17,7 @@ import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentAbout
-import com.tyganeutronics.myratecalculator.fragments.main.FragmentCalculator
-import com.tyganeutronics.myratecalculator.fragments.main.FragmentHome
+import com.tyganeutronics.myratecalculator.fragments.main.FragmentRates
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentCoinsBalance
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentRewards
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentSpends
@@ -76,16 +75,8 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         when (item.itemId) {
-            R.id.navigation_home -> {
-                transaction.replace(R.id.nav_host_fragment, FragmentHome(), FragmentHome.TAG)
-            }
-
             R.id.navigation_calculator -> {
-                transaction.replace(
-                    R.id.nav_host_fragment,
-                    FragmentCalculator(),
-                    FragmentCalculator.TAG
-                )
+                transaction.replace(R.id.nav_host_fragment, FragmentRates(), FragmentRates.TAG)
             }
 
             R.id.navigation_about -> {

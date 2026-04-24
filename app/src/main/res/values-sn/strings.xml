@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="calc_amount">Mari</string>
-    <string name="amount_info">Mari yandoda kuchinja</string>
-
     <string name="preferred_currency">Rate randoda</string>
     <string name="preferred_currency_summary">Tora rate %s</string>
     <string name="preferred_mean">Yepakati (Mean)</string>
@@ -77,5 +74,12 @@
 
     <string name="app_update_downloaded">Application itsva ya downloada.</string>
     <string name="app_update_update">Tangidza</string>
+
+    <string name="hint_rate">Muchinjiro</string>
+    <string name="hint_amount">Mari</string>
+    <string name="content_description_flag">Mureza wemari</string>
+    <string name="content_description_pin">Batanidza mari</string>
+    <string name="content_description_refresh">Svenura muchinjiro</string>
+    <string name="menu_refresh_all">Svenura Zvese</string>
 
 </resources>
