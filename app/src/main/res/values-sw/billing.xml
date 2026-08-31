@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">Hakikisha una muunganisho hai wa intaneti.</string>
+    <string name="billing_coin_purchase_cancelled">Ununuzi wa sarafu umeghairiwa.</string>
+    <string name="billing_coin_purchase_not_supported">Ununuzi wa sarafu hauwezekani kwenye kifaa hiki.</string>
+
+    <string name="billing_purchase_coins">Sarafu %1$d (+%2$d bure)</string>
+
+    <string name="billing_disclaimer"><b>Kumbuka:</b>\n\n
+        <b>1</b>. Ikiwa sarafu hazionekani baada ya ununuzi, gusa rejesha ili ujaribu tena\n
+        <b>2</b>. Mbali na sarafu zinazopatikana kwa njia mbalimbali ndani ya programu, sarafu zilizonunuliwa hupunguza hitaji la kukamilisha shughuli mbalimbali ndani ya programu na huzima matangazo\n
+        <b>3</b>. Sarafu ni bidhaa pepe, hatutoi marejesho ya fedha.\n
+        <b>4</b>. Sarafu zimefungamanishwa na usakinishaji huu wa programu, kufuta data ya programu huondoa uhusiano huu (inaweza kubadilika).
+    </string>
+    <string name="billing_title">Ongeza sarafu</string>
+
+    <string name="billing_coins_credited">Sarafu %1$d zimewekwa kwenye akaunti yako. Kitambulisho cha oda: %2$s</string>
+
+    <string name="billing_menu_restore">Rejesha</string>
+    <string name="billing_restoring_purchases">Inarejesha manunuzi!</string>
+</resources>

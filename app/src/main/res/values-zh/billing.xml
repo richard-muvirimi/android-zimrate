@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">请检查你的网络连接是否正常。</string>
+    <string name="billing_coin_purchase_cancelled">金币购买已取消。</string>
+    <string name="billing_coin_purchase_not_supported">此设备不支持购买金币。</string>
+
+    <string name="billing_purchase_coins">%1$d 金币（额外赠送 %2$d）</string>
+
+    <string name="billing_disclaimer"><b>注意：</b>\n\n
+        <b>1</b>. 如果购买后金币未到账，请点击“恢复”重试\n
+        <b>2</b>. 除了通过应用内各种方式赚取的金币外，购买的金币可以减少完成应用内活动的需要，并可关闭广告\n
+        <b>3</b>. 金币为虚拟物品，我们不支持退款。\n
+        <b>4</b>. 金币与当前的应用安装绑定，清除应用数据会解除该绑定（此规则可能变更）。
+    </string>
+    <string name="billing_title">金币充值</string>
+
+    <string name="billing_coins_credited">%1$d 金币已存入你的账户。订单编号：%2$s</string>
+
+    <string name="billing_menu_restore">恢复</string>
+    <string name="billing_restoring_purchases">正在恢复购买！</string>
+</resources>

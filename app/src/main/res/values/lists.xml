@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="currencies">
-        <item>@string/currency_usd</item>
-        <item>@string/currency_bond</item>
-        <item>@string/currency_omir</item>
-        <item>@string/currency_rbz</item>
-        <item>@string/currency_rtgs</item>
-        <item>@string/currency_zar</item>
-    </string-array>
-
     <string-array name="preferred">
         <item>@string/preferred_max</item>
         <item>@string/preferred_min</item>

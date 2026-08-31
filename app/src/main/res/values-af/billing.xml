@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">Kontroleer dat jy \'n aktiewe internetverbinding het.</string>
+    <string name="billing_coin_purchase_cancelled">Muntaankoop gekanselleer.</string>
+    <string name="billing_coin_purchase_not_supported">Muntaankoop word nie op hierdie toestel ondersteun nie.</string>
+
+    <string name="billing_purchase_coins">%1$d munte (+%2$d gratis)</string>
+
+    <string name="billing_disclaimer"><b>Let wel:</b>\n\n
+        <b>1</b>. As die munte nie ná die aankoop verskyn nie, tik herstel om weer te probeer\n
+        <b>2</b>. Benewens die munte wat op verskeie maniere in die program verdien word, verminder gekoopte munte die behoefte om verskeie aktiwiteite in die program te voltooi en skakel advertensies af\n
+        <b>3</b>. Munte is virtuele items, ons ondersteun nie terugbetalings nie.\n
+        <b>4</b>. Munte is gekoppel aan hierdie installasie van die program; die uitvee van programdata verwyder hierdie koppeling (onderhewig aan verandering).
+    </string>
+    <string name="billing_title">Laai munte op</string>
+
+    <string name="billing_coins_credited">%1$d munte is tot jou rekening gekrediteer. Bestellings-ID: %2$s</string>
+
+    <string name="billing_menu_restore">Herstel</string>
+    <string name="billing_restoring_purchases">Aankope word herstel!</string>
+</resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Bevorzugter Wechselkurs</string>
+    <string name="preferred_currency_summary">%s-Wert abrufen</string>
+    <string name="preferred_mean">Mittelwert</string>
+    <string name="preferred_median">Median</string>
+    <string name="preferred_random">Zufällig</string>
+    <string name="preferred_mode">Modus</string>
+    <string name="preferred_min">Niedrigster</string>
+    <string name="preferred_max">Höchster</string>
+
+    <string name="update_interval">Aktualisierungsintervall</string>
+    <string name="update_hourly">Stündlich</string>
+    <string name="update_hour_two">Alle zwei Stunden</string>
+    <string name="update_hour_six">Alle sechs Stunden</string>
+    <string name="update_hour_twelve">Alle zwölf Stunden</string>
+    <string name="update_daily">Täglich</string>
+
+    <string name="auto_update">Automatische Aktualisierung</string>
+    <string name="auto_update_summary_on">Automatisch mit empfangenen Wechselkursen aktualisieren</string>
+    <string name="auto_update_summary_off">Manuell klicken, um Wechselkurse zu aktualisieren</string>
+
+    <string name="auto_check">Nach Aktualisierungen suchen</string>
+    <string name="auto_check_summary_on">Automatisch nach Wechselkurs-Aktualisierungen suchen</string>
+    <string name="auto_check_summary_off">Wechselkurse manuell aktualisieren</string>
+
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_info">Tipps</string>
+    <string name="menu_close">Schließen</string>
+
+    <string name="menu_history">Verlauf</string>
+    <string name="menu_home">Startseite</string>
+    <string name="menu_calculator">Rechner</string>
+
+    <string name="info_message">1. Um die Kurse jederzeit zu aktualisieren, können Sie von oben auf diesem Bildschirm wischen.\n\n2. Sie können auch ein Widget zu Ihrem Startbildschirm hinzufügen, um die zuletzt geladenen Kurse ohne Öffnen der App anzuzeigen. (Kurse werden nicht im Hintergrund geladen)\n\n3. Sie können das berechnete Ergebnis sofort für weitere Berechnungen verwenden, indem Sie auf das gewünschte Ergebnis drücken.</string>
+    <string name="info_dismiss">OK</string>
+    <string name="about">Über</string>
+    <string name="author">Autor</string>
+    <string name="rates_source_title">Kurse von</string>
+
+    <string name="pref_dev_brief">Kontaktieren Sie mich gerne unten, wenn Sie ein Problem, eine Frage, Vorschläge haben oder einfach sehen möchten, woran ich noch gearbeitet habe.</string>
+
+    <string name="pref_app_version">Version %s</string>
+
+    <string name="update_available">Neue Kurse verfügbar</string>
+    <string name="update_apply">Anwenden</string>
+    <string name="update_none">Keine neuen Kurse verfügbar</string>
+
+    <string name="license">Open-Source-Lizenzen</string>
+
+    <string name="widget_add_desc">Kurs zum Hinzufügen auswählen</string>
+    <string name="widget_add_summary">Dieses Widget zeigt einen einzelnen Wechselkurs auf dem Startbildschirm. Wählen Sie die Währung, der es folgen soll — fügen Sie für jede weitere ein eigenes Widget hinzu.</string>
+    <string name="widget_add">Hinzufügen</string>
+
+    <string name="prefs_misc">Sonstiges</string>
+    <string name="prefs_analytics_title">Analytik</string>
+    <string name="prefs_analytics_on">Erfassung anonymer Nutzungsstatistiken erlauben</string>
+    <string name="prefs_analytics_off">Erfassung anonymer Nutzungsstatistiken ablehnen</string>
+
+    <string name="calculator_answer">Erg</string>
+    <string name="calculator_dialog_cancel">Abbrechen</string>
+    <string name="calculator_dialog_clear">Löschen</string>
+    <string name="calculator_dialog_erase">Alle löschen</string>
+    <string name="calculator_dialog_ok">OK</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>Division durch null</item>
+        <item>Außerhalb der Grenzen</item>
+        <item>Ergebnis muss positiv sein</item>
+        <item>Ergebnis muss negativ sein</item>
+    </string-array>
+
+    <string name="list_nothing_found">Nichts hier.</string>
+    <string name="list_search_nothing_found">Nichts entspricht den Suchkriterien.</string>
+
+    <string name="app_update_downloaded">Ein Update wurde gerade heruntergeladen.</string>
+    <string name="app_update_update">Neustart</string>
+
+    <string name="hint_rate">Kurs</string>
+    <string name="hint_amount">Betrag</string>
+    <string name="content_description_flag">Währungsflagge</string>
+    <string name="content_description_pin">Währung anheften</string>
+    <string name="content_description_refresh">Wechselkurs aktualisieren</string>
+    <string name="menu_refresh_all">Alles aktualisieren</string>
+
+    <string name="section_favourites">Favoriten</string>
+    <string name="section_suggested">Vorgeschlagene Favoriten</string>
+    <string name="section_other_rates">Weitere Kurse</string>
+
+    <string name="empty_rates_title">Noch keine Kurse</string>
+    <string name="empty_rates_subtitle">Zum Laden der neuesten Wechselkurse nach unten ziehen oder auf Aktualisieren tippen.</string>
+
+    <string name="menu_hidden_rates">Ausgeblendete Kurse</string>
+    <string name="rate_hidden">%s ausgeblendet</string>
+    <string name="no_hidden_rates">Keine ausgeblendeten Kurse</string>
+    <string name="no_pinned_rates">Keine favorisierten Kurse</string>
+
+    <string name="restore">Wiederherstellen</string>
+
+    <string name="notification_channel_rates">Kursaktualisierungen</string>
+    <string name="notification_coins_exhausted_title">Hintergrundaktualisierung pausiert</string>
+    <string name="notification_coins_exhausted_body">Ihre Münzen sind aufgebraucht, daher werden die Kurse nicht mehr im Hintergrund aktualisiert. Laden Sie auf, um fortzufahren.</string>
+
+</resources>

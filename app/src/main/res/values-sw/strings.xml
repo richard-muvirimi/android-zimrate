@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Kiwango cha ubadilishaji kipendeleo</string>
+    <string name="preferred_currency_summary">Pata thamani ya %s</string>
+    <string name="preferred_mean">Wastani</string>
+    <string name="preferred_median">Kati</string>
+    <string name="preferred_random">Nasibu</string>
+    <string name="preferred_mode">Hali</string>
+    <string name="preferred_min">Chini kabisa</string>
+    <string name="preferred_max">Juu kabisa</string>
+
+    <string name="update_interval">Muda wa kusasisha</string>
+    <string name="update_hourly">Kila saa</string>
+    <string name="update_hour_two">Kila masaa mawili</string>
+    <string name="update_hour_six">Kila masaa sita</string>
+    <string name="update_hour_twelve">Kila masaa kumi na mawili</string>
+    <string name="update_daily">Kila siku</string>
+
+    <string name="auto_update">Sasisha kiotomatiki</string>
+    <string name="auto_update_summary_on">Sasisha kiotomatiki na viwango vya ubadilishaji vilivyopokelewa</string>
+    <string name="auto_update_summary_off">Bonyeza kwa mkono kusasisha viwango vya ubadilishaji</string>
+
+    <string name="auto_check">Angalia masasisho</string>
+    <string name="auto_check_summary_on">Angalia kiotomatiki masasisho ya viwango vya ubadilishaji</string>
+    <string name="auto_check_summary_off">Sasisha viwango vya ubadilishaji kwa mkono</string>
+
+    <string name="menu_settings">Mipangilio</string>
+    <string name="menu_info">Vidokezo</string>
+    <string name="menu_close">Funga</string>
+
+    <string name="menu_history">Historia</string>
+    <string name="menu_home">Nyumbani</string>
+    <string name="menu_calculator">Kikokotoo</string>
+
+    <string name="info_message">1. Ili kuburudisha viwango wakati wowote, unaweza kutelezesha kutoka juu kwenye skrini hii.\n\n2. Unaweza pia kuongeza wijeti kwenye skrini yako ya nyumbani ili kuona viwango vilivyopakiwa vya mwisho bila kufungua programu. (Viwango havipakiwa chinichini)\n\n3. Unaweza mara moja kutumia matokeo yaliyohesabiwa kwa mahesabu zaidi kwa kubonyeza matokeo unayoyataka.</string>
+    <string name="info_dismiss">Sawa</string>
+    <string name="about">Kuhusu</string>
+    <string name="author">Mwandishi</string>
+    <string name="rates_source_title">Viwango kutoka</string>
+
+    <string name="pref_dev_brief">Jisikie huru kuwasiliana nami hapa chini ukiwa na tatizo lolote, swali, mapendekezo au unataka tu kuona nini kingine nilichofanya kazi nacho.</string>
+
+    <string name="pref_app_version">Toleo %s</string>
+
+    <string name="update_available">Viwango Vipya Vinapatikana</string>
+    <string name="update_apply">Omba</string>
+    <string name="update_none">Hakuna viwango vipya vinavyopatikana</string>
+
+    <string name="license">Leseni za Chanzo Huria</string>
+
+    <string name="widget_add_desc">Chagua kiwango cha kuongeza</string>
+    <string name="widget_add_summary">Wijeti hii inaonyesha kiwango kimoja cha ubadilishaji kwenye skrini yako ya kwanza. Chagua sarafu unayotaka kufuatilia — ongeza wijeti nyingine kwa kila sarafu ya ziada.</string>
+    <string name="widget_add">Ongeza</string>
+
+    <string name="prefs_misc">Mengineyo</string>
+    <string name="prefs_analytics_title">Uchanganuzi</string>
+    <string name="prefs_analytics_on">Ruhusu ukusanyaji wa takwimu za matumizi zisizojulikana</string>
+    <string name="prefs_analytics_off">Kataa ukusanyaji wa takwimu za matumizi zisizojulikana</string>
+
+    <string name="calculator_answer">Jibu</string>
+    <string name="calculator_dialog_cancel">Ghairi</string>
+    <string name="calculator_dialog_clear">Futa</string>
+    <string name="calculator_dialog_erase">Futa yote</string>
+    <string name="calculator_dialog_ok">Sawa</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>Kugawanya na sifuri</item>
+        <item>Nje ya mipaka</item>
+        <item>Matokeo lazima yawe chanya</item>
+        <item>Matokeo lazima yawe hasi</item>
+    </string-array>
+
+    <string name="list_nothing_found">Hakuna Kitu Hapa.</string>
+    <string name="list_search_nothing_found">Hakuna kinachofanana na vigezo vya kutafuta.</string>
+
+    <string name="app_update_downloaded">Sasisho limepakuliwa hivi karibuni.</string>
+    <string name="app_update_update">Anzisha upya</string>
+
+    <string name="hint_rate">Kiwango</string>
+    <string name="hint_amount">Kiasi</string>
+    <string name="content_description_flag">Bendera ya sarafu</string>
+    <string name="content_description_pin">Piga pini sarafu</string>
+    <string name="content_description_refresh">Burudisha kiwango cha ubadilishaji</string>
+    <string name="menu_refresh_all">Burudisha Yote</string>
+
+    <string name="section_favourites">Vipendwa</string>
+    <string name="section_suggested">Vipendwa vinavyopendekezwa</string>
+    <string name="section_other_rates">Viwango vingine</string>
+
+    <string name="empty_rates_title">Hakuna viwango bado</string>
+    <string name="empty_rates_subtitle">Vuta chini au gusa onyesha upya ili kupakia viwango vipya vya kubadilisha fedha.</string>
+
+    <string name="menu_hidden_rates">Viwango vilivyofichwa</string>
+    <string name="rate_hidden">%s imefichwa</string>
+    <string name="no_hidden_rates">Hakuna viwango vilivyofichwa</string>
+    <string name="no_pinned_rates">Hakuna viwango vinavyopendwa</string>
+
+    <string name="restore">Rejesha</string>
+
+    <string name="notification_channel_rates">Masasisho ya viwango</string>
+    <string name="notification_coins_exhausted_title">Masasisho ya chinichini yamesitishwa</string>
+    <string name="notification_coins_exhausted_body">Sarafu zako zimeisha, hivyo viwango havisasishwi tena chinichini. Ongeza salio ili kuanza tena.</string>
+
+</resources>

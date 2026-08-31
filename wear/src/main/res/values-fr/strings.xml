@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">Taux ZimRate</string>
+    <string name="complication_config_label">Devise ZimRate</string>
+    <string name="tile_label">Taux ZimRate</string>
+    <string name="no_rates">Aucun taux favori.\nOuvrez ZimRate sur votre téléphone pour en ajouter.</string>
+    <string name="updated_at">Mis à jour %s</string>
+    <string name="pick_currency">Choisissez la devise pour la complication</string>
+</resources>

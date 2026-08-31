@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferred_currency">Taux de change préféré</string>
+    <string name="preferred_currency_summary">Obtenir la valeur %s</string>
+    <string name="preferred_mean">Moyenne</string>
+    <string name="preferred_median">Médiane</string>
+    <string name="preferred_random">Aléatoire</string>
+    <string name="preferred_mode">Mode</string>
+    <string name="preferred_min">Le plus bas</string>
+    <string name="preferred_max">Le plus haut</string>
+
+    <string name="update_interval">Intervalle de mise à jour</string>
+    <string name="update_hourly">Toutes les heures</string>
+    <string name="update_hour_two">Toutes les deux heures</string>
+    <string name="update_hour_six">Toutes les six heures</string>
+    <string name="update_hour_twelve">Toutes les douze heures</string>
+    <string name="update_daily">Quotidiennement</string>
+
+    <string name="auto_update">Mise à jour automatique</string>
+    <string name="auto_update_summary_on">Mettre à jour automatiquement avec les taux de change reçus</string>
+    <string name="auto_update_summary_off">Cliquez manuellement pour mettre à jour les taux de change</string>
+
+    <string name="auto_check">Vérifier les mises à jour</string>
+    <string name="auto_check_summary_on">Vérifier automatiquement les mises à jour des taux de change</string>
+    <string name="auto_check_summary_off">Mettre à jour manuellement les taux de change</string>
+
+    <string name="menu_settings">Paramètres</string>
+    <string name="menu_info">Conseils</string>
+    <string name="menu_close">Fermer</string>
+
+    <string name="menu_history">Historique</string>
+    <string name="menu_home">Accueil</string>
+    <string name="menu_calculator">Calculatrice</string>
+
+    <string name="info_message">1. Pour actualiser les taux à tout moment, vous pouvez faire glisser depuis le haut de cet écran.\n\n2. Vous pouvez également ajouter un widget à votre écran d\'accueil pour voir les derniers taux chargés sans ouvrir l\'application. (Les taux ne sont pas chargés en arrière-plan)\n\n3. Vous pouvez instantanément utiliser le résultat calculé pour d\'autres calculs en appuyant sur le résultat souhaité.</string>
+    <string name="info_dismiss">OK</string>
+    <string name="about">À propos</string>
+    <string name="author">Auteur</string>
+    <string name="rates_source_title">Taux de</string>
+
+    <string name="pref_dev_brief">N\'hésitez pas à me contacter ci-dessous si vous avez un problème, une question, des suggestions ou si vous souhaitez simplement voir ce sur quoi j\'ai travaillé.</string>
+
+    <string name="pref_app_version">Version %s</string>
+
+    <string name="update_available">Nouveaux taux disponibles</string>
+    <string name="update_apply">Appliquer</string>
+    <string name="update_none">Aucun nouveau taux disponible</string>
+
+    <string name="license">Licences open source</string>
+
+    <string name="widget_add_desc">Sélectionner le taux à ajouter</string>
+    <string name="widget_add_summary">Ce widget affiche un seul taux de change sur votre écran d\'accueil. Choisissez la devise à suivre — ajoutez un autre widget pour chaque devise supplémentaire.</string>
+    <string name="widget_add">Ajouter</string>
+
+    <string name="prefs_misc">Divers</string>
+    <string name="prefs_analytics_title">Analytique</string>
+    <string name="prefs_analytics_on">Autoriser la collecte de statistiques d\'utilisation anonymes</string>
+    <string name="prefs_analytics_off">Refuser la collecte de statistiques d\'utilisation anonymes</string>
+
+    <string name="calculator_answer">Rés</string>
+    <string name="calculator_dialog_cancel">Annuler</string>
+    <string name="calculator_dialog_clear">Effacer</string>
+    <string name="calculator_dialog_erase">Supprimer</string>
+    <string name="calculator_dialog_ok">OK</string>
+
+    <string-array name="calculator_dialog_errors">
+        <item>Division par zéro</item>
+        <item>Hors limites</item>
+        <item>Le résultat doit être positif</item>
+        <item>Le résultat doit être négatif</item>
+    </string-array>
+
+    <string name="list_nothing_found">Rien ici.</string>
+    <string name="list_search_nothing_found">Rien ne correspond aux critères de recherche.</string>
+
+    <string name="app_update_downloaded">Une mise à jour vient d\'être téléchargée.</string>
+    <string name="app_update_update">Redémarrer</string>
+
+    <string name="hint_rate">Taux</string>
+    <string name="hint_amount">Montant</string>
+    <string name="content_description_flag">Drapeau de la devise</string>
+    <string name="content_description_pin">Épingler la devise</string>
+    <string name="content_description_refresh">Actualiser le taux de change</string>
+    <string name="menu_refresh_all">Tout actualiser</string>
+
+    <string name="section_favourites">Favoris</string>
+    <string name="section_suggested">Favoris suggérés</string>
+    <string name="section_other_rates">Autres taux</string>
+
+    <string name="empty_rates_title">Aucun taux pour l\'instant</string>
+    <string name="empty_rates_subtitle">Faites glisser vers le bas ou appuyez sur actualiser pour charger les derniers taux de change.</string>
+
+    <string name="menu_hidden_rates">Taux masqués</string>
+    <string name="rate_hidden">%s masqué</string>
+    <string name="no_hidden_rates">Aucun taux masqué</string>
+    <string name="no_pinned_rates">Aucun taux favori</string>
+
+    <string name="restore">Restaurer</string>
+
+    <string name="notification_channel_rates">Mises à jour des taux</string>
+    <string name="notification_coins_exhausted_title">Mises à jour en arrière-plan en pause</string>
+    <string name="notification_coins_exhausted_body">Vos pièces sont épuisées, les taux ne sont donc plus actualisés en arrière-plan. Rechargez pour recommencer.</string>
+
+</resources>

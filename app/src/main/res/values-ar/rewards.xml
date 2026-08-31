@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">اليوم 1</string>
+    <string name="rewards_day_2">اليوم 2</string>
+    <string name="rewards_day_3">اليوم 3</string>
+    <string name="rewards_day_4">اليوم 4</string>
+    <string name="rewards_day_5">اليوم 5</string>
+    <string name="rewards_day_6">اليوم 6</string>
+    <string name="rewards_day_7">اليوم 7</string>
+
+    <string name="rewards_awards_info">سجّل الدخول إلى التطبيق يوميًا لتحصل على عملات تستخدمها داخل التطبيق.\nاكسب المزيد من العملات بمشاهدة الإعلانات أو بشراء العملات.</string>
+
+    <string name="rewards_description">مكافآت تسجيل الدخول اليومي</string>
+
+    <string name="rewards_coins_info">إجمالي العملات المتاحة للاستخدام داخل التطبيق فقط. يشمل العملات الممنوحة والمشتراة. تُخصم العملات من خلال أنشطة مختلفة داخل التطبيق.</string>
+    <string name="rewards_coins_purchase_alt">أو</string>
+
+    <string name="rewards_history_awards_cta">المكافآت</string>
+    <string name="rewards_history_purchases_cta">المشتراة</string>
+    <string name="rewards_history_spends_cta">إنفاق العملات</string>
+    <string name="rewards_earn_advert">شاهد إعلانًا لتكسب %d+ عملة</string>
+    <string name="rewards_earn_advert_loading">جارٍ تحميل الإعلان…</string>
+    <string name="rewards_earn_purchase">شراء العملات (يزيل الإعلانات)</string>
+
+    <string name="rewards_coins">العملات</string>
+    <string name="menu_coins_balance">%d عملة</string>
+
+    <string name="rewards_toast_watched_advert">تم منح المكافأة، شُوهد الإعلان.</string>
+    <string name="rewards_toast_advert_failed">تعذّر تحميل الإعلان.</string>
+
+    <string name="rewards_awarded_history_title">سجل المكافآت</string>
+    <string name="rewards_purchases_history_title">العملات المشتراة</string>
+    <string name="rewards_coin_spends_history_title">سجل إنفاق العملات</string>
+
+    <string name="rewards_expires">تنتهي الصلاحية %s</string>
+    <string name="rewards_spent_on">أُنفقت %s</string>
+
+    <string name="rewards_awarded_starter_pack">مكافأة حزمة البداية. تم منح %d عملة.</string>
+    <string name="rewards_award_advert_click">"مكافأة النقر على اللافتة. تم منح %d عملة."</string>
+    <string name="rewards_award_watch_advert">"مكافأة مشاهدة الإعلان. تم منح %d عملة."</string>
+    <string name="rewards_award_daily_clock_in">"مكافأة تسجيل الدخول اليومي. تم منح %d عملة."</string>
+    <string name="rewards_award_coins_purchased">شراء العملات. تمت إضافة %d عملة.</string>
+
+    <string name="rewards_spend_data_fetch">تم إنفاق %d عملة على جلب البيانات.</string>
+    <string name="rewards_spend_calculation">تم إنفاق %d عملة على جلسة الحساب.</string>
+
+    <string name="rewards_coins_title">شحن العملات</string>
+    <string name="rewards_coins_available">يبدو أن كل شيء جاهز، يمكنك استخدام الخيارات التالية لشحن رصيدك من العملات.</string>
+    <string name="rewards_coins_exhausted">يبدو أنك استنفدت رصيدك من العملات، يمكنك استخدام الخيارات التالية لشحن رصيدك.</string>
+</resources>

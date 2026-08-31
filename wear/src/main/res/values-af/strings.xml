@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">ZimRate-koers</string>
+    <string name="complication_config_label">ZimRate-geldeenheid</string>
+    <string name="tile_label">ZimRate-koerse</string>
+    <string name="no_rates">Geen gunsteling-koerse nie.\nMaak ZimRate op jou foon oop om van hulle by te voeg.</string>
+    <string name="updated_at">Opgedateer %s</string>
+    <string name="pick_currency">Kies geldeenheid vir komplikasie</string>
+</resources>

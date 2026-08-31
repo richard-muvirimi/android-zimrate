@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">Vérifiez que vous disposez d\'une connexion internet active.</string>
+    <string name="billing_coin_purchase_cancelled">Achat de pièces annulé.</string>
+    <string name="billing_coin_purchase_not_supported">L\'achat de pièces n\'est pas pris en charge sur cet appareil.</string>
+
+    <string name="billing_purchase_coins">%1$d pièces (+%2$d offertes)</string>
+
+    <string name="billing_disclaimer"><b>Remarque :</b>\n\n
+        <b>1</b>. Si les pièces n\'apparaissent pas après l\'achat, appuyez sur Restaurer pour réessayer\n
+        <b>2</b>. En plus des pièces gagnées de différentes façons dans l\'application, les pièces achetées réduisent la nécessité d\'effectuer diverses activités dans l\'application et désactivent les publicités\n
+        <b>3</b>. Les pièces sont des articles virtuels, nous ne proposons pas de remboursement.\n
+        <b>4</b>. Les pièces sont liées à cette installation de l\'application, effacer les données de l\'application supprime cette association (susceptible d\'être modifié).
+    </string>
+    <string name="billing_title">Recharger des pièces</string>
+
+    <string name="billing_coins_credited">%1$d pièces ont été créditées sur votre compte. N° de commande : %2$s</string>
+
+    <string name="billing_menu_restore">Restaurer</string>
+    <string name="billing_restoring_purchases">Restauration des achats !</string>
+</resources>

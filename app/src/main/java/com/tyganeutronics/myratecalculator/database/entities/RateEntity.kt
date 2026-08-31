@@ -29,9 +29,6 @@ open class RateEntity : BaseEntity() {
     @ColumnInfo(name = RatesContract.COLUMN_NAME_CURRENCY)
     var currency: String = ""
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_CURRENCY_BASE)
-    var currencyBase: String = ""
-
     @ColumnInfo(name = RatesContract.COLUMN_NAME_RATE)
     var rate: BigDecimal = BigDecimal(0)
 
@@ -43,6 +40,29 @@ open class RateEntity : BaseEntity() {
 
     @ColumnInfo(name = RatesContract.COLUMN_NAME_PINNED)
     var pinned: Boolean = false
+
+    @ColumnInfo(name = RatesContract.COLUMN_NAME_HIDDEN)
+    var hidden: Boolean = false
+
+    @ColumnInfo(name = RatesContract.COLUMN_NAME_SORT_ORDER)
+    var sortOrder: Int = Int.MAX_VALUE
+
+    fun duplicateWithPinned(pinned: Boolean = this.pinned): RateEntity {
+        return RateEntity().also { copy ->
+            copy.id = id
+            copy.createdAt = createdAt
+            copy.updatedAt = updatedAt
+            copy.url = url
+            copy.name = name
+            copy.currency = currency
+            copy.rate = rate
+            copy.lastRate = lastRate
+            copy.lastChecked = lastChecked
+            copy.pinned = pinned
+            copy.hidden = hidden
+            copy.sortOrder = sortOrder
+        }
+    }
 
     override fun doInsert(database: Database) {
         database.rates().insert(this)
@@ -62,7 +82,6 @@ open class RateEntity : BaseEntity() {
             jsonObject.put(RatesContract.COLUMN_NAME_NAME, name)
             jsonObject.put(RatesContract.COLUMN_NAME_URL, url)
             jsonObject.put(RatesContract.COLUMN_NAME_CURRENCY, currency)
-            jsonObject.put(RatesContract.COLUMN_NAME_CURRENCY_BASE, currencyBase)
             jsonObject.putBigDecimal(RatesContract.COLUMN_NAME_RATE, rate)
             jsonObject.putBigDecimal(RatesContract.COLUMN_NAME_LAST_RATE, lastRate)
             jsonObject.putInstant(RatesContract.COLUMN_NAME_LAST_CHECKED, lastChecked)
@@ -82,7 +101,6 @@ open class RateEntity : BaseEntity() {
             name = jsonObject.optString(RatesContract.COLUMN_NAME_NAME, "")
             url = jsonObject.optString(RatesContract.COLUMN_NAME_URL, "")
             currency = jsonObject.optString(RatesContract.COLUMN_NAME_CURRENCY, "")
-            currencyBase = jsonObject.optString(RatesContract.COLUMN_NAME_CURRENCY_BASE, "")
             rate = jsonObject.optBigDecimal(RatesContract.COLUMN_NAME_RATE, BigDecimal(1))
             lastRate = jsonObject.optBigDecimal(RatesContract.COLUMN_NAME_LAST_RATE, BigDecimal(1))
             lastChecked = jsonObject

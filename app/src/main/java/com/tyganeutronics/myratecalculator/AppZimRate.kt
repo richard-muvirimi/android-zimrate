@@ -18,6 +18,7 @@ import com.tyganeutronics.myratecalculator.database.contract.DatabaseContract
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.utils.TokenUtils
 import com.tyganeutronics.myratecalculator.utils.contracts.ApiContract
+import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
 
 class AppZimRate : MultiDexApplication() {
     override fun onCreate() {
@@ -25,6 +26,8 @@ class AppZimRate : MultiDexApplication() {
 
         this.setUpApollo()
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+
+        RatesRefreshScheduler.sync(this)
 
         initializeAppCheck()
         setUpDataBase()
@@ -57,6 +60,7 @@ class AppZimRate : MultiDexApplication() {
             DatabaseContract.DATABASE_NAME
         )
         database.allowMainThreadQueries()
+        database.addMigrations(Database.MIGRATION_1_2, Database.MIGRATION_2_3, Database.MIGRATION_3_4)
         database.fallbackToDestructiveMigrationOnDowngrade()
         database.enableMultiInstanceInvalidation()
         database.addCallback(object : RoomDatabase.Callback() {

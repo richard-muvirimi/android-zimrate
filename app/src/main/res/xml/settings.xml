@@ -5,7 +5,7 @@
     <PreferenceCategory android:title="@string/menu_settings">
 
         <ListPreference
-            android:defaultValue="max"
+            android:defaultValue="median"
             android:entries="@array/preferred"
             android:entryValues="@array/preferred_values"
             android:icon="?attr/ic_dollar"
@@ -20,7 +20,7 @@
             android:key="update_interval"
             android:summary="%s"
             android:title="@string/update_interval"
-            app:defaultValue="1" />
+            app:defaultValue="24" />
 
         <CheckBoxPreference
             android:defaultValue="true"

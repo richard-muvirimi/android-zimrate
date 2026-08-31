@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">Comprueba que tienes una conexión a internet activa.</string>
+    <string name="billing_coin_purchase_cancelled">Compra de monedas cancelada.</string>
+    <string name="billing_coin_purchase_not_supported">La compra de monedas no es compatible con este dispositivo.</string>
+
+    <string name="billing_purchase_coins">%1$d monedas (+%2$d gratis)</string>
+
+    <string name="billing_disclaimer"><b>Nota:</b>\n\n
+        <b>1</b>. Si las monedas no aparecen después de la compra, pulsa restaurar para volver a intentarlo\n
+        <b>2</b>. Además de las monedas obtenidas de varias formas en la aplicación, las monedas compradas reducen la necesidad de completar actividades dentro de la aplicación y desactivan los anuncios\n
+        <b>3</b>. Las monedas son artículos virtuales, no admitimos reembolsos.\n
+        <b>4</b>. Las monedas están vinculadas a esta instalación de la aplicación, borrar los datos de la aplicación elimina esa vinculación (sujeto a cambios).
+    </string>
+    <string name="billing_title">Recargar monedas</string>
+
+    <string name="billing_coins_credited">Se han acreditado %1$d monedas en tu cuenta. N.º de pedido: %2$s</string>
+
+    <string name="billing_menu_restore">Restaurar</string>
+    <string name="billing_restoring_purchases">¡Restaurando compras!</string>
+</resources>

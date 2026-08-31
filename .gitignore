@@ -85,3 +85,4 @@ lint/tmp/
 
 app/google-services.json
 **/release
+CLAUDE.md

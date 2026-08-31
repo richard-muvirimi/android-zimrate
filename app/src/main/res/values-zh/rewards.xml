@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">第 1 天</string>
+    <string name="rewards_day_2">第 2 天</string>
+    <string name="rewards_day_3">第 3 天</string>
+    <string name="rewards_day_4">第 4 天</string>
+    <string name="rewards_day_5">第 5 天</string>
+    <string name="rewards_day_6">第 6 天</string>
+    <string name="rewards_day_7">第 7 天</string>
+
+    <string name="rewards_awards_info">每天签到即可获得可在应用内使用的金币奖励。\n观看广告或购买金币可获得更多金币。</string>
+
+    <string name="rewards_description">连续签到奖励</string>
+
+    <string name="rewards_coins_info">仅可在应用内使用的金币总数，包含奖励所得和购买所得。金币会因应用内的各项活动而扣除。</string>
+    <string name="rewards_coins_purchase_alt">或</string>
+
+    <string name="rewards_history_awards_cta">奖励</string>
+    <string name="rewards_history_purchases_cta">已购买</string>
+    <string name="rewards_history_spends_cta">金币消费</string>
+    <string name="rewards_earn_advert">观看广告可获得 %d+ 金币</string>
+    <string name="rewards_earn_advert_loading">正在加载广告…</string>
+    <string name="rewards_earn_purchase">购买金币（去除广告）</string>
+
+    <string name="rewards_coins">金币</string>
+    <string name="menu_coins_balance">%d 金币</string>
+
+    <string name="rewards_toast_watched_advert">已发放奖励，广告观看完毕。</string>
+    <string name="rewards_toast_advert_failed">广告加载失败。</string>
+
+    <string name="rewards_awarded_history_title">奖励记录</string>
+    <string name="rewards_purchases_history_title">已购买的金币</string>
+    <string name="rewards_coin_spends_history_title">金币消费记录</string>
+
+    <string name="rewards_expires">%s 到期</string>
+    <string name="rewards_spent_on">%s 消费</string>
+
+    <string name="rewards_awarded_starter_pack">新手礼包奖励。已发放 %d 金币。</string>
+    <string name="rewards_award_advert_click">"横幅点击奖励。已发放 %d 金币。"</string>
+    <string name="rewards_award_watch_advert">"观看广告奖励。已发放 %d 金币。"</string>
+    <string name="rewards_award_daily_clock_in">"每日签到奖励。已发放 %d 金币。"</string>
+    <string name="rewards_award_coins_purchased">金币购买。已存入 %d 金币。</string>
+
+    <string name="rewards_spend_data_fetch">获取数据消费了 %d 金币。</string>
+    <string name="rewards_spend_calculation">计算功能消费了 %d 金币。</string>
+
+    <string name="rewards_coins_title">金币充值</string>
+    <string name="rewards_coins_available">看起来一切就绪，你可以使用以下方式为金币余额充值。</string>
+    <string name="rewards_coins_exhausted">你的金币余额似乎已用完，你可以使用以下方式为金币余额充值。</string>
+</resources>

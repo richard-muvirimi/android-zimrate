@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">Día 1</string>
+    <string name="rewards_day_2">Día 2</string>
+    <string name="rewards_day_3">Día 3</string>
+    <string name="rewards_day_4">Día 4</string>
+    <string name="rewards_day_5">Día 5</string>
+    <string name="rewards_day_6">Día 6</string>
+    <string name="rewards_day_7">Día 7</string>
+
+    <string name="rewards_awards_info">Entra en la aplicación todos los días para recibir monedas que puedes usar en ella.\nConsigue más monedas viendo anuncios o comprándolas.</string>
+
+    <string name="rewards_description">Recompensas por entrar cada día</string>
+
+    <string name="rewards_coins_info">Total de monedas disponibles para usar solo en la aplicación. Incluye las monedas obtenidas y compradas. Las monedas se descuentan mediante distintas actividades de la aplicación.</string>
+    <string name="rewards_coins_purchase_alt">O</string>
+
+    <string name="rewards_history_awards_cta">Recompensas</string>
+    <string name="rewards_history_purchases_cta">Compradas</string>
+    <string name="rewards_history_spends_cta">Gastos de monedas</string>
+    <string name="rewards_earn_advert">Ve un anuncio para ganar %d+ monedas</string>
+    <string name="rewards_earn_advert_loading">Cargando anuncio…</string>
+    <string name="rewards_earn_purchase">Comprar monedas (elimina los anuncios)</string>
+
+    <string name="rewards_coins">Monedas</string>
+    <string name="menu_coins_balance">%d monedas</string>
+
+    <string name="rewards_toast_watched_advert">Recompensa concedida, anuncio visto.</string>
+    <string name="rewards_toast_advert_failed">No se pudo cargar el anuncio.</string>
+
+    <string name="rewards_awarded_history_title">Historial de recompensas</string>
+    <string name="rewards_purchases_history_title">Monedas compradas</string>
+    <string name="rewards_coin_spends_history_title">Historial de gastos de monedas</string>
+
+    <string name="rewards_expires">Caduca %s</string>
+    <string name="rewards_spent_on">Gastado %s</string>
+
+    <string name="rewards_awarded_starter_pack">Recompensa del paquete inicial. %d monedas concedidas.</string>
+    <string name="rewards_award_advert_click">"Recompensa por clic en el banner. %d monedas concedidas."</string>
+    <string name="rewards_award_watch_advert">"Recompensa por ver un anuncio. %d monedas concedidas."</string>
+    <string name="rewards_award_daily_clock_in">"Recompensa por entrar cada día. %d monedas concedidas."</string>
+    <string name="rewards_award_coins_purchased">Compra de monedas. Se han acreditado %d monedas.</string>
+
+    <string name="rewards_spend_data_fetch">%d moneda gastada en la obtención de datos.</string>
+    <string name="rewards_spend_calculation">%d moneda gastada en la sesión de cálculo.</string>
+
+    <string name="rewards_coins_title">Recarga de monedas</string>
+    <string name="rewards_coins_available">Parece que lo tienes todo listo, puedes usar las siguientes opciones para recargar tu saldo de monedas.</string>
+    <string name="rewards_coins_exhausted">Parece que has agotado tu saldo de monedas, puedes usar las siguientes opciones para recargarlo.</string>
+</resources>

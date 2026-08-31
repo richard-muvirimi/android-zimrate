@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">Qinisekisa ukuthi ule inthanethi esebenzayo.</string>
+    <string name="billing_coin_purchase_cancelled">Ukuthenga amaCoin kukhanselwe.</string>
+    <string name="billing_coin_purchase_not_supported">Ukuthenga amaCoin akwenzeki kule insiza.</string>
+
+    <string name="billing_purchase_coins">AmaCoin angu-%1$d (+%2$d amahala)</string>
+
+    <string name="billing_disclaimer"><b>Qaphela:</b>\n\n
+        <b>1</b>. Nxa amaCoin engabonakali emva kokuthenga, thinta ubuyisela ukuze uzame futhi\n
+        <b>2</b>. Ngaphandle kwamaCoin atholakala ngezindlela ezitshiyeneyo kule application, amaCoin athengiweyo ehlisa isidingo sokwenza imisebenzi etshiyeneyo ngaphakathi, njalo acitsha izimemezelo\n
+        <b>3</b>. AmaCoin yizinto ezingabonakaliyo, kasibuyiseli imali.\n
+        <b>4</b>. AmaCoin abotshelwe kule application efakiweyo, ukwesula idatha ye-application kususa lokhu kuxhumana (kungatshintsha).
+    </string>
+    <string name="billing_title">Engezelela amaCoin</string>
+
+    <string name="billing_coins_credited">AmaCoin angu-%1$d afakwe kuakhawunti yakho. Inombolo ye-oda: %2$s</string>
+
+    <string name="billing_menu_restore">Buyisela</string>
+    <string name="billing_restoring_purchases">Kubuyiselwa okuthengiweyo!</string>
+</resources>

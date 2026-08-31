@@ -1,193 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+    Header uses the same treatment as the rates list section headings — small, bold, all caps
+    and letter spaced — with the sync stamp trailing it.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_white_border_primary_light"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_widget"
     android:orientation="vertical"
-    android:padding="@dimen/padding_4">
+    android:padding="@dimen/padding_8">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_4">
 
-        <ImageView
-            android:layout_width="@dimen/padding_16"
-            android:layout_height="@dimen/padding_16"
-            android:layout_marginEnd="@dimen/padding_4"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_launcher" />
-
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:ellipsize="end"
+            android:letterSpacing="0.08"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="@color/widget_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_date_checked"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txt_date_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_8"
+            android:textColor="@color/widget_text_secondary"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            tools:text="3 hours ago" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/lv_rates"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_white_border_primary_light"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_4">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_usd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="@dimen/padding_4"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="@string/currency_usd" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_bond"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="@dimen/padding_4"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="@string/currency_bond" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_omir"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="@dimen/padding_4"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="@string/currency_omir" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_rbz"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="@dimen/padding_4"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="@string/currency_rbz" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_rtgs"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="@dimen/padding_4"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="@string/currency_rtgs" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_zar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="@dimen/padding_4"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="@string/currency_zar" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/txt_no_pinned"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/no_pinned_rates"
+        android:textColor="@color/widget_text_secondary"
+        android:textSize="12sp"
+        android:visibility="gone" />
 
 </LinearLayout>

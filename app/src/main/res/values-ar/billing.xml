@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">تحقق من أن لديك اتصالاً نشطًا بالإنترنت.</string>
+    <string name="billing_coin_purchase_cancelled">تم إلغاء شراء العملات.</string>
+    <string name="billing_coin_purchase_not_supported">شراء العملات غير مدعوم على هذا الجهاز.</string>
+
+    <string name="billing_purchase_coins">%1$d عملة (+%2$d مجانًا)</string>
+
+    <string name="billing_disclaimer"><b>ملاحظة:</b>\n\n
+        <b>1</b>. إذا لم تظهر العملات بعد الشراء، اضغط على استعادة لإعادة المحاولة\n
+        <b>2</b>. إضافةً إلى العملات التي تكسبها بطرق مختلفة داخل التطبيق، تقلل العملات المشتراة الحاجة إلى إكمال الأنشطة داخل التطبيق وتعطّل الإعلانات\n
+        <b>3</b>. العملات عناصر افتراضية، ولا ندعم استرداد الأموال.\n
+        <b>4</b>. ترتبط العملات بهذا التثبيت الحالي للتطبيق، ومسح بيانات التطبيق يزيل هذا الارتباط (قابل للتغيير).
+    </string>
+    <string name="billing_title">شحن العملات</string>
+
+    <string name="billing_coins_credited">تمت إضافة %1$d عملة إلى حسابك. رقم الطلب: %2$s</string>
+
+    <string name="billing_menu_restore">استعادة</string>
+    <string name="billing_restoring_purchases">جارٍ استعادة المشتريات!</string>
+</resources>

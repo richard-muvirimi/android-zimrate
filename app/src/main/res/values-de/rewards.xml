@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">Tag 1</string>
+    <string name="rewards_day_2">Tag 2</string>
+    <string name="rewards_day_3">Tag 3</string>
+    <string name="rewards_day_4">Tag 4</string>
+    <string name="rewards_day_5">Tag 5</string>
+    <string name="rewards_day_6">Tag 6</string>
+    <string name="rewards_day_7">Tag 7</string>
+
+    <string name="rewards_awards_info">Melden Sie sich täglich in der App an, um Münzen für die Nutzung in der App zu erhalten.\nVerdienen Sie mehr Münzen, indem Sie Werbung ansehen oder Münzen kaufen.</string>
+
+    <string name="rewards_description">Belohnungen für tägliches Anmelden</string>
+
+    <string name="rewards_coins_info">Gesamtzahl der Münzen, die nur in der App verwendet werden können. Enthält erhaltene und gekaufte Münzen. Münzen werden durch verschiedene Aktivitäten in der App abgezogen.</string>
+    <string name="rewards_coins_purchase_alt">ODER</string>
+
+    <string name="rewards_history_awards_cta">Belohnungen</string>
+    <string name="rewards_history_purchases_cta">Gekauft</string>
+    <string name="rewards_history_spends_cta">Münzausgaben</string>
+    <string name="rewards_earn_advert">Werbung ansehen und %d+ Münzen verdienen</string>
+    <string name="rewards_earn_advert_loading">Werbung wird geladen…</string>
+    <string name="rewards_earn_purchase">Münzen kaufen (entfernt Werbung)</string>
+
+    <string name="rewards_coins">Münzen</string>
+    <string name="menu_coins_balance">%d Münzen</string>
+
+    <string name="rewards_toast_watched_advert">Belohnung erhalten, Werbung angesehen.</string>
+    <string name="rewards_toast_advert_failed">Werbung konnte nicht geladen werden.</string>
+
+    <string name="rewards_awarded_history_title">Belohnungsverlauf</string>
+    <string name="rewards_purchases_history_title">Gekaufte Münzen</string>
+    <string name="rewards_coin_spends_history_title">Verlauf der Münzausgaben</string>
+
+    <string name="rewards_expires">Läuft ab %s</string>
+    <string name="rewards_spent_on">Ausgegeben %s</string>
+
+    <string name="rewards_awarded_starter_pack">Starterpaket-Belohnung. %d Münzen erhalten.</string>
+    <string name="rewards_award_advert_click">"Belohnung für Bannerklick. %d Münzen erhalten."</string>
+    <string name="rewards_award_watch_advert">"Belohnung für angesehene Werbung. %d Münzen erhalten."</string>
+    <string name="rewards_award_daily_clock_in">"Belohnung für tägliches Anmelden. %d Münzen erhalten."</string>
+    <string name="rewards_award_coins_purchased">Münzkauf. %d Münzen wurden gutgeschrieben.</string>
+
+    <string name="rewards_spend_data_fetch">%d Münze für den Datenabruf ausgegeben.</string>
+    <string name="rewards_spend_calculation">%d Münze für die Rechnersitzung ausgegeben.</string>
+
+    <string name="rewards_coins_title">Münzen aufladen</string>
+    <string name="rewards_coins_available">Sie scheinen bestens ausgestattet zu sein. Mit den folgenden Optionen können Sie Ihr Münzguthaben aufladen.</string>
+    <string name="rewards_coins_exhausted">Ihr Münzguthaben scheint aufgebraucht zu sein. Mit den folgenden Optionen können Sie Ihr Münzguthaben aufladen.</string>
+</resources>

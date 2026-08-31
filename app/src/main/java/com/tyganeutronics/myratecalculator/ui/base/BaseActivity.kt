@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -47,7 +46,10 @@ abstract class BaseActivity : AppCompatActivity() {
         bindViews()
 
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge#kotlin
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById<CoordinatorLayout>(R.id.layout_container)) { v, windowInsets ->
+        // Typed as View, not CoordinatorLayout — only margins are set, and screens that are
+        // not built on a CoordinatorLayout still need insetting under enforced edge to edge.
+        val container = findViewById<View>(R.id.layout_container) ?: return
+        ViewCompat.setOnApplyWindowInsetsListener(container) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {

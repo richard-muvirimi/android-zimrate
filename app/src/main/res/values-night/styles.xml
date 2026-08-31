@@ -10,6 +10,10 @@
         <item name="ic_check">@drawable/ic_check_dark</item>
         <item name="ic_analytics">@drawable/ic_analytics_dark</item>
 
+        <item name="ic_refresh">@drawable/ic_refresh_dark</item>
+        <item name="ic_star_filled">@drawable/ic_star_filled_dark</item>
+        <item name="ic_star_outline">@drawable/ic_star_outline_dark</item>
+
         <item name="colorPrimaryLight">@android:color/white</item>
     </style>
 

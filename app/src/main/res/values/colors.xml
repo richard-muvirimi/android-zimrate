@@ -4,4 +4,13 @@
     <color name="colorPrimary">#01579b</color>
     <color name="colorPrimaryLight">#4f83cc</color>
     <color name="light_grey">#FFECECEC</color>
+
+    <!--
+        Widgets are inflated in the launcher's process, so they cannot inherit the app theme.
+        Every widget colour is stated explicitly here and overridden in values-night.
+    -->
+    <color name="widget_background">#FFFFFFFF</color>
+    <color name="widget_stroke">#1F000000</color>
+    <color name="widget_text_primary">#DE000000</color>
+    <color name="widget_text_secondary">#8A000000</color>
 </resources>

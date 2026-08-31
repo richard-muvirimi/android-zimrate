@@ -1,10 +1,13 @@
 package com.tyganeutronics.myratecalculator.activities
 
+import android.Manifest
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
@@ -17,21 +20,31 @@ import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentAbout
-import com.tyganeutronics.myratecalculator.fragments.main.FragmentCalculator
-import com.tyganeutronics.myratecalculator.fragments.main.FragmentHome
+import com.tyganeutronics.myratecalculator.fragments.main.FragmentRates
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentCoinsBalance
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentRewards
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentSpends
 import com.tyganeutronics.myratecalculator.interfaces.RewardModelInterface
 import com.tyganeutronics.myratecalculator.interfaces.RewardsActivity
 import com.tyganeutronics.myratecalculator.ui.base.BaseAppActivity
+import com.tyganeutronics.myratecalculator.utils.RatesNotifier
+import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
+import com.tyganeutronics.myratecalculator.utils.traits.putBooleanPref
 import com.tyganeutronics.myratecalculator.widget.MultipleRateProvider
 import com.tyganeutronics.myratecalculator.widget.SingleRateProvider
+import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
 
 class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener, RewardsActivity,
     RewardModelInterface {
 
     override lateinit var rewardViewModel: RewardViewModel
+
+    private val notificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+
+    companion object {
+        private const val PREF_ASKED_NOTIFICATIONS = "asked_notifications"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -51,6 +64,26 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         fetchRemoteConfigs()
 
         RewardModel.maybeRewardClockIn(this)
+
+        // Background refreshing stops itself when coins run out; bring it back on a top up.
+        rewardViewModel.coins.observe(this) { coins ->
+            if ((coins ?: 0) > 0) RatesRefreshScheduler.sync(this)
+        }
+
+        requestNotificationPermission()
+    }
+
+    /**
+     * Asked once, so the coins-exhausted notification can actually reach the user. Declining
+     * costs them nothing beyond that notification — refreshing still stops at a zero balance.
+     */
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (RatesNotifier.canNotify(this)) return
+        if (getBooleanPref(PREF_ASKED_NOTIFICATIONS, false)) return
+
+        putBooleanPref(PREF_ASKED_NOTIFICATIONS, true)
+        notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     private fun fetchRemoteConfigs() {
@@ -76,16 +109,8 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         when (item.itemId) {
-            R.id.navigation_home -> {
-                transaction.replace(R.id.nav_host_fragment, FragmentHome(), FragmentHome.TAG)
-            }
-
             R.id.navigation_calculator -> {
-                transaction.replace(
-                    R.id.nav_host_fragment,
-                    FragmentCalculator(),
-                    FragmentCalculator.TAG
-                )
+                transaction.replace(R.id.nav_host_fragment, FragmentRates(), FragmentRates.TAG)
             }
 
             R.id.navigation_about -> {

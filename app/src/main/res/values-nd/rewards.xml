@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">Ilanga 1</string>
+    <string name="rewards_day_2">Ilanga 2</string>
+    <string name="rewards_day_3">Ilanga 3</string>
+    <string name="rewards_day_4">Ilanga 4</string>
+    <string name="rewards_day_5">Ilanga 5</string>
+    <string name="rewards_day_6">Ilanga 6</string>
+    <string name="rewards_day_7">Ilanga 7</string>
+
+    <string name="rewards_awards_info">Ngena kule application insuku zonke ukuze uthole amaCoin okusebenzisa ngaphakathi.\nThola amanye amaCoin ngokubukela izimemezelo kumbe ngokuwathenga.</string>
+
+    <string name="rewards_description">Imivuzo yokungena insuku zonke</string>
+
+    <string name="rewards_coins_info">Isilinganiso samaCoin asebenza kule application kuphela. Afaka lawo owanikwayo lawo owathengayo. AmaCoin ayehliswa ngemisebenzi etshiyeneyo ngaphakathi kule application.</string>
+    <string name="rewards_coins_purchase_alt">KUMBE</string>
+
+    <string name="rewards_history_awards_cta">Imivuzo</string>
+    <string name="rewards_history_purchases_cta">Athengiweyo</string>
+    <string name="rewards_history_spends_cta">Asetshenzisiweyo</string>
+    <string name="rewards_earn_advert">Bukela isimemezelo uthole amaCoin angu-%d+</string>
+    <string name="rewards_earn_advert_loading">Kulayitshwa isimemezelo…</string>
+    <string name="rewards_earn_purchase">Thenga amaCoin (kususa izimemezelo)</string>
+
+    <string name="rewards_coins">AmaCoin</string>
+    <string name="menu_coins_balance">AmaCoin angu-%d</string>
+
+    <string name="rewards_toast_watched_advert">Umvuzo unikiwe, isimemezelo sibukelwe.</string>
+    <string name="rewards_toast_advert_failed">Kwehlulekile ukulayitsha isimemezelo.</string>
+
+    <string name="rewards_awarded_history_title">Umlando wemivuzo</string>
+    <string name="rewards_purchases_history_title">AmaCoin athengiweyo</string>
+    <string name="rewards_coin_spends_history_title">Umlando wamaCoin asetshenzisiweyo</string>
+
+    <string name="rewards_expires">Kuphelelwa yisikhathi %s</string>
+    <string name="rewards_spent_on">Kusetshenziswe %s</string>
+
+    <string name="rewards_awarded_starter_pack">Umvuzo wesiqalo. Uphiwe amaCoin angu-%d.</string>
+    <string name="rewards_award_advert_click">"Umvuzo wokuthinta ibhena. Uphiwe amaCoin angu-%d."</string>
+    <string name="rewards_award_watch_advert">"Umvuzo wokubukela isimemezelo. Uphiwe amaCoin angu-%d."</string>
+    <string name="rewards_award_daily_clock_in">"Umvuzo wokungena insuku zonke. Uphiwe amaCoin angu-%d."</string>
+    <string name="rewards_award_coins_purchased">Ukuthenga amaCoin. AmaCoin angu-%d afakiwe.</string>
+
+    <string name="rewards_spend_data_fetch">AmaCoin angu-%d asetshenziswe ukulanda idatha.</string>
+    <string name="rewards_spend_calculation">AmaCoin angu-%d asetshenziswe ekubaleni.</string>
+
+    <string name="rewards_coins_title">Ukwengezelela amaCoin</string>
+    <string name="rewards_coins_available">Kubonakala ulungile, ungasebenzisa lezi indlela ukwengezelela amaCoin akho.</string>
+    <string name="rewards_coins_exhausted">Kubonakala amaCoin akho aphelile, ungasebenzisa lezi indlela ukuwengezelela.</string>
+</resources>

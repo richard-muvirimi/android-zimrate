@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">Kiwango cha ZimRate</string>
+    <string name="complication_config_label">Sarafu ya ZimRate</string>
+    <string name="tile_label">Viwango vya ZimRate</string>
+    <string name="no_rates">Hakuna viwango vinavyopendwa.\nFungua ZimRate kwenye simu yako ili kuongeza baadhi.</string>
+    <string name="updated_at">Ilisasishwa %s</string>
+    <string name="pick_currency">Chagua sarafu ya kionyeshi</string>
+</resources>

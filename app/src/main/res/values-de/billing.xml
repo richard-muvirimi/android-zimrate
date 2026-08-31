@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="billing_coin_purchase_failed">Prüfen Sie, ob eine aktive Internetverbindung besteht.</string>
+    <string name="billing_coin_purchase_cancelled">Münzkauf abgebrochen.</string>
+    <string name="billing_coin_purchase_not_supported">Münzkauf wird auf diesem Gerät nicht unterstützt.</string>
+
+    <string name="billing_purchase_coins">%1$d Münzen (+%2$d gratis)</string>
+
+    <string name="billing_disclaimer"><b>Hinweis:</b>\n\n
+        <b>1</b>. Falls die Münzen nach dem Kauf nicht erscheinen, tippen Sie auf Wiederherstellen, um es erneut zu versuchen\n
+        <b>2</b>. Zusätzlich zu den Münzen, die auf verschiedene Weise in der App verdient werden, verringern gekaufte Münzen den Bedarf an In-App-Aktivitäten und deaktivieren Werbung\n
+        <b>3</b>. Münzen sind virtuelle Gegenstände, wir bieten keine Rückerstattungen an.\n
+        <b>4</b>. Münzen sind an diese App-Installation gebunden, das Löschen der App-Daten hebt diese Verknüpfung auf (Änderungen vorbehalten).
+    </string>
+    <string name="billing_title">Münzen aufladen</string>
+
+    <string name="billing_coins_credited">%1$d Münzen wurden Ihrem Konto gutgeschrieben. Bestellnummer: %2$s</string>
+
+    <string name="billing_menu_restore">Wiederherstellen</string>
+    <string name="billing_restoring_purchases">Käufe werden wiederhergestellt!</string>
+</resources>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="calc_amount">Mari</string>
-    <string name="amount_info">Mari yandoda kuchinja</string>
-
     <string name="preferred_currency">Rate randoda</string>
     <string name="preferred_currency_summary">Tora rate %s</string>
     <string name="preferred_mean">Yepakati (Mean)</string>
@@ -48,10 +45,12 @@
 
     <string name="update_available">Rate ritsva ravapo</string>
     <string name="update_apply">Isa</string>
+    <string name="update_none">Hapana marates matsva</string>
 
     <string name="license">Ma License</string>
 
     <string name="widget_add_desc">Sarudza rate rekuisa</string>
+    <string name="widget_add_summary">Widget iyi inoratidza rate rimwe chete pahomu skrini yako. Sarudza mari yaunoda kutevera — wedzera imwe widget pamari imwe neimwe yaunoda.</string>
     <string name="widget_add">Isa</string>
 
     <string name="prefs_misc">Zvimwewo</string>
@@ -77,5 +76,30 @@
 
     <string name="app_update_downloaded">Application itsva ya downloada.</string>
     <string name="app_update_update">Tangidza</string>
+
+    <string name="hint_rate">Muchinjiro</string>
+    <string name="hint_amount">Mari</string>
+    <string name="content_description_flag">Mureza wemari</string>
+    <string name="content_description_pin">Batanidza mari</string>
+    <string name="content_description_refresh">Svenura muchinjiro</string>
+    <string name="menu_refresh_all">Svenura Zvese</string>
+
+    <string name="section_favourites">Zvasarudzwa</string>
+    <string name="section_suggested">Zvaungasarudza</string>
+    <string name="section_other_rates">Mamwe marates</string>
+
+    <string name="empty_rates_title">Hapana marates parizvino</string>
+    <string name="empty_rates_subtitle">Dhonza pasi kana kudzvanya refresh kuti utore marates matsva.</string>
+
+    <string name="menu_hidden_rates">Marates akavanzwa</string>
+    <string name="rate_hidden">%s yavanzwa</string>
+    <string name="no_hidden_rates">Hapana marates akavanzwa</string>
+    <string name="no_pinned_rates">Hapana marates asarudzwa</string>
+
+    <string name="restore">Dzosera</string>
+
+    <string name="notification_channel_rates">Kuvandudzwa kwemarates</string>
+    <string name="notification_coins_exhausted_title">Kuvandudza kwemashure kwamiswa</string>
+    <string name="notification_coins_exhausted_body">MaCoin ako apera, saka marates haachavandudzwi kumashure. Wedzera kuti zvitangezve.</string>
 
 </resources>
