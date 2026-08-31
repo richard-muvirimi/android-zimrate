@@ -50,6 +50,7 @@
     <string name="license">Licencias de código abierto</string>
 
     <string name="widget_add_desc">Seleccionar tipo para agregar</string>
+    <string name="widget_add_summary">Este widget muestra un único tipo de cambio en tu pantalla de inicio. Elige la moneda que debe seguir — añade otro widget para cada moneda adicional.</string>
     <string name="widget_add">Agregar</string>
 
     <string name="prefs_misc">Varios</string>

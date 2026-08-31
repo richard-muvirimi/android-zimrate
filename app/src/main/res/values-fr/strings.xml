@@ -50,6 +50,7 @@
     <string name="license">Licences open source</string>
 
     <string name="widget_add_desc">Sélectionner le taux à ajouter</string>
+    <string name="widget_add_summary">Ce widget affiche un seul taux de change sur votre écran d\'accueil. Choisissez la devise à suivre — ajoutez un autre widget pour chaque devise supplémentaire.</string>
     <string name="widget_add">Ajouter</string>
 
     <string name="prefs_misc">Divers</string>

@@ -50,6 +50,7 @@
     <string name="license">开源许可证</string>
 
     <string name="widget_add_desc">选择要添加的汇率</string>
+    <string name="widget_add_summary">此小部件在主屏幕上显示单个汇率。请选择要跟踪的货币 — 每增加一种货币需另外添加一个小部件。</string>
     <string name="widget_add">添加</string>
 
     <string name="prefs_misc">其他</string>

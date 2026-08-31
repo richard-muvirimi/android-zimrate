@@ -67,7 +67,9 @@
     <string name="license">Open source Licenses</string>
 
     <string name="widget_add_desc">Select rate to add</string>
+    <string name="widget_add_summary">This widget shows a single exchange rate on your home screen. Pick the currency it should follow — add another widget for each extra one you want.</string>
     <string name="widget_add">Add</string>
+    <string name="widget_currency_item" translatable="false">%1$s — %2$s</string>
 
     <string name="prefs_misc">Miscellaneous</string>
 

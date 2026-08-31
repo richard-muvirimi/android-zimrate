@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_8">
 
@@ -11,10 +12,20 @@
         android:layout_height="wrap_content"
         android:text="@string/widget_add_desc" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_4"
+        android:text="@string/widget_add_summary"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="13sp" />
+
+    <!-- Weighted so a long currency list scrolls instead of pushing Add off screen. -->
     <ListView
         android:id="@+id/lv_currencies"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_margin="@dimen/padding_8"
         android:choiceMode="singleChoice" />
 

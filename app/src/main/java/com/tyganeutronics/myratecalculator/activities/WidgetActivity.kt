@@ -18,6 +18,8 @@ import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.ui.base.BaseAppActivity
 import com.tyganeutronics.myratecalculator.utils.CurrencyFlagUtil
+import com.tyganeutronics.myratecalculator.utils.WidgetUtils
+import com.tyganeutronics.myratecalculator.utils.traits.getStringPref
 import com.tyganeutronics.myratecalculator.utils.traits.putStringPref
 
 class WidgetActivity : BaseAppActivity(), View.OnClickListener {
@@ -42,8 +44,14 @@ class WidgetActivity : BaseAppActivity(), View.OnClickListener {
             return
         }
 
-        RemoteViews(packageName, R.layout.widget_single).also { views ->
-            getWidgetManager().updateAppWidget(mAppWidgetId, views)
+        val current = getStringPref("widget-$mAppWidgetId", "")
+
+        // Blank placeholder only for a brand new widget. On a reconfigure this would wipe a
+        // working widget, and cancelling would leave it wiped.
+        if (current.isEmpty()) {
+            RemoteViews(packageName, R.layout.widget_single).also { views ->
+                getWidgetManager().updateAppWidget(mAppWidgetId, views)
+            }
         }
 
         rates.clear()
@@ -51,7 +59,14 @@ class WidgetActivity : BaseAppActivity(), View.OnClickListener {
 
         val lv = findViewById<ListView>(R.id.lv_currencies)
         lv.adapter = CurrencyAdapter(this, rates)
-        if (rates.isNotEmpty()) lv.setItemChecked(0, true)
+
+        // Reopened from the widget's reconfigure action — start on its current currency
+        // rather than the top of the list.
+        if (rates.isNotEmpty()) {
+            val selected = rates.indexOfFirst { it.currency == current }
+            lv.setItemChecked(if (selected >= 0) selected else 0, true)
+            if (selected > 0) lv.setSelection(selected)
+        }
     }
 
     override fun syncViews() {
@@ -68,6 +83,10 @@ class WidgetActivity : BaseAppActivity(), View.OnClickListener {
                 if (pos < 0 || pos >= rates.size) return
 
                 putStringPref("widget-$mAppWidgetId", rates[pos].currency)
+
+                // A first-time configure gets an onUpdate from the host, but a reconfigure
+                // does not — redraw here so the change shows either way.
+                WidgetUtils.refreshAll(this)
 
                 setResult(Activity.RESULT_OK, Intent().apply {
                     putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
@@ -91,7 +110,11 @@ class WidgetActivity : BaseAppActivity(), View.OnClickListener {
             view.setCompoundDrawablesWithIntrinsicBounds(
                 if (flagRes != 0) flagRes else R.mipmap.ic_launcher, 0, 0, 0
             )
-            view.text = "${entity.currency} — ${entity.name.ifEmpty { entity.currency }}"
+            view.text = context.getString(
+                R.string.widget_currency_item,
+                entity.currency,
+                entity.name.ifEmpty { entity.currency },
+            )
             return view
         }
     }

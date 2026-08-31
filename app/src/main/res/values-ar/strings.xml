@@ -50,6 +50,7 @@
     <string name="license">تراخيص المصدر المفتوح</string>
 
     <string name="widget_add_desc">اختر السعر للإضافة</string>
+    <string name="widget_add_summary">تعرض هذه الأداة سعر صرف واحدًا على الشاشة الرئيسية. اختر العملة التي تريد متابعتها — أضف أداة أخرى لكل عملة إضافية.</string>
     <string name="widget_add">إضافة</string>
 
     <string name="prefs_misc">متنوعات</string>

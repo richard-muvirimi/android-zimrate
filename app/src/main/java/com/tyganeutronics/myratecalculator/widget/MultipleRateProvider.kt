@@ -13,11 +13,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.activities.MainActivity
+import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class MultipleRateProvider : AppWidgetProvider() {
 
@@ -56,13 +53,11 @@ class MultipleRateProvider : AppWidgetProvider() {
 
         // Date stamp — use the most recently checked pinned rate
         val rates = try { AppZimRate.database.rates().getAllPinned() } catch (e: Exception) { emptyList() }
-        // Skip the Instant.MIN "never checked" sentinel — it is out of range for LocalDateTime.
+        // Skip the Instant.MIN "never checked" sentinel — it is not representable in millis.
         val lastChecked = rates.map { it.lastChecked }
             .filter { it > Instant.EPOCH }
             .maxOrNull() ?: Instant.now()
-        val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT)
-        val dateStr = LocalDateTime.ofInstant(lastChecked, ZoneId.systemDefault()).format(formatter)
-        views.setTextViewText(R.id.txt_date_checked, dateStr)
+        views.setTextViewText(R.id.txt_date_checked, WidgetUtils.formatChecked(lastChecked))
 
         // Wire the scrollable list to the RemoteViewsService
         val serviceIntent = Intent(context, MultipleRateRemoteViewsService::class.java).apply {

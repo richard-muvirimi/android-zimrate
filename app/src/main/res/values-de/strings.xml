@@ -50,6 +50,7 @@
     <string name="license">Open-Source-Lizenzen</string>
 
     <string name="widget_add_desc">Kurs zum Hinzufügen auswählen</string>
+    <string name="widget_add_summary">Dieses Widget zeigt einen einzelnen Wechselkurs auf dem Startbildschirm. Wählen Sie die Währung, der es folgen soll — fügen Sie für jede weitere ein eigenes Widget hinzu.</string>
     <string name="widget_add">Hinzufügen</string>
 
     <string name="prefs_misc">Sonstiges</string>

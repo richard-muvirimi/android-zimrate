@@ -50,6 +50,7 @@
     <string name="license">Leseni za Chanzo Huria</string>
 
     <string name="widget_add_desc">Chagua kiwango cha kuongeza</string>
+    <string name="widget_add_summary">Wijeti hii inaonyesha kiwango kimoja cha ubadilishaji kwenye skrini yako ya kwanza. Chagua sarafu unayotaka kufuatilia — ongeza wijeti nyingine kwa kila sarafu ya ziada.</string>
     <string name="widget_add">Ongeza</string>
 
     <string name="prefs_misc">Mengineyo</string>

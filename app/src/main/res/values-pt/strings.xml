@@ -50,6 +50,7 @@
     <string name="license">Licenças de código aberto</string>
 
     <string name="widget_add_desc">Selecionar taxa para adicionar</string>
+    <string name="widget_add_summary">Este widget mostra uma única taxa de câmbio no seu ecrã inicial. Escolha a moeda que deve seguir — adicione outro widget para cada moeda adicional.</string>
     <string name="widget_add">Adicionar</string>
 
     <string name="prefs_misc">Diversos</string>

@@ -4,10 +4,26 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateUtils
 import com.tyganeutronics.myratecalculator.widget.MultipleRateProvider
 import com.tyganeutronics.myratecalculator.widget.SingleRateProvider
+import java.time.Instant
 
 object WidgetUtils {
+
+    /**
+     * Relative "3 hours ago" stamp, matching the footnote on the rates screen. Empty for the
+     * Instant.MIN "never checked" sentinel, which is not representable in millis.
+     */
+    fun formatChecked(lastChecked: Instant): String {
+        if (lastChecked <= Instant.EPOCH) return ""
+
+        return DateUtils.getRelativeTimeSpanString(
+            lastChecked.toEpochMilli(),
+            System.currentTimeMillis(),
+            DateUtils.MINUTE_IN_MILLIS,
+        ).toString()
+    }
 
     /** Redraws every placed widget so they pick up freshly saved rates. */
     fun refreshAll(context: Context) {

@@ -50,6 +50,7 @@
     <string name="license">Oopbron-lisensies</string>
 
     <string name="widget_add_desc">Kies koers om by te voeg</string>
+    <string name="widget_add_summary">Hierdie legstuk wys een wisselkoers op jou tuisskerm. Kies die geldeenheid wat dit moet volg — voeg nog \'n legstuk by vir elke ekstra een wat jy wil hê.</string>
     <string name="widget_add">Voeg by</string>
 
     <string name="prefs_misc">Diverse</string>

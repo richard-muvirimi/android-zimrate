@@ -50,6 +50,7 @@
     <string name="license">Amalayisensi womthombo ovulekile</string>
 
     <string name="widget_add_desc">Khetha intengo yokengeza</string>
+    <string name="widget_add_summary">Lesi sisetshenziswa sitshengisa izinga elilodwa lokuntshintshanisa esikrinini sakho. Khetha imali ozayilandela — engeza esinye isisetshenziswa kuleyo laleyo mali oyifunayo.</string>
     <string name="widget_add">Engeza</string>
 
     <string name="prefs_misc">Okunye</string>
