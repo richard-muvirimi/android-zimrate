@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">ZimRate-Kurs</string>
+    <string name="complication_config_label">ZimRate-Währung</string>
+    <string name="tile_label">ZimRate-Kurse</string>
+    <string name="no_rates">Keine favorisierten Kurse.\nÖffne ZimRate auf deinem Telefon, um welche hinzuzufügen.</string>
+    <string name="updated_at">Aktualisiert %s</string>
+    <string name="pick_currency">Währung für die Komplikation auswählen</string>
+</resources>

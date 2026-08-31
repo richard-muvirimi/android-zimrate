@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
+import com.tyganeutronics.myratecalculator.database.models.RatesModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -124,59 +125,16 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * Upsert a list of fresh rates from the API into Room.
-     * Preserves the `pinned` and `hidden` flags of existing records.
-     * All saves happen inside a single SQLite transaction so Room fires LiveData exactly once.
+     * Upsert a list of fresh rates from the API into Room, discarding any rates or amounts
+     * the user typed. Only call this for a user-initiated refresh — background refreshes go
+     * straight through [RatesModel.save] so they never clobber typed input.
      */
     fun saveApiRates(apiRates: List<RateEntity>) {
         _rateOverrides.value = emptyMap()
         _activeCurrency.value = null
         _activeAmount.value = BigDecimal.ONE
         viewModelScope.launch(Dispatchers.IO) {
-            AppZimRate.database.runInTransaction {
-                // Only inject a synthetic USD base for full refreshes (more than one currency).
-                // Single-currency per-row refreshes should not touch USD.
-                val ratesToSave = when {
-                    apiRates.any { it.currency == "USD" } -> apiRates
-                    apiRates.size > 1 -> apiRates + RateEntity().apply {
-                        currency = "USD"
-                        name = "US Dollar"
-                        rate = BigDecimal.ONE
-                        url = ""
-                    }
-
-                    else -> apiRates
-                }
-
-                val now = Instant.now()
-                ratesToSave.forEach { incoming ->
-                    val existing = dao.findByCurrency(incoming.currency)
-                    if (existing != null) {
-                        incoming.id = existing.id
-                        incoming.pinned = existing.pinned
-                        incoming.hidden = existing.hidden
-                        incoming.createdAt = existing.createdAt
-                        incoming.sortOrder = existing.sortOrder
-                    } else {
-                        incoming.createdAt = now
-                        incoming.sortOrder = Int.MAX_VALUE
-                    }
-                    if (incoming.currency == "USD") {
-                        incoming.pinned = true
-                    }
-                    incoming.updatedAt = now
-                }
-
-                val sorted = ratesToSave.sortedWith(
-                    compareBy(
-                    { it.currency != "USD" },
-                    { !it.pinned },
-                    { it.sortOrder },
-                    { it.currency }
-                ))
-                sorted.forEachIndexed { index, entity -> entity.sortOrder = index }
-                dao.insertAll(sorted)
-            }
+            RatesModel.save(getApplication(), apiRates)
         }
     }
 

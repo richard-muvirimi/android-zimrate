@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">ZimRate 汇率</string>
+    <string name="complication_config_label">ZimRate 货币</string>
+    <string name="tile_label">ZimRate 汇率</string>
+    <string name="no_rates">没有收藏的汇率。\n请在手机上打开 ZimRate 添加。</string>
+    <string name="updated_at">更新于%s</string>
+    <string name="pick_currency">选择复杂功能显示的货币</string>
+</resources>

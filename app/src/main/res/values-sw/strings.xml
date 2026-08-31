@@ -45,6 +45,7 @@
 
     <string name="update_available">Viwango Vipya Vinapatikana</string>
     <string name="update_apply">Omba</string>
+    <string name="update_none">Hakuna viwango vipya vinavyopatikana</string>
 
     <string name="license">Leseni za Chanzo Huria</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">Piga pini sarafu</string>
     <string name="content_description_refresh">Burudisha kiwango cha ubadilishaji</string>
     <string name="menu_refresh_all">Burudisha Yote</string>
+
+    <string name="section_favourites">Vipendwa</string>
+    <string name="section_suggested">Vipendwa vinavyopendekezwa</string>
+    <string name="section_other_rates">Viwango vingine</string>
+
+    <string name="empty_rates_title">Hakuna viwango bado</string>
+    <string name="empty_rates_subtitle">Vuta chini au gusa onyesha upya ili kupakia viwango vipya vya kubadilisha fedha.</string>
+
+    <string name="menu_hidden_rates">Viwango vilivyofichwa</string>
+    <string name="rate_hidden">%s imefichwa</string>
+    <string name="no_hidden_rates">Hakuna viwango vilivyofichwa</string>
+    <string name="no_pinned_rates">Hakuna viwango vinavyopendwa</string>
+
+    <string name="restore">Rejesha</string>
+
+    <string name="notification_channel_rates">Masasisho ya viwango</string>
+    <string name="notification_coins_exhausted_title">Masasisho ya chinichini yamesitishwa</string>
+    <string name="notification_coins_exhausted_body">Sarafu zako zimeisha, hivyo viwango havisasishwi tena chinichini. Ongeza salio ili kuanza tena.</string>
 
 </resources>

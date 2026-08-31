@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">Siku 1</string>
+    <string name="rewards_day_2">Siku 2</string>
+    <string name="rewards_day_3">Siku 3</string>
+    <string name="rewards_day_4">Siku 4</string>
+    <string name="rewards_day_5">Siku 5</string>
+    <string name="rewards_day_6">Siku 6</string>
+    <string name="rewards_day_7">Siku 7</string>
+
+    <string name="rewards_awards_info">Ingia kwenye programu kila siku ili upate sarafu za kutumia ndani ya programu.\nPata sarafu zaidi kwa kutazama matangazo au kwa kununua sarafu.</string>
+
+    <string name="rewards_description">Zawadi za kuingia kila siku</string>
+
+    <string name="rewards_coins_info">Jumla ya sarafu zinazopatikana kwa matumizi ndani ya programu pekee. Zinajumuisha sarafu zilizozawadiwa na zilizonunuliwa. Sarafu hupunguzwa kupitia shughuli mbalimbali ndani ya programu.</string>
+    <string name="rewards_coins_purchase_alt">AU</string>
+
+    <string name="rewards_history_awards_cta">Zawadi</string>
+    <string name="rewards_history_purchases_cta">Zilizonunuliwa</string>
+    <string name="rewards_history_spends_cta">Matumizi ya sarafu</string>
+    <string name="rewards_earn_advert">Tazama tangazo upate sarafu %d+</string>
+    <string name="rewards_earn_advert_loading">Inapakia tangazo…</string>
+    <string name="rewards_earn_purchase">Nunua sarafu (huondoa matangazo)</string>
+
+    <string name="rewards_coins">Sarafu</string>
+    <string name="menu_coins_balance">Sarafu %d</string>
+
+    <string name="rewards_toast_watched_advert">Zawadi imetolewa, tangazo limetazamwa.</string>
+    <string name="rewards_toast_advert_failed">Imeshindwa kupakia tangazo.</string>
+
+    <string name="rewards_awarded_history_title">Historia ya zawadi</string>
+    <string name="rewards_purchases_history_title">Sarafu zilizonunuliwa</string>
+    <string name="rewards_coin_spends_history_title">Historia ya matumizi ya sarafu</string>
+
+    <string name="rewards_expires">Inaisha %s</string>
+    <string name="rewards_spent_on">Zilitumika %s</string>
+
+    <string name="rewards_awarded_starter_pack">Zawadi ya kifurushi cha kuanzia. Umepewa sarafu %d.</string>
+    <string name="rewards_award_advert_click">"Zawadi ya kubofya bango. Umepewa sarafu %d."</string>
+    <string name="rewards_award_watch_advert">"Zawadi ya kutazama tangazo. Umepewa sarafu %d."</string>
+    <string name="rewards_award_daily_clock_in">"Zawadi ya kuingia kila siku. Umepewa sarafu %d."</string>
+    <string name="rewards_award_coins_purchased">Ununuzi wa sarafu. Sarafu %d zimewekwa.</string>
+
+    <string name="rewards_spend_data_fetch">Sarafu %d imetumika kupakua data.</string>
+    <string name="rewards_spend_calculation">Sarafu %d imetumika kwenye kipindi cha kukokotoa.</string>
+
+    <string name="rewards_coins_title">Kuongeza sarafu</string>
+    <string name="rewards_coins_available">Inaonekana uko tayari, unaweza kutumia chaguo zifuatazo kuongeza salio lako la sarafu.</string>
+    <string name="rewards_coins_exhausted">Inaonekana salio lako la sarafu limeisha, unaweza kutumia chaguo zifuatazo kuliongeza.</string>
+</resources>

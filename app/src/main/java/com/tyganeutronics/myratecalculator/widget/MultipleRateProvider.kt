@@ -56,7 +56,10 @@ class MultipleRateProvider : AppWidgetProvider() {
 
         // Date stamp — use the most recently checked pinned rate
         val rates = try { AppZimRate.database.rates().getAllPinned() } catch (e: Exception) { emptyList() }
-        val lastChecked = rates.maxOfOrNull { it.lastChecked } ?: Instant.now()
+        // Skip the Instant.MIN "never checked" sentinel — it is out of range for LocalDateTime.
+        val lastChecked = rates.map { it.lastChecked }
+            .filter { it > Instant.EPOCH }
+            .maxOrNull() ?: Instant.now()
         val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT)
         val dateStr = LocalDateTime.ofInstant(lastChecked, ZoneId.systemDefault()).format(formatter)
         views.setTextViewText(R.id.txt_date_checked, dateStr)

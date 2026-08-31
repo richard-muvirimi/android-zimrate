@@ -45,6 +45,7 @@
 
     <string name="update_available">Novas taxas disponíveis</string>
     <string name="update_apply">Aplicar</string>
+    <string name="update_none">Não há taxas novas disponíveis</string>
 
     <string name="license">Licenças de código aberto</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">Fixar moeda</string>
     <string name="content_description_refresh">Atualizar taxa de câmbio</string>
     <string name="menu_refresh_all">Atualizar tudo</string>
+
+    <string name="section_favourites">Favoritas</string>
+    <string name="section_suggested">Favoritas sugeridas</string>
+    <string name="section_other_rates">Outras taxas</string>
+
+    <string name="empty_rates_title">Ainda não há taxas</string>
+    <string name="empty_rates_subtitle">Puxe para baixo ou toque em atualizar para carregar as taxas de câmbio mais recentes.</string>
+
+    <string name="menu_hidden_rates">Taxas ocultas</string>
+    <string name="rate_hidden">%s ocultada</string>
+    <string name="no_hidden_rates">Não há taxas ocultas</string>
+    <string name="no_pinned_rates">Não há taxas favoritas</string>
+
+    <string name="restore">Restaurar</string>
+
+    <string name="notification_channel_rates">Atualizações de taxas</string>
+    <string name="notification_coins_exhausted_title">Atualizações em segundo plano em pausa</string>
+    <string name="notification_coins_exhausted_body">As suas moedas acabaram, por isso as taxas já não são atualizadas em segundo plano. Carregue para recomeçar.</string>
 
 </resources>

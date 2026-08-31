@@ -45,6 +45,7 @@
 
     <string name="update_available">Nuwe koerse beskikbaar</string>
     <string name="update_apply">Toepas</string>
+    <string name="update_none">Geen nuwe koerse beskikbaar nie</string>
 
     <string name="license">Oopbron-lisensies</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">Vaspen geldeenheid</string>
     <string name="content_description_refresh">Verfris wisselkoers</string>
     <string name="menu_refresh_all">Verfris alles</string>
+
+    <string name="section_favourites">Gunstelinge</string>
+    <string name="section_suggested">Voorgestelde gunstelinge</string>
+    <string name="section_other_rates">Ander koerse</string>
+
+    <string name="empty_rates_title">Nog geen koerse nie</string>
+    <string name="empty_rates_subtitle">Trek af of tik verfris om die jongste wisselkoerse te laai.</string>
+
+    <string name="menu_hidden_rates">Versteekte koerse</string>
+    <string name="rate_hidden">%s versteek</string>
+    <string name="no_hidden_rates">Geen versteekte koerse nie</string>
+    <string name="no_pinned_rates">Geen gunsteling-koerse nie</string>
+
+    <string name="restore">Herstel</string>
+
+    <string name="notification_channel_rates">Koersopdaterings</string>
+    <string name="notification_coins_exhausted_title">Agtergrondopdaterings onderbreek</string>
+    <string name="notification_coins_exhausted_body">Jou munte is op, dus word koerse nie meer in die agtergrond opgedateer nie. Laai op om weer te begin.</string>
 
 </resources>

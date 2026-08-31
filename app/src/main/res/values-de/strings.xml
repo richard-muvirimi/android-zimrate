@@ -45,6 +45,7 @@
 
     <string name="update_available">Neue Kurse verfügbar</string>
     <string name="update_apply">Anwenden</string>
+    <string name="update_none">Keine neuen Kurse verfügbar</string>
 
     <string name="license">Open-Source-Lizenzen</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">Währung anheften</string>
     <string name="content_description_refresh">Wechselkurs aktualisieren</string>
     <string name="menu_refresh_all">Alles aktualisieren</string>
+
+    <string name="section_favourites">Favoriten</string>
+    <string name="section_suggested">Vorgeschlagene Favoriten</string>
+    <string name="section_other_rates">Weitere Kurse</string>
+
+    <string name="empty_rates_title">Noch keine Kurse</string>
+    <string name="empty_rates_subtitle">Zum Laden der neuesten Wechselkurse nach unten ziehen oder auf Aktualisieren tippen.</string>
+
+    <string name="menu_hidden_rates">Ausgeblendete Kurse</string>
+    <string name="rate_hidden">%s ausgeblendet</string>
+    <string name="no_hidden_rates">Keine ausgeblendeten Kurse</string>
+    <string name="no_pinned_rates">Keine favorisierten Kurse</string>
+
+    <string name="restore">Wiederherstellen</string>
+
+    <string name="notification_channel_rates">Kursaktualisierungen</string>
+    <string name="notification_coins_exhausted_title">Hintergrundaktualisierung pausiert</string>
+    <string name="notification_coins_exhausted_body">Ihre Münzen sind aufgebraucht, daher werden die Kurse nicht mehr im Hintergrund aktualisiert. Laden Sie auf, um fortzufahren.</string>
 
 </resources>

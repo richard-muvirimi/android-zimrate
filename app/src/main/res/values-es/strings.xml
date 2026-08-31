@@ -45,6 +45,7 @@
 
     <string name="update_available">Nuevos tipos disponibles</string>
     <string name="update_apply">Aplicar</string>
+    <string name="update_none">No hay tasas nuevas disponibles</string>
 
     <string name="license">Licencias de código abierto</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">Fijar moneda</string>
     <string name="content_description_refresh">Actualizar tipo de cambio</string>
     <string name="menu_refresh_all">Actualizar todo</string>
+
+    <string name="section_favourites">Favoritas</string>
+    <string name="section_suggested">Favoritas sugeridas</string>
+    <string name="section_other_rates">Otras tasas</string>
+
+    <string name="empty_rates_title">Aún no hay tasas</string>
+    <string name="empty_rates_subtitle">Desliza hacia abajo o toca actualizar para cargar las últimas tasas de cambio.</string>
+
+    <string name="menu_hidden_rates">Tasas ocultas</string>
+    <string name="rate_hidden">%s ocultada</string>
+    <string name="no_hidden_rates">No hay tasas ocultas</string>
+    <string name="no_pinned_rates">No hay tasas favoritas</string>
+
+    <string name="restore">Restaurar</string>
+
+    <string name="notification_channel_rates">Actualizaciones de tasas</string>
+    <string name="notification_coins_exhausted_title">Actualizaciones en segundo plano en pausa</string>
+    <string name="notification_coins_exhausted_body">Se te han acabado las monedas, por lo que las tasas ya no se actualizan en segundo plano. Recarga para volver a empezar.</string>
 
 </resources>

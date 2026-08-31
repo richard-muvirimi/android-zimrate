@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">Izinga leZimRate</string>
+    <string name="complication_config_label">Imali yeZimRate</string>
+    <string name="tile_label">Amazinga eZimRate</string>
+    <string name="no_rates">Awekho amazinga akhethiweyo.\nVula iZimRate efonini yakho ukuze wengeze amanye.</string>
+    <string name="updated_at">Kuvuselelwe %s</string>
+    <string name="pick_currency">Khetha imali yesikhombisi</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">Rate yeZimRate</string>
+    <string name="complication_config_label">Mari yeZimRate</string>
+    <string name="tile_label">Marates eZimRate</string>
+    <string name="no_rates">Hapana marates asarudzwa.\nVhura ZimRate pafoni yako kuti uwedzere.</string>
+    <string name="updated_at">Zvavandudzwa %s</string>
+    <string name="pick_currency">Sarudza mari yechiratidzo</string>
+</resources>

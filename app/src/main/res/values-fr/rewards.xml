@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">Jour 1</string>
+    <string name="rewards_day_2">Jour 2</string>
+    <string name="rewards_day_3">Jour 3</string>
+    <string name="rewards_day_4">Jour 4</string>
+    <string name="rewards_day_5">Jour 5</string>
+    <string name="rewards_day_6">Jour 6</string>
+    <string name="rewards_day_7">Jour 7</string>
+
+    <string name="rewards_awards_info">Connectez-vous chaque jour à l\'application pour recevoir des pièces à utiliser dans l\'application.\nGagnez plus de pièces en regardant des publicités ou en achetant des pièces.</string>
+
+    <string name="rewards_description">Récompenses de connexion quotidienne</string>
+
+    <string name="rewards_coins_info">Total des pièces utilisables uniquement dans l\'application. Comprend les pièces gagnées et achetées. Les pièces sont déduites lors de différentes activités dans l\'application.</string>
+    <string name="rewards_coins_purchase_alt">OU</string>
+
+    <string name="rewards_history_awards_cta">Récompenses</string>
+    <string name="rewards_history_purchases_cta">Achetées</string>
+    <string name="rewards_history_spends_cta">Dépenses de pièces</string>
+    <string name="rewards_earn_advert">Regardez une publicité pour gagner %d+ pièces</string>
+    <string name="rewards_earn_advert_loading">Chargement de la publicité…</string>
+    <string name="rewards_earn_purchase">Acheter des pièces (supprime les publicités)</string>
+
+    <string name="rewards_coins">Pièces</string>
+    <string name="menu_coins_balance">%d pièces</string>
+
+    <string name="rewards_toast_watched_advert">Récompense attribuée, publicité regardée.</string>
+    <string name="rewards_toast_advert_failed">Échec du chargement de la publicité.</string>
+
+    <string name="rewards_awarded_history_title">Historique des récompenses</string>
+    <string name="rewards_purchases_history_title">Pièces achetées</string>
+    <string name="rewards_coin_spends_history_title">Historique des dépenses de pièces</string>
+
+    <string name="rewards_expires">Expire %s</string>
+    <string name="rewards_spent_on">Dépensé %s</string>
+
+    <string name="rewards_awarded_starter_pack">Récompense du pack de démarrage. %d pièces attribuées.</string>
+    <string name="rewards_award_advert_click">"Récompense pour clic sur bannière. %d pièces attribuées."</string>
+    <string name="rewards_award_watch_advert">"Récompense pour publicité regardée. %d pièces attribuées."</string>
+    <string name="rewards_award_daily_clock_in">"Récompense de connexion quotidienne. %d pièces attribuées."</string>
+    <string name="rewards_award_coins_purchased">Achat de pièces. %d pièces ont été créditées.</string>
+
+    <string name="rewards_spend_data_fetch">%d pièce dépensée pour la récupération des données.</string>
+    <string name="rewards_spend_calculation">%d pièce dépensée pour la session de calcul.</string>
+
+    <string name="rewards_coins_title">Recharge de pièces</string>
+    <string name="rewards_coins_available">Tout semble en ordre, vous pouvez utiliser les options suivantes pour recharger votre solde de pièces.</string>
+    <string name="rewards_coins_exhausted">Votre solde de pièces semble épuisé, vous pouvez utiliser les options suivantes pour le recharger.</string>
+</resources>

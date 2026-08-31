@@ -45,6 +45,7 @@
 
     <string name="update_available">新汇率可用</string>
     <string name="update_apply">应用</string>
+    <string name="update_none">暂无新汇率</string>
 
     <string name="license">开源许可证</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">固定货币</string>
     <string name="content_description_refresh">刷新汇率</string>
     <string name="menu_refresh_all">全部刷新</string>
+
+    <string name="section_favourites">收藏</string>
+    <string name="section_suggested">推荐收藏</string>
+    <string name="section_other_rates">其他汇率</string>
+
+    <string name="empty_rates_title">暂无汇率</string>
+    <string name="empty_rates_subtitle">下拉或点击刷新以加载最新汇率。</string>
+
+    <string name="menu_hidden_rates">已隐藏的汇率</string>
+    <string name="rate_hidden">已隐藏 %s</string>
+    <string name="no_hidden_rates">没有已隐藏的汇率</string>
+    <string name="no_pinned_rates">没有收藏的汇率</string>
+
+    <string name="restore">恢复</string>
+
+    <string name="notification_channel_rates">汇率更新</string>
+    <string name="notification_coins_exhausted_title">后台更新已暂停</string>
+    <string name="notification_coins_exhausted_body">你的金币已用完，汇率不再在后台刷新。充值后即可继续。</string>
 
 </resources>

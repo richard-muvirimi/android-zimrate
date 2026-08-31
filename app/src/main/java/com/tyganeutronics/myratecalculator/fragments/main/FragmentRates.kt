@@ -14,34 +14,34 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.apollographql.apollo3.api.Optional
 import com.google.android.material.snackbar.Snackbar
 import com.maltaisn.calcdialog.CalcDialog
-import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.contract.PurchasesContract
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
+import com.tyganeutronics.myratecalculator.database.models.RatesModel
 import com.tyganeutronics.myratecalculator.database.models.SpendModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RatesViewModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.FragmentCalculator
-import com.tyganeutronics.myratecalculator.graphql.FetchRatesQuery
-import com.tyganeutronics.myratecalculator.graphql.type.Prefer
 import com.tyganeutronics.myratecalculator.interfaces.RewardModelInterface
 import com.tyganeutronics.myratecalculator.interfaces.RewardsActivity
 import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
 import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.CalcField
 import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.RatesAdapter
+import com.tyganeutronics.myratecalculator.utils.contracts.CurrencyContract
 import com.tyganeutronics.myratecalculator.utils.resolveAttr
+import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
+import com.tyganeutronics.myratecalculator.utils.traits.getLongPref
 import com.tyganeutronics.myratecalculator.utils.traits.getStringPref
+import com.tyganeutronics.myratecalculator.utils.traits.putLongPref
 import com.tyganeutronics.myratecalculator.utils.traits.invalidateOptionsMenu
 import com.tyganeutronics.myratecalculator.utils.traits.requireViewById
 import com.tyganeutronics.myratecalculator.utils.traits.setTitle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
-import java.time.Instant
+import java.util.concurrent.TimeUnit
 
 class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
 
@@ -130,20 +130,38 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
 
         rewardViewModel.coins.observe(this) {
             invalidateOptionsMenu()
+            maybeAutoFetch()
         }
 
         ratesViewModel.rates.observe(this) { rates ->
-            adapter.submitList(rates)
+            adapter.submitRates(rates)
             val empty = rates.isEmpty()
             requireViewById<View>(R.id.layout_empty).visibility =
                 if (empty) View.VISIBLE else View.GONE
             requireViewById<View>(R.id.rv_rates).visibility =
                 if (empty) View.GONE else View.VISIBLE
 
-            if (empty && !autoFetchDone && canConsumeCoins()) {
-                autoFetchDone = true
-                fetchRates()
-            }
+            maybeAutoFetch()
+        }
+    }
+
+    /**
+     * Refreshes once per screen, as soon as both the rates and the coin balance are known.
+     * Both are loaded asynchronously and either can arrive first, so this is driven from both
+     * observers — checking too early would read a null balance and skip the refresh entirely.
+     */
+    private fun maybeAutoFetch() {
+        if (autoFetchDone) return
+
+        val rates = ratesViewModel.rates.value ?: return
+        rewardViewModel.coins.value ?: return
+
+        autoFetchDone = true
+        when {
+            // With nothing on screen the app is unusable, so a top up prompt is fair.
+            rates.isEmpty() -> fetchRates()
+            // Merely stale — refresh quietly if they can afford it, never nag.
+            shouldUpdate() -> fetchRates(promptForCoins = false)
         }
     }
 
@@ -235,7 +253,7 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
             ): Int {
                 val pos = viewHolder.bindingAdapterPosition
                 if (pos == RecyclerView.NO_POSITION) return 0
-                val entity = adapter.currentList.getOrNull(pos) ?: return 0
+                val entity = adapter.entityAt(pos) ?: return 0
                 return if (entity.currency == "USD") 0
                 else ItemTouchHelper.UP or ItemTouchHelper.DOWN
             }
@@ -246,14 +264,14 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
             ): Int {
                 val pos = viewHolder.bindingAdapterPosition
                 if (pos == RecyclerView.NO_POSITION) return 0
-                val entity = adapter.currentList.getOrNull(pos) ?: return 0
+                val entity = adapter.entityAt(pos) ?: return 0
                 return if (entity.currency == "USD") 0
                 else ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val pos = viewHolder.bindingAdapterPosition
-                val entity = adapter.currentList.getOrNull(pos) ?: return
+                val entity = adapter.entityAt(pos) ?: return
                 ratesViewModel.hideRate(entity)
 
                 view?.let { root ->
@@ -284,48 +302,46 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         }
     }
 
-    private fun fetchRates(singleCurrency: String? = null) {
-        if (!canConsumeCoins()) return
+    /**
+     * True when the update_interval setting has elapsed since the last successful check, so opening the
+     * app pulls fresh rates. The `check_update` setting turns this off entirely.
+     */
+    private fun shouldUpdate(): Boolean {
+        if (!requireContext().getBooleanPref("check_update", true)) return false
+
+        val last = requireContext().getLongPref(CurrencyContract.LAST_CHECK, 0L)
+        val hours = requireContext().getStringPref("update_interval", "24").toLongOrNull() ?: 24L
+
+        return System.currentTimeMillis() > last + TimeUnit.HOURS.toMillis(hours)
+    }
+
+    /**
+     * [promptForCoins] shows the top up dialog when the balance is empty. Refreshes the user
+     * did not ask for pass false so an empty balance never nags them on open.
+     */
+    private fun fetchRates(singleCurrency: String? = null, promptForCoins: Boolean = true) {
+        if (!hasCoins()) {
+            if (promptForCoins) (requireActivity() as RewardsActivity).showTopUpDialog()
+            return
+        }
 
         setRefreshing(true)
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val preferStr = requireContext()
-                    .getStringPref("preferred_currency", "mean")
-                    .uppercase()
-                val prefer = try {
-                    Prefer.valueOf(preferStr)
-                } catch (_: IllegalArgumentException) {
-                    Prefer.MEAN
-                }
+                val apiRates = RatesModel.fetch(
+                    RatesModel.preferred(requireContext()),
+                    singleCurrency,
+                )
 
-                val response = AppZimRate
-                    .apolloClient
-                    .query(FetchRatesQuery(prefer = Optional.present(prefer)))
-                    .execute()
-
-                val apiRates = response.data?.rates?.mapNotNull { r ->
-                    if (singleCurrency != null && r.currency != singleCurrency) return@mapNotNull null
-
-                    RateEntity().apply {
-                        currency = r.currency ?: return@mapNotNull null
-                        name = r.name ?: currency
-                        url = r.url ?: ""
-                        rate = r.rate?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
-                        lastChecked = r.last_updated?.toLong()
-                            ?.let { Instant.ofEpochSecond(it) } ?: Instant.now()
-                    }
-                } ?: emptyList()
-
-                if (apiRates.isEmpty() && singleCurrency != null) {
-                    showSnackbar(getString(R.string.update_available))
+                if (apiRates.isEmpty()) {
+                    showSnackbar(getString(R.string.update_none))
                 } else {
-                    ratesViewModel.saveApiRates(apiRates)
-                    // Overrides cleared synchronously above — refresh rate fields for currencies
-                    // not returned by the API (e.g. ZWG when status=false) so stale typed
-                    // values don't persist on screen.
-                    adapter.refreshAllRates()
+                    requireContext().putLongPref(
+                        CurrencyContract.LAST_CHECK,
+                        System.currentTimeMillis(),
+                    )
+                    applyOrOfferRates(apiRates)
 
                     SpendModel.consume(
                         requireContext(),
@@ -344,8 +360,35 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         }
     }
 
+    /**
+     * Applies fresh rates immediately, or — when auto update is off — offers them behind a
+     * snackbar, so a rate the user typed is never replaced without them agreeing to it.
+     */
+    private fun applyOrOfferRates(apiRates: List<RateEntity>) {
+        if (requireContext().getBooleanPref("auto_update", true)) {
+            applyRates(apiRates)
+            return
+        }
+
+        view?.let { root ->
+            Snackbar.make(root, R.string.update_available, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.update_apply) { applyRates(apiRates) }
+                .show()
+        }
+    }
+
+    private fun applyRates(apiRates: List<RateEntity>) {
+        ratesViewModel.saveApiRates(apiRates)
+        // Overrides cleared synchronously above — refresh rate fields for currencies
+        // not returned by the API (e.g. ZWG when status=false) so stale typed
+        // values don't persist on screen.
+        adapter.refreshAllRates()
+    }
+
+    private fun hasCoins(): Boolean = (rewardViewModel.coins.value ?: 0) > 0
+
     private fun canConsumeCoins(): Boolean {
-        val hasCoins = (rewardViewModel.coins.value ?: 0) > 0
+        val hasCoins = hasCoins()
         if (!hasCoins) {
             (requireActivity() as RewardsActivity).showTopUpDialog()
         }

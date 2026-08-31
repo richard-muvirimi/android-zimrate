@@ -23,7 +23,13 @@ object CurrencyFlagUtil {
                 runCatching { Currency.getInstance(locale) }.getOrNull()
                     ?.let { it.currencyCode to locale.country.lowercase() }
             }
-            .toMap()
+            .groupBy({ it.first }, { it.second })
+            .mapValues { (currency, countries) ->
+                // ISO 4217 currency codes are prefixed with their country code (USD→us, ZAR→za).
+                // When multiple countries share a currency, prefer the matching one.
+                val preferred = currency.take(2).lowercase()
+                countries.firstOrNull { it == preferred } ?: countries.first()
+            }
     }
 
     fun countryCode(currencyCode: String): String {

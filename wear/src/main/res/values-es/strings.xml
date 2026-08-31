@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">Tasa de ZimRate</string>
+    <string name="complication_config_label">Moneda de ZimRate</string>
+    <string name="tile_label">Tasas de ZimRate</string>
+    <string name="no_rates">No hay tasas favoritas.\nAbre ZimRate en tu teléfono para añadir algunas.</string>
+    <string name="updated_at">Actualizado %s</string>
+    <string name="pick_currency">Elige la moneda para la complicación</string>
+</resources>

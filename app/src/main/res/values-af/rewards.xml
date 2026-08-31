@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rewards_day_1">Dag 1</string>
+    <string name="rewards_day_2">Dag 2</string>
+    <string name="rewards_day_3">Dag 3</string>
+    <string name="rewards_day_4">Dag 4</string>
+    <string name="rewards_day_5">Dag 5</string>
+    <string name="rewards_day_6">Dag 6</string>
+    <string name="rewards_day_7">Dag 7</string>
+
+    <string name="rewards_awards_info">Meld daagliks by die program aan om muntbelonings te ontvang wat jy in die program kan gebruik.\nVerdien meer munte deur advertensies te kyk of munte te koop.</string>
+
+    <string name="rewards_description">Belonings vir daaglikse aanmelding</string>
+
+    <string name="rewards_coins_info">Totale munte wat slegs in die program gebruik kan word. Sluit beloonde en gekoopte munte in. Munte word deur verskeie aktiwiteite in die program afgetrek.</string>
+    <string name="rewards_coins_purchase_alt">OF</string>
+
+    <string name="rewards_history_awards_cta">Toekennings</string>
+    <string name="rewards_history_purchases_cta">Gekoop</string>
+    <string name="rewards_history_spends_cta">Muntbestedings</string>
+    <string name="rewards_earn_advert">Kyk \'n advertensie om %d+ munte te verdien</string>
+    <string name="rewards_earn_advert_loading">Advertensie laai…</string>
+    <string name="rewards_earn_purchase">Koop munte (verwyder advertensies)</string>
+
+    <string name="rewards_coins">Munte</string>
+    <string name="menu_coins_balance">%d munte</string>
+
+    <string name="rewards_toast_watched_advert">Beloning toegeken, advertensie gekyk.</string>
+    <string name="rewards_toast_advert_failed">Kon nie die advertensie laai nie.</string>
+
+    <string name="rewards_awarded_history_title">Beloningsgeskiedenis</string>
+    <string name="rewards_purchases_history_title">Gekoopte munte</string>
+    <string name="rewards_coin_spends_history_title">Geskiedenis van muntbestedings</string>
+
+    <string name="rewards_expires">Verval %s</string>
+    <string name="rewards_spent_on">Bestee %s</string>
+
+    <string name="rewards_awarded_starter_pack">Beginnerspakket-beloning. %d munte toegeken.</string>
+    <string name="rewards_award_advert_click">"Beloning vir banierklik. %d munte toegeken."</string>
+    <string name="rewards_award_watch_advert">"Beloning vir advertensie gekyk. %d munte toegeken."</string>
+    <string name="rewards_award_daily_clock_in">"Beloning vir daaglikse aanmelding. %d munte toegeken."</string>
+    <string name="rewards_award_coins_purchased">Muntaankoop. %d munte is gekrediteer.</string>
+
+    <string name="rewards_spend_data_fetch">%d munt bestee aan die haal van data.</string>
+    <string name="rewards_spend_calculation">%d munt bestee aan \'n berekeningsessie.</string>
+
+    <string name="rewards_coins_title">Munte oplaai</string>
+    <string name="rewards_coins_available">Dit lyk of jy reg is; jy kan die volgende opsies gebruik om jou muntbalans te herlaai.</string>
+    <string name="rewards_coins_exhausted">Dit lyk of jou muntbalans op is; jy kan die volgende opsies gebruik om jou muntbalans te herlaai.</string>
+</resources>

@@ -45,6 +45,7 @@
 
     <string name="update_available">Izintengo Ezintsha Zikhona</string>
     <string name="update_apply">Faka</string>
+    <string name="update_none">Awekho amazinga amatsha atholakalayo</string>
 
     <string name="license">Amalayisensi womthombo ovulekile</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">Phina imali</string>
     <string name="content_description_refresh">Vuselela intengo yemali</string>
     <string name="menu_refresh_all">Vuselela Konke</string>
+
+    <string name="section_favourites">Ezikhethiweyo</string>
+    <string name="section_suggested">Ezingakhethwa</string>
+    <string name="section_other_rates">Amanye amazinga</string>
+
+    <string name="empty_rates_title">Awukho amazinga okwamanje</string>
+    <string name="empty_rates_subtitle">Donsela phansi kumbe uthinte ukuvuselela ukuze uthwale amazinga okuntshintshanisa amatsha.</string>
+
+    <string name="menu_hidden_rates">Amazinga afihliweyo</string>
+    <string name="rate_hidden">%s ifihliwe</string>
+    <string name="no_hidden_rates">Awekho amazinga afihliweyo</string>
+    <string name="no_pinned_rates">Awekho amazinga akhethiweyo</string>
+
+    <string name="restore">Buyisela</string>
+
+    <string name="notification_channel_rates">Ukuvuselelwa kwamazinga</string>
+    <string name="notification_coins_exhausted_title">Ukuvuselela ngemuva kumisiwe</string>
+    <string name="notification_coins_exhausted_body">AmaCoin akho aphelile, ngakho amazinga kawasavuselelwa ngemuva. Engezelela ukuze kuqhubeke.</string>
 
 </resources>

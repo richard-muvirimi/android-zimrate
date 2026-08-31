@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complication_label">سعر ZimRate</string>
+    <string name="complication_config_label">عملة ZimRate</string>
+    <string name="tile_label">أسعار ZimRate</string>
+    <string name="no_rates">لا توجد أسعار مفضلة.\nافتح ZimRate على هاتفك لإضافة بعضها.</string>
+    <string name="updated_at">آخر تحديث %s</string>
+    <string name="pick_currency">اختر العملة الخاصة بالتعقيد</string>
+</resources>

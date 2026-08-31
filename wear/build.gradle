@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+android {
+    compileSdkVersion 37
+    buildToolsVersion = '36.0.0'
+
+    defaultConfig {
+        applicationId "com.tyganeutronics.myratecalculator"
+        minSdk 26
+        targetSdk 37
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+
+    namespace 'com.tyganeutronics.myratecalculator.wear'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // Wear OS Compose UI
+    implementation 'androidx.wear.compose:compose-material:1.4.1'
+    implementation 'androidx.wear.compose:compose-foundation:1.4.1'
+    implementation 'androidx.activity:activity-compose:1.10.1'
+    implementation "androidx.compose.ui:ui-tooling-preview:1.8.2"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.8.2"
+
+    // Wearable Data Layer (phone ↔ watch sync)
+    implementation 'com.google.android.gms:play-services-wearable:19.0.0'
+
+    // Complications
+    implementation 'androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1'
+
+    // Tiles
+    implementation 'androidx.wear.tiles:tiles:1.5.0'
+    implementation 'androidx.wear.tiles:tiles-material:1.5.0'
+    // ListenableFuture helpers used by TileService callbacks
+    implementation 'com.google.guava:guava:33.4.8-android'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'
+
+    // Offline flag drawables (same library as phone)
+    implementation("com.github.murgupluoglu:flagkit-android:1.0.2")
+}

@@ -57,6 +57,12 @@
 
     <string name="update_available">New Rates Available</string>
     <string name="update_apply">Apply</string>
+    <string name="update_none">No new rates available</string>
+
+    <!-- Background refresh -->
+    <string name="notification_channel_rates">Rate updates</string>
+    <string name="notification_coins_exhausted_title">Background updates paused</string>
+    <string name="notification_coins_exhausted_body">Your coins have run out, so rates are no longer refreshing in the background. Top up to start again.</string>
 
     <string name="license">Open source Licenses</string>
 
@@ -64,6 +70,11 @@
     <string name="widget_add">Add</string>
 
     <string name="prefs_misc">Miscellaneous</string>
+
+    <!-- Rate list sections -->
+    <string name="section_favourites">Favourites</string>
+    <string name="section_suggested">Suggested favourites</string>
+    <string name="section_other_rates">Other rates</string>
 
     <!-- Empty state -->
     <string name="empty_rates_title">No rates yet</string>

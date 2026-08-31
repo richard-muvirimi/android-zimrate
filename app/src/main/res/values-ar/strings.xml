@@ -45,6 +45,7 @@
 
     <string name="update_available">أسعار جديدة متاحة</string>
     <string name="update_apply">تطبيق</string>
+    <string name="update_none">لا توجد أسعار جديدة</string>
 
     <string name="license">تراخيص المصدر المفتوح</string>
 
@@ -81,5 +82,23 @@
     <string name="content_description_pin">تثبيت العملة</string>
     <string name="content_description_refresh">تحديث سعر الصرف</string>
     <string name="menu_refresh_all">تحديث الكل</string>
+
+    <string name="section_favourites">المفضلة</string>
+    <string name="section_suggested">مفضّلات مقترحة</string>
+    <string name="section_other_rates">أسعار أخرى</string>
+
+    <string name="empty_rates_title">لا توجد أسعار بعد</string>
+    <string name="empty_rates_subtitle">اسحب للأسفل أو اضغط على تحديث لتحميل أحدث أسعار الصرف.</string>
+
+    <string name="menu_hidden_rates">الأسعار المخفية</string>
+    <string name="rate_hidden">تم إخفاء %s</string>
+    <string name="no_hidden_rates">لا توجد أسعار مخفية</string>
+    <string name="no_pinned_rates">لا توجد أسعار مفضلة</string>
+
+    <string name="restore">استعادة</string>
+
+    <string name="notification_channel_rates">تحديثات الأسعار</string>
+    <string name="notification_coins_exhausted_title">تم إيقاف التحديثات في الخلفية مؤقتًا</string>
+    <string name="notification_coins_exhausted_body">نفدت عملاتك، لذا لم تعد الأسعار تُحدَّث في الخلفية. اشحن رصيدك للبدء من جديد.</string>
 
 </resources>

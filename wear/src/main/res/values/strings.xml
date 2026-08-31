@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">ZimRate</string>
+    <string name="complication_label">ZimRate Rate</string>
+    <string name="complication_config_label">ZimRate Currency</string>
+    <string name="tile_label">ZimRate Rates</string>
+    <string name="no_rates">No favourited rates.\nOpen ZimRate on your phone to add some.</string>
+    <string name="updated_at">Updated %s</string>
+    <string name="pick_currency">Pick currency for complication</string>
+</resources>
