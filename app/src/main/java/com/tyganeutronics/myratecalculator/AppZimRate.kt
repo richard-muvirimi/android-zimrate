@@ -17,6 +17,7 @@ import com.tyganeutronics.myratecalculator.database.Database
 import com.tyganeutronics.myratecalculator.database.contract.DatabaseContract
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.utils.TokenUtils
+import com.tyganeutronics.myratecalculator.utils.PreferenceMigrations
 import com.tyganeutronics.myratecalculator.utils.contracts.ApiContract
 import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
 
@@ -27,6 +28,8 @@ class AppZimRate : MultiDexApplication() {
         this.setUpApollo()
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
+        // Must run before the schedule is built — it can change update_interval.
+        PreferenceMigrations.run(this)
         RatesRefreshScheduler.sync(this)
 
         initializeAppCheck()

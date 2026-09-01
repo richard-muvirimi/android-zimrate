@@ -19,6 +19,7 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesResponseListener
@@ -53,7 +54,13 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
         // Create and initialize BillingManager which talks to BillingLibrary
         billingClient = BillingClient.newBuilder(requireContext())
             .setListener(this)
-            .enablePendingPurchases()
+            // The no-argument enablePendingPurchases() was removed in Play Billing 8.0.0.
+            // This is its documented equivalent — coins are one time products.
+            .enablePendingPurchases(
+                PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .build()
+            )
             .build()
 
         startBillingConnection()
@@ -151,8 +158,16 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
             .setProductList(products)
             .build()
 
-        billingClient.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
-            Log.i(TAG, "onSkuDetailsResponse ${billingResult.responseCode}")
+        // Since Play Billing 8.0.0 the listener receives a QueryProductDetailsResult rather
+        // than a bare list, so products that could not be fetched are reported instead of
+        // silently missing.
+        billingClient.queryProductDetailsAsync(params) { billingResult, queryResult ->
+            Log.i(TAG, "onProductDetailsResponse ${billingResult.responseCode}")
+
+            val productDetailsList = queryResult.productDetailsList
+            queryResult.unfetchedProductList.forEach { unfetched ->
+                Log.w(TAG, "Unfetched product $unfetched")
+            }
 
             Handler(Looper.getMainLooper()).post {
 

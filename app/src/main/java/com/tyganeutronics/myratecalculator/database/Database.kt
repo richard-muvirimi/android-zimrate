@@ -27,10 +27,7 @@ abstract class Database : RoomDatabase() {
     abstract fun spends(): SpendsDao
 
     companion object {
-        /**
-         * v1 → v2: remove the currency_base column from the rates table.
-         * SQLite < API 35 doesn't support DROP COLUMN, so we recreate the table.
-         */
+        /** v3 → v4: add sort_order so the rates list keeps a user defined order. */
         val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE rates ADD COLUMN sort_order INTEGER NOT NULL DEFAULT ${Int.MAX_VALUE}")
@@ -39,12 +36,17 @@ abstract class Database : RoomDatabase() {
             }
         }
 
+        /** v2 → v3: add the hidden flag for swipe to hide. */
         val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE rates ADD COLUMN hidden INTEGER NOT NULL DEFAULT 0")
             }
         }
 
+        /**
+         * v1 → v2: remove the currency_base column from the rates table.
+         * SQLite < API 35 doesn't support DROP COLUMN, so we recreate the table.
+         */
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Create a new table without the currency_base column
