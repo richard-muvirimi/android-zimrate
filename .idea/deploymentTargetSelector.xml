@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-27T09:26:05.904309826Z">
+        <DropdownSelection timestamp="2026-09-01T13:01:34.659229400Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/home/richard/.var/app/com.google.AndroidStudio/config/.android/avd/Wear_OS_XL_Round.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R58WB0T8XAH" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -15,10 +15,10 @@
       </SelectionState>
       <SelectionState runConfigName="wear">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-09-01T08:15:44.922041900Z">
+        <DropdownSelection timestamp="2026-09-01T13:07:04.595748400Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=R58WB0T8XAH" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\tygal\.android\avd\Wear_OS_Large_Round.avd" />
             </handle>
           </Target>
         </DropdownSelection>

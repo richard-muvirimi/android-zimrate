@@ -1,5 +1,6 @@
 package com.tyganeutronics.myratecalculator.wear.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
 import androidx.activity.ComponentActivity
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
@@ -41,33 +44,54 @@ import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
 import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
 import com.tyganeutronics.myratecalculator.wear.presentation.theme.ZimRateWearTheme
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
+import com.tyganeutronics.myratecalculator.wear.util.countryName
 
 class MainActivity : ComponentActivity() {
+
+    private val rates = mutableStateOf<List<WearRateModel>>(emptyList())
+
+    /** Currency named by a complication tap, scrolled to and highlighted on arrival. */
+    private val focused = mutableStateOf<String?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        focused.value = intent?.getStringExtra(EXTRA_CURRENCY)
         setContent {
             ZimRateWearTheme {
-                RatesScreen()
+                RatesScreen(rates.value, focused.value)
             }
         }
+    }
+
+    /** Launch mode is singleTop, so a second tap arrives here rather than in onCreate. */
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        focused.value = intent.getStringExtra(EXTRA_CURRENCY)
     }
 
     override fun onResume() {
         super.onResume()
-        // Refresh by recomposing — state is read in RatesScreen
-        setContent {
-            ZimRateWearTheme {
-                RatesScreen()
-            }
-        }
+        // Re-read the store rather than rebuilding the composition, so rates that arrive
+        // while the screen is open show up.
+        rates.value = WearRateStore.load(this)
+    }
+
+    companion object {
+        const val EXTRA_CURRENCY = "currency"
     }
 }
 
 @Composable
-fun RatesScreen() {
-    val context = LocalContext.current
-    val rates = WearRateStore.load(context)
+fun RatesScreen(rates: List<WearRateModel>, focused: String? = null) {
     val listState = rememberScalingLazyListState()
+
+    LaunchedEffect(focused, rates) {
+        if (focused == null) return@LaunchedEffect
+        val index = rates.indexOfFirst { it.currency == focused }
+        // +1 for the header item occupying index 0.
+        if (index >= 0) listState.animateScrollToItem(index + 1)
+    }
 
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -96,7 +120,7 @@ fun RatesScreen() {
             }
         } else {
             items(rates) { rate ->
-                RateRow(rate)
+                RateRow(rate, highlighted = rate.currency == focused)
             }
 
             item {
@@ -120,7 +144,7 @@ fun RatesScreen() {
 }
 
 @Composable
-fun RateRow(rate: WearRateModel) {
+fun RateRow(rate: WearRateModel, highlighted: Boolean = false) {
     val context = LocalContext.current
     var flagBitmap by remember(rate.currency) {
         mutableStateOf(
@@ -132,31 +156,42 @@ fun RateRow(rate: WearRateModel) {
         )
     }
 
+    val color = if (highlighted) {
+        MaterialTheme.colors.primary
+    } else {
+        MaterialTheme.colors.onBackground
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            if (flagBitmap != null) {
-                Image(
-                    bitmap = flagBitmap!!.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.size(width = 24.dp, height = 16.dp),
-                )
-            }
-            Spacer(Modifier.width(6.dp))
-            Text(
-                text = rate.currency,
-                fontWeight = FontWeight.Bold,
-                fontSize = 13.sp,
+        if (flagBitmap != null) {
+            Image(
+                bitmap = flagBitmap!!.asImageBitmap(),
+                contentDescription = null,
+                modifier = Modifier.size(width = 24.dp, height = 16.dp),
             )
+            Spacer(Modifier.width(6.dp))
         }
+        // Weighted so a long country name yields space to the rate rather than pushing it off.
+        Text(
+            text = countryName(rate.currency),
+            fontWeight = FontWeight.Medium,
+            fontSize = 13.sp,
+            color = color,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f),
+        )
+        Spacer(Modifier.width(6.dp))
         Text(
             text = rate.rate,
+            fontWeight = FontWeight.Bold,
             fontSize = 13.sp,
+            color = color,
         )
     }
 }

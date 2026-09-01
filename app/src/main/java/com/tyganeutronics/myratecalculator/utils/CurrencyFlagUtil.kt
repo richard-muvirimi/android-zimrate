@@ -38,4 +38,20 @@ object CurrencyFlagUtil {
             ?: localeMap[upper]
             ?: upper.take(2).lowercase()
     }
+
+    /**
+     * Localised country name for a currency, shown in place of the code because a code means
+     * nothing to most people.
+     *
+     * Inherits the approximation in [OVERRIDES]: currencies shared across countries resolve to
+     * one representative country, so XAF reads as Cameroon. Falls back to the code where no
+     * country name resolves, which includes EUR.
+     */
+    fun countryName(currencyCode: String): String {
+        val region = countryCode(currencyCode)
+        return runCatching { Locale.Builder().setRegion(region).build().displayCountry }
+            .getOrNull()
+            ?.takeIf { it.isNotEmpty() && !it.equals(region, ignoreCase = true) }
+            ?: currencyCode.uppercase()
+    }
 }

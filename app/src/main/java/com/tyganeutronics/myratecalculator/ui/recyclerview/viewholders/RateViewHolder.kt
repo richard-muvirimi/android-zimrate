@@ -35,7 +35,6 @@ class RateViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_rate, parent, false)
 ) {
     private val imgFlag: ImageView = itemView.findViewById(R.id.img_flag)
-    private val txtCode: TextView = itemView.findViewById(R.id.txt_currency_code)
     private val txtName: TextView = itemView.findViewById(R.id.txt_currency_name)
     private val tilRate: TextInputLayout = itemView.findViewById(R.id.til_rate)
     private val etRate: TextInputEditText = itemView.findViewById(R.id.et_rate)
@@ -55,8 +54,6 @@ class RateViewHolder(
         val countryCode = CurrencyFlagUtil.countryCode(entity.currency)
         val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(itemView.context, countryCode) else 0
         imgFlag.setImageResource(if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
-
-        txtCode.text = entity.currency
 
         val isBase = entity.currency == "USD" && entity.url.isEmpty()
         etRate.isEnabled = !isBase
@@ -130,7 +127,7 @@ class RateViewHolder(
     }
 
     private fun updateFootnote(entity: RateEntity) {
-        txtName.text = entity.name.ifEmpty { entity.currency }
+        txtName.text = CurrencyFlagUtil.countryName(entity.currency)
         txtName.isSelected = true
 
         val dateStr = formatSyncDate(entity.lastChecked)

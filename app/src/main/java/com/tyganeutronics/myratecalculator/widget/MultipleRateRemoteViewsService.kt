@@ -35,8 +35,7 @@ private class Factory(private val context: Context) : RemoteViewsService.RemoteV
         val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(context, countryCode) else 0
         views.setImageViewResource(R.id.img_widget_item_flag, if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
 
-        views.setTextViewText(R.id.txt_widget_item_code, entity.currency)
-        views.setTextViewText(R.id.txt_widget_item_name, entity.name.ifEmpty { entity.currency })
+        views.setTextViewText(R.id.txt_widget_item_code, CurrencyFlagUtil.countryName(entity.currency))
         views.setTextViewText(
             R.id.txt_widget_item_rate,
             entity.rate.setScale(2, RoundingMode.HALF_UP).toPlainString()

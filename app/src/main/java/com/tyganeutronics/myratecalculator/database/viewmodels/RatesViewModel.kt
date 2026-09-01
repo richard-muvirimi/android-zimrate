@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.database.models.RatesModel
+import com.tyganeutronics.myratecalculator.wear.WearSyncHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -91,6 +92,7 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
         if (entity.currency == "USD") return
         viewModelScope.launch(Dispatchers.IO) {
             dao.setHidden(entity.currency, true)
+            syncWatch()
         }
     }
 
@@ -98,6 +100,7 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
     fun restoreRate(entity: RateEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             dao.setHidden(entity.currency, false)
+            syncWatch()
         }
     }
 
@@ -113,6 +116,7 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
                 dao.update(fresh)
                 normalizeVisibleSortOrder()
             }
+            syncWatch()
         }
     }
 
@@ -121,6 +125,7 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
             AppZimRate.database.runInTransaction {
                 applyTieredSortOrder(entities)
             }
+            syncWatch()
         }
     }
 
@@ -136,6 +141,15 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             RatesModel.save(getApplication(), apiRates)
         }
+    }
+
+    /**
+     * Mirrors the pinned set to the watch. Pin, hide and order changes all alter what
+     * [dao] returns for pinned rows, so each of them has to re-push — a refresh is not the
+     * only thing the watch needs to hear about.
+     */
+    private fun syncWatch() {
+        WearSyncHelper.pushPinnedRates(getApplication(), dao.getAllPinned())
     }
 
     private fun normalizeVisibleSortOrder() {

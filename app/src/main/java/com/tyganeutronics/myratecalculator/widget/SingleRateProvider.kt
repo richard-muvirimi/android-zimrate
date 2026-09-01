@@ -70,8 +70,7 @@ class SingleRateProvider : AppWidgetProvider() {
         val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(context, countryCode) else 0
         views.setImageViewResource(R.id.img_single_flag, if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
 
-        views.setTextViewText(R.id.txt_single_code, currency)
-        views.setTextViewText(R.id.txt_single_name, entity?.name?.ifEmpty { currency } ?: currency)
+        views.setTextViewText(R.id.txt_single_name, CurrencyFlagUtil.countryName(currency))
         views.setTextViewText(R.id.txt_single_rate, rateText)
 
         // Hidden until there is a real sync stamp, so the row does not show an empty line.
