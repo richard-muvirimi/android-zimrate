@@ -79,6 +79,7 @@
 
     <string name="hint_rate">Taxa</string>
     <string name="hint_amount">Valor</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Bandeira da moeda</string>
     <string name="content_description_pin">Fixar moeda</string>
     <string name="content_description_refresh">Atualizar taxa de câmbio</string>

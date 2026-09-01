@@ -44,7 +44,7 @@ import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
 import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
 import com.tyganeutronics.myratecalculator.wear.presentation.theme.ZimRateWearTheme
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
-import com.tyganeutronics.myratecalculator.wear.util.countryName
+import com.tyganeutronics.myratecalculator.wear.data.label
 
 class MainActivity : ComponentActivity() {
 
@@ -146,9 +146,12 @@ fun RatesScreen(rates: List<WearRateModel>, focused: String? = null) {
 @Composable
 fun RateRow(rate: WearRateModel, highlighted: Boolean = false) {
     val context = LocalContext.current
+    // A code the user invented is not ISO, so looking up a flag for it would show an unrelated
+    // country's. Those rows carry the code and name alone.
     var flagBitmap by remember(rate.currency) {
         mutableStateOf(
             runCatching {
+                if (rate.custom) return@runCatching null
                 val code = countryCode(rate.currency)
                 val resId = if (code.isNotEmpty()) FlagKit.getResId(context, code) else 0
                 if (resId != 0) context.getDrawable(resId)?.toBitmap() else null
@@ -178,7 +181,7 @@ fun RateRow(rate: WearRateModel, highlighted: Boolean = false) {
         }
         // Weighted so a long country name yields space to the rate rather than pushing it off.
         Text(
-            text = countryName(rate.currency),
+            text = rate.label(context),
             fontWeight = FontWeight.Medium,
             fontSize = 13.sp,
             color = color,

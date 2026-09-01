@@ -79,6 +79,7 @@
 
     <string name="hint_rate">Kiwango</string>
     <string name="hint_amount">Kiasi</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Bendera ya sarafu</string>
     <string name="content_description_pin">Piga pini sarafu</string>
     <string name="content_description_refresh">Burudisha kiwango cha ubadilishaji</string>

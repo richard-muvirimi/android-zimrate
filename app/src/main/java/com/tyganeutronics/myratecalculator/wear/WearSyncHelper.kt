@@ -24,6 +24,9 @@ object WearSyncHelper {
                 put(JSONObject().apply {
                     put("currency", entity.currency)
                     put("name", entity.name)
+                    // The watch cannot tell an invented code from an ISO one, and would name and
+                    // flag OMIR after Oman without being told.
+                    put("custom", entity.custom)
                     put("rate", entity.rate.setScale(2, java.math.RoundingMode.HALF_UP).toPlainString())
                     put("lastChecked", lastChecked)
                 })

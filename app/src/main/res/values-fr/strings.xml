@@ -79,6 +79,7 @@
 
     <string name="hint_rate">Taux</string>
     <string name="hint_amount">Montant</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Drapeau de la devise</string>
     <string name="content_description_pin">Épingler la devise</string>
     <string name="content_description_refresh">Actualiser le taux de change</string>

@@ -41,7 +41,7 @@ import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
 import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
 import com.tyganeutronics.myratecalculator.wear.presentation.MainActivity
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
-import com.tyganeutronics.myratecalculator.wear.util.countryName
+import com.tyganeutronics.myratecalculator.wear.data.label
 import java.nio.ByteBuffer
 
 class RateTileService : TileService() {
@@ -70,6 +70,7 @@ class RateTileService : TileService() {
         // by resource id, so each flag is rasterised and inlined instead.
         WearRateStore.load(applicationContext)
             .take(MAX_VISIBLE)
+            .filterNot { it.custom }
             .forEach { rate ->
                 flagImage(applicationContext, rate.currency)?.let {
                     builder.addIdToImageMapping(rate.currency, it)
@@ -194,10 +195,14 @@ class RateTileService : TileService() {
         private fun heroLabel(context: Context, rate: WearRateModel): LayoutElement =
             Row.Builder()
                 .setVerticalAlignment(VERTICAL_ALIGN_CENTER)
-                .addContent(flagElement(rate.currency))
-                .addContent(Spacer.Builder().setWidth(dp(5f)).build())
+                .apply {
+                    flagElement(rate)?.let {
+                        addContent(it)
+                        addContent(Spacer.Builder().setWidth(dp(5f)).build())
+                    }
+                }
                 .addContent(
-                    Text.Builder(context, countryName(rate.currency))
+                    Text.Builder(context, rate.label(context))
                         .setTypography(Typography.TYPOGRAPHY_CAPTION1)
                         .setColor(argb(COLORS.onSurface))
                         .setMaxLines(1)
@@ -217,8 +222,12 @@ class RateTileService : TileService() {
                         )
                         .build()
                 )
-                .addContent(flagElement(rate.currency))
-                .addContent(Spacer.Builder().setWidth(dp(5f)).build())
+                .apply {
+                    flagElement(rate)?.let {
+                        addContent(it)
+                        addContent(Spacer.Builder().setWidth(dp(5f)).build())
+                    }
+                }
                 // Expanding box so a long country name ellipsizes rather than squeezing the
                 // rate off the row.
                 .addContent(
@@ -226,7 +235,7 @@ class RateTileService : TileService() {
                         .setWidth(expand())
                         .setHorizontalAlignment(HORIZONTAL_ALIGN_START)
                         .addContent(
-                            Text.Builder(context, countryName(rate.currency))
+                            Text.Builder(context, rate.label(context))
                                 .setTypography(Typography.TYPOGRAPHY_CAPTION2)
                                 .setColor(argb(MUTED))
                                 .setMaxLines(1)
@@ -244,13 +253,17 @@ class RateTileService : TileService() {
                 )
                 .build()
 
-        private fun flagElement(currency: String): LayoutElement =
-            Image.Builder()
-                .setResourceId(currency)
+        /** Null for a rate the user added: its code is not ISO, so no flag was mapped for it. */
+        private fun flagElement(rate: WearRateModel): LayoutElement? {
+            if (rate.custom) return null
+
+            return Image.Builder()
+                .setResourceId(rate.currency)
                 .setWidth(dp(18f))
                 .setHeight(dp(12f))
                 .setContentScaleMode(CONTENT_SCALE_MODE_FIT)
                 .build()
+        }
 
         private fun updatedLabel(
             context: Context,

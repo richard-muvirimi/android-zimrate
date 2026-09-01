@@ -163,11 +163,13 @@ class RateViewHolder(
     }
 
     private fun updateFootnote(entity: RateEntity) {
-        txtName.text = if (entity.custom) {
+        val name = if (entity.custom) {
             entity.name.ifEmpty { entity.currency }
         } else {
             CurrencyFlagUtil.countryName(entity.currency)
         }
+        txtName.text =
+            CurrencyFlagUtil.codeWithName(itemView.context, entity.currency, name)
         txtName.isSelected = true
 
         val dateStr = formatSyncDate(entity.lastChecked)

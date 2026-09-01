@@ -111,6 +111,11 @@
     <!-- Rates list / calculator -->
     <string name="hint_rate">Rate</string>
     <string name="hint_amount">Amount</string>
+    <!--
+        The currency code, then the country or custom name: ZAR · South Africa. Code first so it
+        survives where the label is ellipsized — widgets and the watch both clip this hard.
+    -->
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Currency flag</string>
     <string name="content_description_pin">Pin currency</string>
     <string name="content_description_refresh">Refresh currency rate</string>

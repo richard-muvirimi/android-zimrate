@@ -6,4 +6,5 @@
     <string name="no_rates">Keine favorisierten Kurse.\nÖffne ZimRate auf deinem Telefon, um welche hinzuzufügen.</string>
     <string name="updated_at">Aktualisiert %s</string>
     <string name="pick_currency">Währung für die Komplikation auswählen</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
 </resources>

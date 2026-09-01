@@ -16,10 +16,12 @@ import androidx.wear.watchface.complications.data.SmallImageType
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.murgupluoglu.flagkit.FlagKit
+import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
 import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
+import com.tyganeutronics.myratecalculator.wear.data.displayName
+import com.tyganeutronics.myratecalculator.wear.data.label
 import com.tyganeutronics.myratecalculator.wear.presentation.MainActivity
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
-import com.tyganeutronics.myratecalculator.wear.util.countryName
 
 class RateComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -29,12 +31,11 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
         // is supplied here, so this cannot reflect a per-slot choice — showing the first
         // pinned rate is the closest honest stand-in for real data.
         val sample = WearRateStore.load(applicationContext).firstOrNull()
-        val currency = sample?.currency ?: SAMPLE_CURRENCY
-        val rate = sample?.rate ?: SAMPLE_RATE
+            ?: WearRateModel(SAMPLE_CURRENCY, "", SAMPLE_RATE, 0L)
 
         return when (type) {
-            ComplicationType.SHORT_TEXT -> shortText(currency, rate)
-            ComplicationType.LONG_TEXT -> longText(currency, rate)
+            ComplicationType.SHORT_TEXT -> shortText(sample)
+            ComplicationType.LONG_TEXT -> longText(sample)
             else -> null
         }
     }
@@ -48,8 +49,8 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
         val tap = tapAction(request.complicationInstanceId, rate.currency)
 
         return when (request.complicationType) {
-            ComplicationType.SHORT_TEXT -> shortText(rate.currency, rate.rate, tap)
-            ComplicationType.LONG_TEXT -> longText(rate.currency, rate.rate, tap)
+            ComplicationType.SHORT_TEXT -> shortText(rate, tap)
+            ComplicationType.LONG_TEXT -> longText(rate, tap)
             else -> null
         }
     }
@@ -80,39 +81,45 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
      * be cut. The flag is still attached for the faces that draw small images; most do not, so
      * the title is what actually identifies the currency in practice.
      */
-    private fun shortText(currency: String, rate: String, tap: PendingIntent? = null) =
+    private fun shortText(rate: WearRateModel, tap: PendingIntent? = null) =
         ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(rate).build(),
-            contentDescription = PlainComplicationText.Builder("$currency $rate").build(),
+            text = PlainComplicationText.Builder(rate.rate).build(),
+            contentDescription =
+                PlainComplicationText.Builder("${rate.currency} ${rate.rate}").build(),
         )
-            .setTitle(PlainComplicationText.Builder(currency).build())
+            .setTitle(PlainComplicationText.Builder(rate.currency).build())
             .setTapAction(tap)
-            .apply { flagImage(currency)?.let { setSmallImage(it) } }
+            .apply { flagImage(rate)?.let { setSmallImage(it) } }
             .build()
 
-    private fun longText(currency: String, rate: String, tap: PendingIntent? = null) =
+    private fun longText(rate: WearRateModel, tap: PendingIntent? = null) =
         LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(rate).build(),
-            contentDescription = PlainComplicationText.Builder("$currency $rate").build(),
+            text = PlainComplicationText.Builder(rate.rate).build(),
+            contentDescription =
+                PlainComplicationText.Builder("${rate.currency} ${rate.rate}").build(),
         )
-            .setTitle(PlainComplicationText.Builder(shortCountryName(currency)).build())
+            .setTitle(
+                PlainComplicationText.Builder(rate.label(applicationContext, shortName(rate)))
+                    .build()
+            )
             .setTapAction(tap)
-            .apply { flagImage(currency)?.let { setSmallImage(it) } }
+            .apply { flagImage(rate)?.let { setSmallImage(it) } }
             .build()
 
     /**
-     * A currency code means nothing to most people, so the title shows where the money is
-     * from instead. The platform localises the country name, so this follows the ten locales
-     * the app ships without needing any new strings.
+     * A currency code means nothing to most people, so the title names where the money is from
+     * as well. The platform localises the country name, so this follows the ten locales the app
+     * ships without needing any new strings.
      *
      * Complication titles are only a few characters wide, hence the trim back to a word
-     * boundary. Falls back to the code when a currency maps to no recognisable country.
+     * boundary. Trimmed before the code is attached so the code survives — it is the half that
+     * identifies the rate unambiguously.
      */
-    private fun shortCountryName(currency: String): String {
-        val country = countryName(currency)
-        if (country.length <= MAX_TITLE_CHARS) return country
+    private fun shortName(rate: WearRateModel): String {
+        val name = rate.displayName()
+        if (name.length <= MAX_TITLE_CHARS) return name
 
-        val clipped = country.take(MAX_TITLE_CHARS)
+        val clipped = name.take(MAX_TITLE_CHARS)
         val boundary = clipped.lastIndexOf(' ')
         return if (boundary >= MIN_WORD_CHARS) clipped.take(boundary) else clipped.trimEnd() + "…"
     }
@@ -120,9 +127,14 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
     /**
      * Rendered only by watch faces that support small images, so it supplements the title
      * rather than replacing it. PHOTO keeps the flag's own colours; ICON would tint it flat.
+     *
+     * Nothing for a rate the user added: its code is not ISO, so a lookup would return an
+     * unrelated country's flag.
      */
-    private fun flagImage(currency: String): SmallImage? {
-        val code = countryCode(currency).takeIf { it.isNotEmpty() } ?: return null
+    private fun flagImage(rate: WearRateModel): SmallImage? {
+        if (rate.custom) return null
+
+        val code = countryCode(rate.currency).takeIf { it.isNotEmpty() } ?: return null
         val resId = runCatching { FlagKit.getResId(applicationContext, code) }.getOrNull() ?: return null
         if (resId == 0) return null
 

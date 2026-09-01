@@ -8,4 +8,7 @@
     <string name="updated_at">Updated %s</string>
     <string name="more_rates">+%1$d more</string>
     <string name="pick_currency">Pick currency for complication</string>
+    <!-- The currency code, then the name: ZAR · South Africa. Code first so it survives the
+         ellipsis on a narrow watch row. -->
+    <string name="currency_code_with_name">%1$s · %2$s</string>
 </resources>

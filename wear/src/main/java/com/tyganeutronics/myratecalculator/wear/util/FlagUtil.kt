@@ -1,5 +1,7 @@
 package com.tyganeutronics.myratecalculator.wear.util
 
+import android.content.Context
+import com.tyganeutronics.myratecalculator.wear.R
 import java.util.Currency
 import java.util.Locale
 
@@ -45,4 +47,21 @@ fun countryName(currencyCode: String): String {
         .getOrNull()
         ?.takeIf { it.isNotEmpty() && !it.equals(region, ignoreCase = true) }
         ?: currencyCode.uppercase()
+}
+
+/**
+ * The label a rate is shown under: "ZAR · South Africa".
+ *
+ * Pass [name] to override the country name — a rate the user invented is not ISO, so resolving
+ * its code to a country would name it after an unrelated one. Returns the code on its own where
+ * the two would repeat, which [countryName] causes for EUR.
+ */
+fun codeWithName(
+    context: Context,
+    currencyCode: String,
+    name: String = countryName(currencyCode),
+): String = if (name.equals(currencyCode, ignoreCase = true)) {
+    currencyCode.uppercase()
+} else {
+    context.getString(R.string.currency_code_with_name, currencyCode.uppercase(), name)
 }
