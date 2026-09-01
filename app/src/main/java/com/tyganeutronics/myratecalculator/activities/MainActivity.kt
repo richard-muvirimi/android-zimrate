@@ -12,6 +12,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -20,6 +21,7 @@ import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentAbout
+import com.tyganeutronics.myratecalculator.fragments.main.FragmentCustomRate
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentRates
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentCoinsBalance
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentRewards
@@ -103,6 +105,24 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
     override fun bindViews() {
         super.bindViews()
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        getAddRateFab().setOnClickListener {
+            if (supportFragmentManager.findFragmentByTag(FragmentCustomRate.TAG) === null) {
+                FragmentCustomRate().show(supportFragmentManager, FragmentCustomRate.TAG)
+            }
+        }
+
+        // Rewards and purchase history are pushed onto the back stack rather than through the
+        // navigation bar, so the FAB has to follow those transitions too.
+        supportFragmentManager.addOnBackStackChangedListener { syncAddRateFab() }
+    }
+
+    private fun getAddRateFab(): FloatingActionButton = findViewById(R.id.fab_add_rate)
+
+    /** Custom rates belong to the rates list, so the FAB only rides along with that screen. */
+    private fun syncAddRateFab() {
+        val onRates = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) is FragmentRates
+        if (onRates) getAddRateFab().show() else getAddRateFab().hide()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -111,10 +131,12 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         when (item.itemId) {
             R.id.navigation_calculator -> {
                 transaction.replace(R.id.nav_host_fragment, FragmentRates(), FragmentRates.TAG)
+                getAddRateFab().show()
             }
 
             R.id.navigation_about -> {
                 transaction.replace(R.id.nav_host_fragment, FragmentAbout(), FragmentAbout.TAG)
+                getAddRateFab().hide()
             }
         }
 

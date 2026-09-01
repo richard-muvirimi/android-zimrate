@@ -33,7 +33,7 @@
     <string name="menu_home">الرئيسية</string>
     <string name="menu_calculator">الآلة الحاسبة</string>
 
-    <string name="info_message">١. لتحديث الأسعار في أي وقت، يمكنك السحب من أعلى هذه الشاشة.\n\n٢. يمكنك أيضاً إضافة أداة إلى شاشتك الرئيسية لعرض آخر الأسعار المحملة دون فتح التطبيق. (لا يتم تحميل الأسعار في الخلفية)\n\n٣. يمكنك استخدام النتيجة المحسوبة فوراً لإجراء مزيد من العمليات الحسابية بالضغط على النتيجة المرغوبة.</string>
+    <string name="info_message">١. اسحب قائمة الأسعار للأسفل للتحديث، أو استخدم تحديث الكل من القائمة. كل تحديث يكلف عملة واحدة.\n\n٢. يتم تحديث الأسعار أيضاً تلقائياً في الخلفية. تتحكم الإعدادات في عدد المرات، أو توقف ذلك.\n\n٣. اكتب مبلغاً في أي عملة للتحويل منها، ويتم تحديث بقية الأسعار تبعاً لذلك.\n\n٤. اضغط على النجمة لإبقاء عملة في الأعلى، أو اسحب البطاقة لإخفائها. تعود العملات المخفية من القائمة.\n\n٥. استخدم زر + لإضافة سعر خاص بك، لأي شيء لا يوفره التطبيق.\n\n٦. اضغط على اسم البلد أسفل السعر لمعرفة مصدره.\n\n٧. أضف أداة إلى الشاشة الرئيسية لقراءة أسعارك دون فتح التطبيق.</string>
     <string name="info_dismiss">موافق</string>
     <string name="about">حول</string>
     <string name="author">المؤلف</string>
@@ -86,6 +86,24 @@
 
     <string name="section_favourites">المفضلة</string>
     <string name="section_suggested">مفضّلات مقترحة</string>
+    <string name="custom_rate_add">إضافة سعر خاص</string>
+    <string name="custom_rate_summary">تابع سعراً لا يوفره التطبيق — سعر السوق الموازية، أو عملة خاصة بك. يبقى كما أدخلته تماماً ولا يستبدله التحديث أبداً.</string>
+    <string name="custom_rate_hint_code">الرمز</string>
+    <string name="custom_rate_helper_code">تسمية قصيرة تظهر على البطاقة، مثل OMIR</string>
+    <string name="custom_rate_hint_name">الاسم</string>
+    <string name="custom_rate_hint_rate">السعر مقابل 1 دولار أمريكي</string>
+    <string name="custom_rate_save">حفظ</string>
+    <string name="custom_rate_error_code">أدخل رمزاً</string>
+    <string name="custom_rate_error_duplicate">%s موجود بالفعل في قائمتك</string>
+    <string name="custom_rate_error_rate">أدخل سعراً أكبر من صفر</string>
+    <string name="custom_rate_added">تمت إضافة %s</string>
+    <string name="custom_rate_delete_title">حذف %s؟</string>
+    <string name="custom_rate_delete_message">يؤدي هذا إلى إزالة السعر من قائمتك وأدواتك وساعتك. أما الأسعار الواردة من الخادم فتُخفى بدلاً من حذفها، لذا لا يُحذف بهذه الطريقة سوى أسعارك أنت.</string>
+    <string name="custom_rate_delete_confirm">حذف</string>
+    <string name="custom_rate_deleted">تم حذف %s</string>
+    <string name="content_description_delete">حذف السعر الخاص</string>
+
+    <string name="section_custom_rates">أسعارك</string>
     <string name="section_other_rates">أسعار أخرى</string>
 
     <string name="empty_rates_title">لا توجد أسعار بعد</string>

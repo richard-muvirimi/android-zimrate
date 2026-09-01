@@ -66,7 +66,7 @@ object RatesModel {
         AppZimRate.database.runInTransaction {
             // Only inject a synthetic USD base for full refreshes (more than one currency).
             // Single-currency per-row refreshes should not touch USD.
-            val ratesToSave = when {
+            val candidates = when {
                 apiRates.any { it.currency == "USD" } -> apiRates
                 apiRates.size > 1 -> apiRates + RateEntity().apply {
                     currency = "USD"
@@ -77,6 +77,10 @@ object RatesModel {
 
                 else -> apiRates
             }
+
+            // A currency the user defined owns that code outright. Should the server ever start
+            // returning it, their row stays as they typed it rather than being overwritten.
+            val ratesToSave = candidates.filterNot { dao.findByCurrency(it.currency)?.custom == true }
 
             val now = Instant.now()
             ratesToSave.forEach { incoming ->

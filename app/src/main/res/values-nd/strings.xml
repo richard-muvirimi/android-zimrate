@@ -33,7 +33,9 @@
     <string name="menu_home">Ikhaya</string>
     <string name="menu_calculator">Isibali</string>
 
-    <string name="info_message">1. Ukuvuselela izintengo nganoma yisiphi isikhathi, ungaswepa usuka phezulu kulesiskrini.\n\n2. Ungengeza iwidget kusikrini sakho sekhaya ukuze ubone izintengo ezilodiwe zokugcina ngaphandle kokuvula uhlelo lokusebenza. (Izintengo azilodiwa emvakwemvelo)\n\n3. Ungasebenzisa ngokushesha umphumela ohesabiwayo wokuqhubeka ngehesabu ngokucindezela umphumela ofunekayo.</string>
+    <!-- TODO native review: translated without a native speaker; the terms for swipe, widget
+         and background refresh are the least certain. -->
+    <string name="info_message">1. Donsela phansi uhlu lwamazinga ukuze uvuselele, kumbe usebenzise u-Vuselela Konke kumenyu. Ukuvuselela ngakunye kudla uhlamvu olulodwa.\n\n2. Amazinga ayazivuselela wodwa ngemuva. Izilungiselelo zilawula ukuthi kangaki, kumbe zikuvale.\n\n3. Faka inani kuloba yiyiphi imali ukuze uguqule usuka kuyo. Wonke amanye amazinga ayalandela.\n\n4. Thinta inkanyezi ukuze imali ihlale phezulu, kumbe uswayiphe ikhadi ukuze uyifihle. Imali efihliweyo ibuya ngemenyu.\n\n5. Sebenzisa inkinobho ethi + ukwengeza izinga lakho, lokho okungekho kuhlelo.\n\n6. Thinta ibizo lelizwe ngaphansi kwezinga ukuze ubone ukuthi livela ngaphi.\n\n7. Engeza iwijethi esikrinini sakho sekhaya ukuze ubone amazinga ungavulanga uhlelo.</string>
     <string name="info_dismiss">Kulungile</string>
     <string name="about">Mayelana</string>
     <string name="author">Umbhali</string>
@@ -86,6 +88,24 @@
 
     <string name="section_favourites">Ezikhethiweyo</string>
     <string name="section_suggested">Ezingakhethwa</string>
+    <string name="custom_rate_add">Engeza izinga lakho</string>
+    <string name="custom_rate_summary">Landelela izinga uhlelo olungelalo — izinga lemakethe engaphandle, kumbe imali yakho. Lihlala njengoba ulifakile njalo kalisoze lantshintshwe yikuvuselela.</string>
+    <string name="custom_rate_hint_code">Ikhodi</string>
+    <string name="custom_rate_helper_code">Ibizo elifitshane elitshengiswa ekhadini, njengo-OMIR</string>
+    <string name="custom_rate_hint_name">Ibizo</string>
+    <string name="custom_rate_hint_rate">Izinga le-1 USD</string>
+    <string name="custom_rate_save">Gcina</string>
+    <string name="custom_rate_error_code">Faka ikhodi</string>
+    <string name="custom_rate_error_duplicate">%s ivele ikhona ohlwini lwakho</string>
+    <string name="custom_rate_error_rate">Faka izinga elingaphezu kukazero</string>
+    <string name="custom_rate_added">%s yengeziwe</string>
+    <string name="custom_rate_delete_title">Susa i-%s?</string>
+    <string name="custom_rate_delete_message">Lokhu kususa izinga ohlwini lwakho, kuwowijethi zakho lasewatshini lakho. Amazinga avela kuseva ayafihlwa kulokuthi asuswe, ngakho ngawakho kuphela asuswa ngalindlela.</string>
+    <string name="custom_rate_delete_confirm">Susa</string>
+    <string name="custom_rate_deleted">%s isusiwe</string>
+    <string name="content_description_delete">Susa izinga lakho</string>
+
+    <string name="section_custom_rates">Amazinga akho</string>
     <string name="section_other_rates">Amanye amazinga</string>
 
     <string name="empty_rates_title">Awukho amazinga okwamanje</string>

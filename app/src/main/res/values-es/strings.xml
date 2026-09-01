@@ -33,7 +33,7 @@
     <string name="menu_home">Inicio</string>
     <string name="menu_calculator">Calculadora</string>
 
-    <string name="info_message">1. Para actualizar los tipos en cualquier momento, puede deslizar desde la parte superior de esta pantalla.\n\n2. También puede agregar un widget a su pantalla de inicio para ver los últimos tipos cargados sin abrir la aplicación. (Los tipos no se cargan en segundo plano)\n\n3. Puede usar instantáneamente el resultado calculado para más cálculos presionando el resultado deseado.</string>
+    <string name="info_message">1. Desliza la lista de tasas hacia abajo para actualizar, o usa Actualizar todo en el menú. Cada actualización gasta una moneda.\n\n2. Las tasas también se actualizan solas en segundo plano. Los ajustes controlan la frecuencia, o lo desactivan.\n\n3. Escribe un importe en cualquier moneda para convertir desde ella. El resto de tasas se actualiza en consecuencia.\n\n4. Toca la estrella para mantener una moneda arriba, o desliza una tarjeta para ocultarla. Las monedas ocultas vuelven desde el menú.\n\n5. Usa el botón + para añadir una tasa propia, para lo que la aplicación no incluya.\n\n6. Toca el nombre del país bajo una tasa para ver de dónde procede.\n\n7. Añade un widget a tu pantalla de inicio para leer tus tasas sin abrir la aplicación.</string>
     <string name="info_dismiss">OK</string>
     <string name="about">Acerca de</string>
     <string name="author">Autor</string>
@@ -86,6 +86,24 @@
 
     <string name="section_favourites">Favoritas</string>
     <string name="section_suggested">Favoritas sugeridas</string>
+    <string name="custom_rate_add">Añadir tasa propia</string>
+    <string name="custom_rate_summary">Sigue una tasa que la aplicación no incluye — una tasa del mercado paralelo, o una moneda propia. Se mantiene tal como la introduces y nunca la reemplaza una actualización.</string>
+    <string name="custom_rate_hint_code">Código</string>
+    <string name="custom_rate_helper_code">Etiqueta corta que aparece en la tarjeta, como OMIR</string>
+    <string name="custom_rate_hint_name">Nombre</string>
+    <string name="custom_rate_hint_rate">Tasa por 1 USD</string>
+    <string name="custom_rate_save">Guardar</string>
+    <string name="custom_rate_error_code">Introduce un código</string>
+    <string name="custom_rate_error_duplicate">%s ya está en tu lista</string>
+    <string name="custom_rate_error_rate">Introduce una tasa mayor que cero</string>
+    <string name="custom_rate_added">%s añadida</string>
+    <string name="custom_rate_delete_title">¿Eliminar %s?</string>
+    <string name="custom_rate_delete_message">Esto quita la tasa de tu lista, tus widgets y tu reloj. Las tasas del servidor se ocultan en lugar de eliminarse, así que solo se eliminan así las tuyas.</string>
+    <string name="custom_rate_delete_confirm">Eliminar</string>
+    <string name="custom_rate_deleted">%s eliminada</string>
+    <string name="content_description_delete">Eliminar tasa propia</string>
+
+    <string name="section_custom_rates">Tus tasas</string>
     <string name="section_other_rates">Otras tasas</string>
 
     <string name="empty_rates_title">Aún no hay tasas</string>

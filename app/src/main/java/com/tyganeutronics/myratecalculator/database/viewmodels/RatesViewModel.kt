@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.database.models.RatesModel
+import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import com.tyganeutronics.myratecalculator.wear.WearSyncHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -86,6 +87,73 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
             .divide(sourceRate, MathContext(10, RoundingMode.HALF_UP))
             .setScale(2, RoundingMode.HALF_UP)
     }
+
+    /**
+     * Stores a rate the user typed in themselves, for a currency the API does not carry. It
+     * enters the list like any other rate — pinnable, hideable, and visible to the watch and
+     * the widgets — and [RatesModel.save] leaves it alone on every refresh.
+     */
+    fun addCustomRate(currency: String, name: String, rate: BigDecimal) {
+        val code = currency.trim().uppercase()
+        if (code.isEmpty()) return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            AppZimRate.database.runInTransaction {
+                val now = Instant.now()
+                dao.insert(RateEntity().apply {
+                    this.currency = code
+                    this.name = name.trim().ifEmpty { code }
+                    this.rate = rate
+                    this.custom = true
+                    this.lastChecked = now
+                    this.createdAt = now
+                    this.updatedAt = now
+                })
+                normalizeVisibleSortOrder()
+            }
+            syncWatch()
+            WidgetUtils.refreshAll(getApplication())
+        }
+    }
+
+    /**
+     * Writes an edited custom rate back to Room. Typed rates are otherwise held in memory only
+     * and cleared by the next refresh, which would quietly undo an edit to a rate the user owns.
+     */
+    fun updateCustomRate(entity: RateEntity, rate: BigDecimal) {
+        if (!entity.custom || rate <= BigDecimal.ZERO) return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val fresh = dao.findByCurrency(entity.currency) ?: return@launch
+            if (fresh.rate.compareTo(rate) == 0) return@launch
+
+            fresh.rate = rate
+            fresh.lastChecked = Instant.now()
+            fresh.updatedAt = Instant.now()
+            dao.update(fresh)
+
+            syncWatch()
+            WidgetUtils.refreshAll(getApplication())
+        }
+    }
+
+    /** Removes a custom rate outright. API rates are hidden rather than deleted. */
+    fun deleteCustomRate(entity: RateEntity) {
+        if (!entity.custom) return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            AppZimRate.database.runInTransaction {
+                dao.deleteByCurrency(entity.currency)
+                normalizeVisibleSortOrder()
+            }
+            syncWatch()
+            WidgetUtils.refreshAll(getApplication())
+        }
+    }
+
+    /** True when [currency] is already in the list, so the add dialog can reject a duplicate. */
+    fun currencyExists(currency: String): Boolean =
+        dao.findByCurrency(currency.trim().uppercase()) != null
 
     /** Hide a rate from the main list. USD cannot be hidden. */
     fun hideRate(entity: RateEntity) {

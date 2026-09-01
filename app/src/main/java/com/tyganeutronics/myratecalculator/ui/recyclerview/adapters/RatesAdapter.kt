@@ -25,6 +25,7 @@ sealed class RateListItem {
 enum class Section(@StringRes val titleRes: Int) {
     FAVOURITES(R.string.section_favourites),
     SUGGESTED(R.string.section_suggested),
+    CUSTOM(R.string.section_custom_rates),
     OTHERS(R.string.section_other_rates),
 }
 
@@ -32,6 +33,7 @@ class RatesAdapter(
     private val viewModel: RatesViewModel,
     private val onPinClick: (RateEntity) -> Unit,
     private val onRefreshClick: (RateEntity) -> Unit,
+    private val onDeleteClick: (RateEntity) -> Unit,
     private val onCalcClick: (entity: RateEntity, field: CalcField, currentValue: BigDecimal) -> Unit,
 ) : ListAdapter<RateListItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
@@ -102,6 +104,9 @@ class RatesAdapter(
      */
     private fun sectionOf(entity: RateEntity): Section = when {
         entity.pinned || entity.currency == "USD" -> Section.FAVOURITES
+        // Checked before the local-currency guess, whose country lookup is meaningless for a
+        // code the user invented and would scatter custom rates into Suggested.
+        entity.custom -> Section.CUSTOM
         CurrencyFlagUtil.countryCode(entity.currency) == LOCAL_COUNTRY_CODE -> Section.SUGGESTED
         else -> Section.OTHERS
     }
@@ -146,6 +151,7 @@ class RatesAdapter(
                 viewModel,
                 onPinClick,
                 onRefreshClick,
+                onDeleteClick,
                 onCalcClick,
                 ::notifyAmountsChanged,
             )

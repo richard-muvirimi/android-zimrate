@@ -47,6 +47,10 @@ open class RateEntity : BaseEntity() {
     @ColumnInfo(name = RatesContract.COLUMN_NAME_SORT_ORDER)
     var sortOrder: Int = Int.MAX_VALUE
 
+    /** Entered by the user rather than returned by the API. Server rates never overwrite one. */
+    @ColumnInfo(name = RatesContract.COLUMN_NAME_CUSTOM, defaultValue = "0")
+    var custom: Boolean = false
+
     fun duplicateWithPinned(pinned: Boolean = this.pinned): RateEntity {
         return RateEntity().also { copy ->
             copy.id = id
@@ -61,6 +65,7 @@ open class RateEntity : BaseEntity() {
             copy.pinned = pinned
             copy.hidden = hidden
             copy.sortOrder = sortOrder
+            copy.custom = custom
         }
     }
 

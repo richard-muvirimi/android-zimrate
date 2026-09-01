@@ -90,6 +90,7 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
                 firebaseAnalytics.logEvent("refresh_single_currency", Bundle())
                 fetchRates(singleCurrency = entity.currency)
             },
+            onDeleteClick = { entity -> confirmDeleteCustomRate(entity) },
             onCalcClick = { entity, field, currentValue ->
                 calcTargetCurrency = entity.currency
                 calcTargetField = field
@@ -121,6 +122,20 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         }
 
         attachSwipeToHide()
+    }
+
+    /** Deleting is irreversible — there is no server copy to fetch a custom rate back from. */
+    private fun confirmDeleteCustomRate(entity: RateEntity) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.custom_rate_delete_title, entity.currency))
+            .setMessage(R.string.custom_rate_delete_message)
+            .setNegativeButton(R.string.calculator_dialog_cancel, null)
+            .setPositiveButton(R.string.custom_rate_delete_confirm) { _, _ ->
+                firebaseAnalytics.logEvent("delete_custom_rate", Bundle())
+                ratesViewModel.deleteCustomRate(entity)
+                showSnackbar(getString(R.string.custom_rate_deleted, entity.currency))
+            }
+            .show()
     }
 
     /**

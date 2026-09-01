@@ -63,7 +63,12 @@ class AppZimRate : MultiDexApplication() {
             DatabaseContract.DATABASE_NAME
         )
         database.allowMainThreadQueries()
-        database.addMigrations(Database.MIGRATION_1_2, Database.MIGRATION_2_3, Database.MIGRATION_3_4)
+        database.addMigrations(
+            Database.MIGRATION_1_2,
+            Database.MIGRATION_2_3,
+            Database.MIGRATION_3_4,
+            Database.MIGRATION_4_5,
+        )
         database.fallbackToDestructiveMigrationOnDowngrade()
         database.enableMultiInstanceInvalidation()
         database.addCallback(object : RoomDatabase.Callback() {

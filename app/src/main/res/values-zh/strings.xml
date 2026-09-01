@@ -33,7 +33,7 @@
     <string name="menu_home">首页</string>
     <string name="menu_calculator">计算器</string>
 
-    <string name="info_message">1. 要随时刷新汇率，您可以从此屏幕顶部向下滑动。\n\n2. 您还可以将小部件添加到主屏幕，无需打开应用即可查看最新加载的汇率。（汇率不会在后台加载）\n\n3. 您可以通过按下所需结果，立即将计算结果用于进一步计算。</string>
+    <string name="info_message">1. 在汇率列表上下拉即可刷新，或使用菜单中的全部刷新。每次刷新会消耗一枚金币。\n\n2. 汇率也会在后台自动刷新。可在设置中调整频率或将其关闭。\n\n3. 在任意货币中输入金额即可从该货币换算，其他汇率会随之更新。\n\n4. 点按星标可将货币固定在顶部，滑动卡片可将其隐藏。已隐藏的货币可从菜单中找回。\n\n5. 使用 + 按钮添加你自己的汇率，用于应用未收录的货币。\n\n6. 点按汇率下方的国家名称，可查看其来源。\n\n7. 将小部件添加到主屏幕，无需打开应用即可查看汇率。</string>
     <string name="info_dismiss">确定</string>
     <string name="about">关于</string>
     <string name="author">作者</string>
@@ -86,6 +86,24 @@
 
     <string name="section_favourites">收藏</string>
     <string name="section_suggested">推荐收藏</string>
+    <string name="custom_rate_add">添加自定义汇率</string>
+    <string name="custom_rate_summary">跟踪应用未收录的汇率——平行市场汇率，或你自己的货币。它会完全保持你输入的数值，刷新时绝不会被替换。</string>
+    <string name="custom_rate_hint_code">代码</string>
+    <string name="custom_rate_helper_code">显示在卡片上的简短标签，例如 OMIR</string>
+    <string name="custom_rate_hint_name">名称</string>
+    <string name="custom_rate_hint_rate">1 美元对应的汇率</string>
+    <string name="custom_rate_save">保存</string>
+    <string name="custom_rate_error_code">请输入代码</string>
+    <string name="custom_rate_error_duplicate">%s 已在你的列表中</string>
+    <string name="custom_rate_error_rate">请输入大于零的汇率</string>
+    <string name="custom_rate_added">已添加 %s</string>
+    <string name="custom_rate_delete_title">删除 %s？</string>
+    <string name="custom_rate_delete_message">这会将该汇率从你的列表、小部件和手表中移除。来自服务器的汇率只会被隐藏而非删除，因此只有你自己添加的会以这种方式移除。</string>
+    <string name="custom_rate_delete_confirm">删除</string>
+    <string name="custom_rate_deleted">已删除 %s</string>
+    <string name="content_description_delete">删除自定义汇率</string>
+
+    <string name="section_custom_rates">你的汇率</string>
     <string name="section_other_rates">其他汇率</string>
 
     <string name="empty_rates_title">暂无汇率</string>
