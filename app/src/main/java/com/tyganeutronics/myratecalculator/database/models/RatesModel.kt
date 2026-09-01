@@ -1,7 +1,7 @@
 package com.tyganeutronics.myratecalculator.database.models
 
 import android.content.Context
-import com.apollographql.apollo3.api.Optional
+import com.apollographql.apollo.api.Optional
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.graphql.FetchRatesQuery
@@ -37,6 +37,10 @@ object RatesModel {
             .apolloClient
             .query(FetchRatesQuery(prefer = Optional.present(prefer)))
             .execute()
+
+        // Apollo 4+ surfaces fetch errors on the response instead of throwing. Callers tell
+        // "no rates" apart from "request failed", so keep failures propagating as before.
+        response.exception?.let { throw it }
 
         return response.data?.rates?.mapNotNull { r ->
             if (singleCurrency != null && r.currency != singleCurrency) return@mapNotNull null

@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
-    id("com.apollographql.apollo3").version("$apollo_version")
+    id("com.apollographql.apollo").version("$apollo_version")
 }
 
 android {
@@ -110,8 +110,8 @@ dependencies {
     //preferences
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
-    implementation("com.apollographql.apollo3:apollo-runtime:$apollo_version")
-    implementation("com.apollographql.apollo3:apollo-api:$apollo_version")
+    implementation("com.apollographql.apollo:apollo-runtime:$apollo_version")
+    implementation("com.apollographql.apollo:apollo-api:$apollo_version")
 
     //https://github.com/maltaisn/calcdialoglib
     implementation "com.maltaisn:calcdialog:2.2.2"
