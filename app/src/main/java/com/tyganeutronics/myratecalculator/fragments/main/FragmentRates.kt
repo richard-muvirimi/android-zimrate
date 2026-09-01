@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
@@ -107,7 +107,7 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         )
 
         requireViewById<RecyclerView>(R.id.rv_rates).apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = ratesLayoutManager()
             adapter = this@FragmentRates.adapter
         }
 
@@ -121,6 +121,22 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         }
 
         attachSwipeToHide()
+    }
+
+    /**
+     * One column on a phone held upright, more once the window is wide enough that a card would
+     * otherwise stretch. Section headings span the full row so the grouping still reads.
+     */
+    private fun ratesLayoutManager(): GridLayoutManager {
+        val columns = resources.getInteger(R.integer.rates_columns)
+
+        return GridLayoutManager(context, columns).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                // Headings are the rows entityAt cannot resolve to a rate.
+                override fun getSpanSize(position: Int) =
+                    if (adapter.entityAt(position) == null) columns else 1
+            }
+        }
     }
 
     override fun syncViews() {

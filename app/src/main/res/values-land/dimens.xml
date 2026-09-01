@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        A 148dp collapsing toolbar costs over a third of a phone screen turned on its side,
+        leaving barely two rates visible before a scroll. The title margin comes down with it
+        so the expanded headline still sits clear of the pinned toolbar.
+    -->
+    <dimen name="toolbar_height">96dp</dimen>
+    <dimen name="toolbar_margin_bottom">16dp</dimen>
+
+</resources>
