@@ -42,6 +42,13 @@ android {
         buildConfig = true
     }
 
+    androidResources {
+        // Generates the locale config from the values-* folders and wires it into the manifest,
+        // so the supported set cannot drift from the translations that actually ship. Gives the
+        // per-app language picker in system settings on API 33 and up.
+        generateLocaleConfig true
+    }
+
     compileOptions {
         coreLibraryDesugaringEnabled true
 
