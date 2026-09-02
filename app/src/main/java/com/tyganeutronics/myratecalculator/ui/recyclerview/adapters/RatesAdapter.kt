@@ -115,6 +115,11 @@ class RatesAdapter(
     fun entityAt(position: Int): RateEntity? =
         (currentList.getOrNull(position) as? RateListItem.Rate)?.entity
 
+    /** The first rate under [section], or null when that section has no rows. */
+    fun firstPositionIn(section: Section): Int? =
+        currentList.indexOfFirst { it is RateListItem.Rate && sectionOf(it.entity) == section }
+            .takeIf { it >= 0 }
+
     override fun getItemId(position: Int): Long = when (val item = getItem(position)) {
         // Heading ids are negative so they cannot collide with row ids from the database.
         is RateListItem.Header -> -item.titleRes.toLong()

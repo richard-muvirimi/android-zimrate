@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">Hulp</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Hou dit bo</string>
+    <string name="prompt_pin_description">Tik die ster om \'n geldeenheid bo in die lys te hou. Geldeenhede met \'n ster is ook dié wat jou legstukke, jou horlosie en die Koerse-skerm wys.</string>
+
+    <string name="prompt_hide">Versteek wat jy nie gebruik nie</string>
+    <string name="prompt_hide_description">Swiep \'n kaart weg om daardie geldeenheid te versteek. Versteekte geldeenhede kom uit die kieslys terug.</string>
+
+    <string name="prompt_coins">Verfris kos \'n muntstuk</string>
+    <string name="prompt_coins_description">Elke verfrissing van die koerse kos een muntstuk. Tik jou saldo om dit aan te vul.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Tik om om te skakel</string>
+    <string name="prompt_bubble_description">Tik enige sirkel om daarvandaan om te skakel, en tik dan \'n bedrag in om te sien wat dit in die ander werd is.</string>
+
+</resources>

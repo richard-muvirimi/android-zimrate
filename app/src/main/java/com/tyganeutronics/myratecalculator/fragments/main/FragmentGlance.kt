@@ -2,6 +2,9 @@ package com.tyganeutronics.myratecalculator.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +16,11 @@ import com.tyganeutronics.myratecalculator.fragments.FragmentCalculator
 import com.tyganeutronics.myratecalculator.ui.BubbleFlowLayout
 import com.tyganeutronics.myratecalculator.ui.RateBubbleBinder
 import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
+import com.tyganeutronics.myratecalculator.utils.traits.helpPrompt
 import com.tyganeutronics.myratecalculator.utils.traits.requireViewById
 import com.tyganeutronics.myratecalculator.utils.traits.setTitle
+import com.tyganeutronics.myratecalculator.utils.traits.showHelpOnce
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -42,6 +48,7 @@ class FragmentGlance : BaseFragment(), CalcDialog.CalcDialogCallback {
         const val TAG = "FragmentGlance"
         private const val CALC_REQUEST_AMOUNT = 1
         private const val DEFAULT_BASE = "USD"
+        private const val HELP_KEY = "showGlanceHelp"
     }
 
     override fun onCreateView(
@@ -50,6 +57,49 @@ class FragmentGlance : BaseFragment(), CalcDialog.CalcDialogCallback {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_glance, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_glance, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_help -> {
+                firebaseAnalytics.logEvent("show_help_sequence", null)
+                showHelp()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * That a circle can be tapped at all is the one thing this screen has no way of showing.
+     *
+     * The bubbles are held still for the duration: the prompt reads its focal circle off the
+     * target once, when it is shown, so a bubble that kept drifting would slide out of its own
+     * spotlight.
+     */
+    private fun showHelp() {
+        val flow = requireViewById<BubbleFlowLayout>(R.id.flow_bubbles)
+        val bubble = flow.getChildAt(0) ?: return
+
+        flow.pauseDrift()
+        MaterialTapTargetSequence()
+            .addPrompt(
+                helpPrompt(R.string.prompt_bubble, R.string.prompt_bubble_description)
+                    .setTarget(bubble)
+            )
+            .setSequenceCompleteListener { flow.resumeDrift() }
+            .show()
     }
 
     override fun bindViews() {
@@ -100,6 +150,11 @@ class FragmentGlance : BaseFragment(), CalcDialog.CalcDialogCallback {
             if (empty) View.VISIBLE else View.GONE
         requireViewById<View>(R.id.sv_bubbles).visibility =
             if (empty) View.GONE else View.VISIBLE
+
+        // Posted so the bubble being pointed at has been laid out. Nothing is spent while the
+        // screen is empty, so someone who has not favourited anything yet still gets the prompt
+        // the first time they have a circle to tap.
+        if (!empty) flow.post { showHelpOnce(HELP_KEY) { showHelp() } }
     }
 
     /**

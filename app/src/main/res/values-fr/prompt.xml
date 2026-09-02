@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">Aide</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Gardez-la en haut</string>
+    <string name="prompt_pin_description">Touchez l\'étoile pour garder une devise en haut de la liste. Les devises étoilées sont aussi celles qu\'affichent vos widgets, votre montre et l\'écran Taux.</string>
+
+    <string name="prompt_hide">Masquez ce que vous n\'utilisez pas</string>
+    <string name="prompt_hide_description">Balayez une carte pour masquer cette devise. Les devises masquées se retrouvent dans le menu.</string>
+
+    <string name="prompt_coins">Actualiser coûte une pièce</string>
+    <string name="prompt_coins_description">Chaque actualisation des taux coûte une pièce. Touchez votre solde pour le recharger.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Touchez pour convertir</string>
+    <string name="prompt_bubble_description">Touchez un cercle pour convertir à partir de cette devise, puis saisissez un montant pour voir ce qu\'il vaut dans les autres.</string>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">Msaada</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Iweke juu</string>
+    <string name="prompt_pin_description">Gusa nyota ili kuweka sarafu juu ya orodha. Sarafu zenye nyota ndizo zinazoonyeshwa na wijeti zako, saa yako na skrini ya Viwango.</string>
+
+    <string name="prompt_hide">Ficha usichotumia</string>
+    <string name="prompt_hide_description">Telezesha kadi ili kuficha sarafu hiyo. Sarafu zilizofichwa hurudi kupitia menyu.</string>
+
+    <string name="prompt_coins">Kuburudisha hutumia sarafu</string>
+    <string name="prompt_coins_description">Kila uburudishaji wa viwango hugharimu sarafu moja. Gusa salio lako ili kuliongeza.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Gusa ili kubadilisha</string>
+    <string name="prompt_bubble_description">Gusa duara lolote ili kubadilisha kutoka sarafu hiyo, kisha andika kiasi ili kuona thamani yake katika nyingine.</string>
+
+</resources>

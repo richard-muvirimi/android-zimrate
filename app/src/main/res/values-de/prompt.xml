@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">Hilfe</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Oben halten</string>
+    <string name="prompt_pin_description">Tippen Sie auf den Stern, um eine Währung oben in der Liste zu halten. Die markierten Währungen sind auch die, die Ihre Widgets, Ihre Uhr und der Kurse-Bildschirm zeigen.</string>
+
+    <string name="prompt_hide">Ausblenden, was Sie nicht brauchen</string>
+    <string name="prompt_hide_description">Wischen Sie eine Karte weg, um diese Währung auszublenden. Ausgeblendete Währungen finden Sie über das Menü wieder.</string>
+
+    <string name="prompt_coins">Aktualisieren kostet eine Münze</string>
+    <string name="prompt_coins_description">Jede Aktualisierung der Kurse kostet eine Münze. Tippen Sie auf Ihr Guthaben, um es aufzufüllen.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Zum Umrechnen tippen</string>
+    <string name="prompt_bubble_description">Tippen Sie auf einen Kreis, um aus dieser Währung umzurechnen, und geben Sie dann einen Betrag ein, um zu sehen, was er in den anderen wert ist.</string>
+
+</resources>

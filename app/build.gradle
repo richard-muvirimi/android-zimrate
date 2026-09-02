@@ -109,6 +109,9 @@ dependencies {
     //licenses dialog
     implementation 'de.psdev.licensesdialog:licensesdialog:2.2.0'
 
+    //tap target prompt
+    implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
+
     //multi dex
     implementation 'androidx.multidex:multidex:2.0.1'
 

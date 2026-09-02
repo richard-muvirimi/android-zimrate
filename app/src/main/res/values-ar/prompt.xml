@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">مساعدة</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">أبقِها في الأعلى</string>
+    <string name="prompt_pin_description">اضغط على النجمة لإبقاء عملة في أعلى القائمة. العملات المميزة بنجمة هي نفسها التي تظهر في الأدوات وفي ساعتك وفي شاشة الأسعار.</string>
+
+    <string name="prompt_hide">أخفِ ما لا تستخدمه</string>
+    <string name="prompt_hide_description">اسحب البطاقة لإخفاء تلك العملة. تعود العملات المخفية من القائمة.</string>
+
+    <string name="prompt_coins">التحديث يكلف عملة</string>
+    <string name="prompt_coins_description">كل تحديث للأسعار يكلف عملة واحدة. اضغط على رصيدك لشحنه.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">اضغط للتحويل</string>
+    <string name="prompt_bubble_description">اضغط على أي دائرة للتحويل من تلك العملة، ثم أدخل مبلغاً لمعرفة قيمته بالعملات الأخرى.</string>
+
+</resources>

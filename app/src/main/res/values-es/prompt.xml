@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">Ayuda</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Mantenla arriba</string>
+    <string name="prompt_pin_description">Toca la estrella para mantener una moneda arriba en la lista. Las monedas con estrella son también las que muestran tus widgets, tu reloj y la pantalla Tasas.</string>
+
+    <string name="prompt_hide">Oculta lo que no uses</string>
+    <string name="prompt_hide_description">Desliza una tarjeta para ocultar esa moneda. Las monedas ocultas vuelven desde el menú.</string>
+
+    <string name="prompt_coins">Actualizar gasta una moneda</string>
+    <string name="prompt_coins_description">Cada actualización de las tasas cuesta una moneda. Toca tu saldo para recargarlo.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Toca para convertir</string>
+    <string name="prompt_bubble_description">Toca cualquier círculo para convertir desde esa moneda, y luego introduce un importe para ver cuánto vale en las demás.</string>
+
+</resources>

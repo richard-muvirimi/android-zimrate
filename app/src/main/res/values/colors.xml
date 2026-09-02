@@ -32,4 +32,12 @@
     <color name="glance_base_stroke">#FF01579B</color>
     <color name="glance_trend_rose">#FFC62828</color>
     <color name="glance_trend_fell">#FF2E7D32</color>
+
+    <!--
+        The circle a tap target prompt cuts out of its scrim. The target is redrawn on top of it
+        untouched, and the icons it points at carry a baked in tint — #333333 by day, #FFFFFF by
+        night — so this has to follow the same day/night polarity as colorSurface or the icon is
+        white on white and disappears inside its own spotlight. Dark counterpart in values-night.
+    -->
+    <color name="prompt_focal">#FFFFFFFF</color>
 </resources>

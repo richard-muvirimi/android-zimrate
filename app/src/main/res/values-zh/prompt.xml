@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">帮助</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">固定在顶部</string>
+    <string name="prompt_pin_description">点按星标可将货币固定在列表顶部。带星标的货币也是小部件、手表和汇率界面所显示的货币。</string>
+
+    <string name="prompt_hide">隐藏不需要的货币</string>
+    <string name="prompt_hide_description">滑动卡片即可隐藏该货币。已隐藏的货币可从菜单中找回。</string>
+
+    <string name="prompt_coins">刷新会消耗金币</string>
+    <string name="prompt_coins_description">每次刷新汇率会消耗一枚金币。点按余额即可充值。</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">点按即可换算</string>
+    <string name="prompt_bubble_description">点按任意圆圈即可从该货币换算，然后输入金额，即可查看其在其他货币中的价值。</string>
+
+</resources>

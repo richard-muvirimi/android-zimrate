@@ -29,18 +29,24 @@ import com.tyganeutronics.myratecalculator.interfaces.RewardsActivity
 import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
 import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.CalcField
 import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.RatesAdapter
+import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.Section
 import com.tyganeutronics.myratecalculator.utils.contracts.CurrencyContract
 import com.tyganeutronics.myratecalculator.utils.resolveAttr
 import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
 import com.tyganeutronics.myratecalculator.utils.traits.getLongPref
 import com.tyganeutronics.myratecalculator.utils.traits.getStringPref
+import com.tyganeutronics.myratecalculator.utils.traits.helpPrompt
 import com.tyganeutronics.myratecalculator.utils.traits.putLongPref
 import com.tyganeutronics.myratecalculator.utils.traits.invalidateOptionsMenu
 import com.tyganeutronics.myratecalculator.utils.traits.requireViewById
 import com.tyganeutronics.myratecalculator.utils.traits.setTitle
+import com.tyganeutronics.myratecalculator.utils.traits.showHelpOnce
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.concurrent.TimeUnit
 
 class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
@@ -59,6 +65,7 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         const val TAG = "FragmentRates"
         private const val CALC_REQUEST_RATE = 1
         private const val CALC_REQUEST_AMOUNT = 2
+        private const val HELP_KEY = "showRatesHelp"
     }
 
     override fun onCreateView(
@@ -172,8 +179,20 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
             requireViewById<View>(R.id.rv_rates).visibility =
                 if (empty) View.GONE else View.VISIBLE
 
+            // Posted so the first cards are laid out and can be pointed at.
+            if (!empty) requireViewById<RecyclerView>(R.id.rv_rates).post { maybeShowHelp() }
+
             maybeAutoFetch()
         }
+    }
+
+    /**
+     * The flag is only spent once Other rates has something in it, so a first load that arrives
+     * without it does not burn the single chance to show the sequence unprompted.
+     */
+    private fun maybeShowHelp() {
+        if (adapter.firstPositionIn(Section.OTHERS) == null) return
+        showHelpOnce(HELP_KEY) { showHelp() }
     }
 
     /**
@@ -257,7 +276,51 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
                 true
             }
 
+            R.id.menu_help -> {
+                firebaseAnalytics.logEvent("show_help_sequence", null)
+                showHelp()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * The three things this screen cannot show it does: the star, the swipe, and what a refresh
+     * costs.
+     *
+     * Anchored to Other rates rather than to whatever card happens to be first. Both gestures
+     * only make sense against a currency the user has not dealt with yet — telling someone to
+     * star a row that is already starred, or to swipe away USD, which is pinned and cannot be
+     * hidden, explains nothing.
+     */
+    private fun showHelp() {
+        val rv = requireViewById<RecyclerView>(R.id.rv_rates)
+        val position = adapter.firstPositionIn(Section.OTHERS) ?: return
+
+        // Other rates sit below the favourites, so the card being explained is usually off
+        // screen — there would be nothing under the spotlight without this.
+        rv.scrollToPosition(position)
+        rv.post {
+            val card = rv.findViewHolderForAdapterPosition(position)?.itemView ?: return@post
+
+            MaterialTapTargetSequence()
+                .addPrompt(
+                    helpPrompt(R.string.prompt_pin, R.string.prompt_pin_description)
+                        .setTarget(card.findViewById<View>(R.id.btn_pin))
+                )
+                .addPrompt(
+                    helpPrompt(R.string.prompt_hide, R.string.prompt_hide_description)
+                        .setTarget(card)
+                        .setPromptFocal(RectanglePromptFocal())
+                        .setPromptBackground(RectanglePromptBackground())
+                )
+                .addPrompt(
+                    helpPrompt(R.string.prompt_coins, R.string.prompt_coins_description)
+                        .setTarget(R.id.menu_coins)
+                )
+                .show()
         }
     }
 

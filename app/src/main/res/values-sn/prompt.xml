@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TODO native review -->
+
+    <string name="menu_help">Rubatsiro</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Ichengete iri pamusoro</string>
+    <string name="prompt_pin_description">Baya nyeredzi kuti mari irambe iri pamusoro perunyorwa. Mari ine nyeredzi ndiyo inoratidzwa nemawidget ako, wachi yako uye chikuva cheMarates.</string>
+
+    <string name="prompt_hide">Vanza zvausingashandisi</string>
+    <string name="prompt_hide_description">Swaipa kadhi kuti uvanze mari iyoyo. Mari yakavanzwa inodzoka nepamenyu.</string>
+
+    <string name="prompt_coins">Kusvenura kunodya mari</string>
+    <string name="prompt_coins_description">Kusvenura kwega kwega kwemarates kunodya mari imwe. Baya bhalansi yako kuti uiwedzere.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Baya kuti ushandure</string>
+    <string name="prompt_bubble_description">Baya chero denderedzwa kuti ushandure uchibva pamari iyoyo, wozonyora mari kuti uone kuti yakaenzana nezvakadii mune dzimwe.</string>
+
+</resources>

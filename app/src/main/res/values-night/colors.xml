@@ -15,4 +15,7 @@
     <color name="glance_trend_rose">#FFEF9A9A</color>
     <color name="glance_trend_fell">#FFA5D6A7</color>
 
+    <!-- Dark counterpart of the prompt focal declared in values/colors.xml. -->
+    <color name="prompt_focal">#FF121212</color>
+
 </resources>
