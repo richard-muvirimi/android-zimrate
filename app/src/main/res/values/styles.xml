@@ -29,6 +29,15 @@
         <item name="android:navigationBarColor">?attr/colorSurface</item>
     </style>
 
+    <!--
+        A percentage corner size stays a circle at any diameter, which the glance bubbles need
+        because each one is sized at bind time.
+    -->
+    <style name="ShapeAppearance.Zimrate.Bubble" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!--layout_toolbar-->
 
     <style name="AppTheme.Toolbar.Expanded" parent="TextAppearance.MaterialComponents.Headline4">

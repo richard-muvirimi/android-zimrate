@@ -28,6 +28,13 @@ object WearSyncHelper {
                     // flag OMIR after Oman without being told.
                     put("custom", entity.custom)
                     put("rate", entity.rate.setScale(2, java.math.RoundingMode.HALF_UP).toPlainString())
+                    // Rounded the same way as the rate above, so the watch only marks a move it
+                    // can actually show — a change too small to alter the displayed number is not
+                    // one the wearer can see.
+                    put(
+                        "lastRate",
+                        entity.lastRate.setScale(2, java.math.RoundingMode.HALF_UP).toPlainString()
+                    )
                     put("lastChecked", lastChecked)
                 })
             }

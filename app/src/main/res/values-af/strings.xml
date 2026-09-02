@@ -80,6 +80,8 @@
     <string name="hint_rate">Koers</string>
     <string name="hint_amount">Bedrag</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="glance_rate_rose">Gestyg vanaf %1$s</string>
+    <string name="glance_rate_fell">Gedaal vanaf %1$s</string>
     <string name="content_description_flag">Geldeenheid vlag</string>
     <string name="content_description_pin">Vaspen geldeenheid</string>
     <string name="content_description_refresh">Verfris wisselkoers</string>

@@ -50,6 +50,7 @@ object RatesModel {
                 name = r.name ?: currency
                 url = r.url ?: ""
                 rate = r.rate?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                lastRate = r.last_rate?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
                 lastChecked = r.last_updated?.toLong()
                     ?.let { Instant.ofEpochSecond(it) } ?: Instant.now()
             }

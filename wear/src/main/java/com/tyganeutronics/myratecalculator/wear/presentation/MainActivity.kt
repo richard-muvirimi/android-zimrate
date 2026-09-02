@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -44,7 +45,9 @@ import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
 import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
 import com.tyganeutronics.myratecalculator.wear.presentation.theme.ZimRateWearTheme
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
+import com.tyganeutronics.myratecalculator.wear.data.append
 import com.tyganeutronics.myratecalculator.wear.data.label
+import com.tyganeutronics.myratecalculator.wear.data.move
 
 class MainActivity : ComponentActivity() {
 
@@ -190,11 +193,14 @@ fun RateRow(rate: WearRateModel, highlighted: Boolean = false) {
             modifier = Modifier.weight(1f),
         )
         Spacer(Modifier.width(6.dp))
+        // The movement colour wins over the focus highlight on the number itself; the label to
+        // its left still carries the highlight, so a focused row is not mistaken for a moved one.
+        val move = rate.move()
         Text(
-            text = rate.rate,
+            text = move.append(rate.rate),
             fontWeight = FontWeight.Bold,
             fontSize = 13.sp,
-            color = color,
+            color = move.color?.let { Color(it) } ?: color,
         )
     }
 }

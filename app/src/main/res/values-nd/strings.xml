@@ -82,6 +82,9 @@
     <string name="hint_rate">Intengo</string>
     <string name="hint_amount">Imali</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <!-- TODO native review: translated without a native speaker. -->
+    <string name="glance_rate_rose">Kwenyuke kusuka ku-%1$s</string>
+    <string name="glance_rate_fell">Kwehle kusuka ku-%1$s</string>
     <string name="content_description_flag">Iflegi yemali</string>
     <string name="content_description_pin">Phina imali</string>
     <string name="content_description_refresh">Vuselela intengo yemali</string>

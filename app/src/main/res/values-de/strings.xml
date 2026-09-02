@@ -80,6 +80,8 @@
     <string name="hint_rate">Kurs</string>
     <string name="hint_amount">Betrag</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="glance_rate_rose">Gestiegen von %1$s</string>
+    <string name="glance_rate_fell">Gefallen von %1$s</string>
     <string name="content_description_flag">Währungsflagge</string>
     <string name="content_description_pin">Währung anheften</string>
     <string name="content_description_refresh">Wechselkurs aktualisieren</string>

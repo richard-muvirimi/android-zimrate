@@ -42,6 +42,8 @@ import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
 import com.tyganeutronics.myratecalculator.wear.presentation.MainActivity
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
 import com.tyganeutronics.myratecalculator.wear.data.label
+import com.tyganeutronics.myratecalculator.wear.data.append
+import com.tyganeutronics.myratecalculator.wear.data.move
 import java.nio.ByteBuffer
 
 class RateTileService : TileService() {
@@ -162,9 +164,12 @@ class RateTileService : TileService() {
                 .setWidth(expand())
                 .setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
                 .addContent(
+                    // The hero number keeps the movement colour but not the mark — an arrow at
+                    // display size crowds the number off a small round screen. The mark rides in
+                    // the label above it instead.
                     Text.Builder(context, hero.rate)
                         .setTypography(heroTypography(device))
-                        .setColor(argb(COLORS.primary))
+                        .setColor(argb(hero.move().color ?: COLORS.primary))
                         .build()
                 )
 
@@ -209,6 +214,17 @@ class RateTileService : TileService() {
                         .setOverflow(TEXT_OVERFLOW_ELLIPSIZE)
                         .build()
                 )
+                .apply {
+                    val move = rate.move()
+                    move.color?.let { color ->
+                        addContent(
+                            Text.Builder(context, move.mark)
+                                .setTypography(Typography.TYPOGRAPHY_CAPTION1)
+                                .setColor(argb(color))
+                                .build()
+                        )
+                    }
+                }
                 .build()
 
         private fun supportingRow(context: Context, rate: WearRateModel): LayoutElement =
@@ -246,10 +262,12 @@ class RateTileService : TileService() {
                 )
                 .addContent(Spacer.Builder().setWidth(dp(4f)).build())
                 .addContent(
-                    Text.Builder(context, rate.rate)
-                        .setTypography(Typography.TYPOGRAPHY_CAPTION1)
-                        .setColor(argb(COLORS.onSurface))
-                        .build()
+                    rate.move().let { move ->
+                        Text.Builder(context, move.append(rate.rate))
+                            .setTypography(Typography.TYPOGRAPHY_CAPTION1)
+                            .setColor(argb(move.color ?: COLORS.onSurface))
+                            .build()
+                    }
                 )
                 .build()
 

@@ -127,6 +127,7 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
             val fresh = dao.findByCurrency(entity.currency) ?: return@launch
             if (fresh.rate.compareTo(rate) == 0) return@launch
 
+            fresh.lastRate = fresh.rate
             fresh.rate = rate
             fresh.lastChecked = Instant.now()
             fresh.updatedAt = Instant.now()

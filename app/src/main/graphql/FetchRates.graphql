@@ -1,6 +1,7 @@
 query FetchRates($prefer: Prefer) {
     rates : rate(prefer: $prefer) {
         currency
+        last_rate
         last_updated
         name
         rate

@@ -80,6 +80,8 @@
     <string name="hint_rate">Tipo</string>
     <string name="hint_amount">Monto</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="glance_rate_rose">Subió desde %1$s</string>
+    <string name="glance_rate_fell">Bajó desde %1$s</string>
     <string name="content_description_flag">Bandera de moneda</string>
     <string name="content_description_pin">Fijar moneda</string>
     <string name="content_description_refresh">Actualizar tipo de cambio</string>
