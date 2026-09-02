@@ -17,8 +17,8 @@ android {
         // recommends a scheme independent of the phone app rather than one kept in step
         // with it: <targetSdk><3 digit wear release>.
         // https://developer.android.com/training/wearables/apps/packaging
-        versionCode 36002
-        versionName "1.0.1"
+        versionCode 36003
+        versionName "1.1.0"
     }
 
     buildTypes {
