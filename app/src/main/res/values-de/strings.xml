@@ -30,7 +30,7 @@
     <string name="menu_close">Schließen</string>
 
     <string name="menu_history">Verlauf</string>
-    <string name="menu_home">Startseite</string>
+    <string name="menu_rates">Kurse</string>
     <string name="menu_calculator">Rechner</string>
 
     <string name="info_message">1. Ziehen Sie die Kursliste nach unten, um zu aktualisieren, oder nutzen Sie Alles aktualisieren im Menü. Jede Aktualisierung kostet eine Münze.\n\n2. Kurse aktualisieren sich auch von selbst im Hintergrund. In den Einstellungen legen Sie fest, wie oft, oder schalten es ab.\n\n3. Geben Sie einen Betrag in einer beliebigen Währung ein, um daraus umzurechnen. Alle anderen Kurse passen sich an.\n\n4. Tippen Sie auf den Stern, um eine Währung oben zu halten, oder wischen Sie eine Karte weg, um sie auszublenden. Ausgeblendete Währungen finden Sie über das Menü wieder.\n\n5. Mit der Taste + fügen Sie einen eigenen Kurs hinzu, für alles, was die App nicht führt.\n\n6. Tippen Sie auf den Ländernamen unter einem Kurs, um zu sehen, woher er stammt.\n\n7. Fügen Sie ein Widget zum Startbildschirm hinzu, um Ihre Kurse ohne Öffnen der App zu lesen.</string>

@@ -30,7 +30,7 @@
     <string name="menu_close">Fermer</string>
 
     <string name="menu_history">Historique</string>
-    <string name="menu_home">Accueil</string>
+    <string name="menu_rates">Taux</string>
     <string name="menu_calculator">Calculatrice</string>
 
     <string name="info_message">1. Tirez vers le bas sur la liste des taux pour actualiser, ou utilisez Tout actualiser dans le menu. Chaque actualisation coûte une pièce.\n\n2. Les taux s\'actualisent aussi d\'eux-mêmes en arrière-plan. Les paramètres règlent la fréquence, ou désactivent la fonction.\n\n3. Saisissez un montant dans n\'importe quelle devise pour convertir à partir de celle-ci. Tous les autres taux se mettent à jour.\n\n4. Touchez l\'étoile pour garder une devise en haut, ou balayez une carte pour la masquer. Les devises masquées se retrouvent dans le menu.\n\n5. Utilisez le bouton + pour ajouter votre propre taux, pour tout ce que l\'application ne propose pas.\n\n6. Touchez le nom du pays sous un taux pour voir sa provenance.\n\n7. Ajoutez un widget à votre écran d\'accueil pour consulter vos taux sans ouvrir l\'application.</string>

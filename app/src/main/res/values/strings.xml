@@ -39,7 +39,7 @@
     <string name="menu_close">Close</string>
 
     <string name="menu_history">History</string>
-    <string name="menu_home">Home</string>
+    <string name="menu_rates">Rates</string>
     <string name="menu_calculator">Calculator</string>
 
     <string name="info_message">1. Pull down on the rates list to refresh, or use Refresh All from the menu. Each refresh spends a coin.\n\n2. Rates also refresh on their own in the background. Settings controls how often, or turns it off.\n\n3. Type an amount into any currency to convert from it. Every other rate updates to match.\n\n4. Tap the star to keep a currency at the top, or swipe a card away to hide it. Hidden currencies come back from the menu.\n\n5. Use the + button to add a rate of your own, for anything the app does not carry.\n\n6. Tap the country name under a rate to see where it came from.\n\n7. Add a widget to your home screen to read your rates without opening the app.</string>

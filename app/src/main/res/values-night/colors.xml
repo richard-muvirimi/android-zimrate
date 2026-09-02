@@ -11,6 +11,7 @@
     <color name="glance_bubble_rose">#FF3B2523</color>
     <color name="glance_bubble_fell">#FF1D3324</color>
     <color name="glance_bubble_flat">#FF1F2A38</color>
+    <color name="glance_base_stroke">#FF7FB3F0</color>
     <color name="glance_trend_rose">#FFEF9A9A</color>
     <color name="glance_trend_fell">#FFA5D6A7</color>
 

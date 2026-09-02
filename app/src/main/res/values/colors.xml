@@ -28,6 +28,8 @@
         beyond "did not move" — the two colours that do mean something sit either side of it.
     -->
     <color name="glance_bubble_flat">#FFE7EEF7</color>
+    <!-- Ring on the bubble everything else is being converted from. -->
+    <color name="glance_base_stroke">#FF01579B</color>
     <color name="glance_trend_rose">#FFC62828</color>
     <color name="glance_trend_fell">#FF2E7D32</color>
 </resources>
