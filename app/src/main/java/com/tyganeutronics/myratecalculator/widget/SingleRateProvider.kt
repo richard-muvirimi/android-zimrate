@@ -10,11 +10,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.activities.MainActivity
-import com.tyganeutronics.myratecalculator.utils.CurrencyFlagUtil
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import com.tyganeutronics.myratecalculator.utils.traits.getStringPref
 import com.tyganeutronics.myratecalculator.utils.traits.removePref
@@ -66,12 +64,16 @@ class SingleRateProvider : AppWidgetProvider() {
             ?.setScale(2, RoundingMode.HALF_UP)
             ?.toPlainString() ?: "—"
 
-        val countryCode = CurrencyFlagUtil.countryCode(currency)
-        val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(context, countryCode) else 0
-        views.setImageViewResource(R.id.img_single_flag, if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
+        val custom = entity?.custom == true
+        views.setImageViewResource(
+            R.id.img_single_flag,
+            WidgetUtils.flagRes(context, currency, custom),
+        )
 
-        views.setTextViewText(R.id.txt_single_code, currency)
-        views.setTextViewText(R.id.txt_single_name, entity?.name?.ifEmpty { currency } ?: currency)
+        views.setTextViewText(
+            R.id.txt_single_name,
+            WidgetUtils.label(context, currency, custom, entity?.name.orEmpty()),
+        )
         views.setTextViewText(R.id.txt_single_rate, rateText)
 
         // Hidden until there is a real sync stamp, so the row does not show an empty line.

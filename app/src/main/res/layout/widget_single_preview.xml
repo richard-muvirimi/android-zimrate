@@ -12,29 +12,12 @@
     android:padding="@dimen/padding_8"
     tools:ignore="HardcodedText">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="44dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/content_description_flag"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="ZAR"
-            android:textColor="@color/widget_text_primary"
-            android:textSize="10sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+        android:layout_height="28dp"
+        android:contentDescription="@string/content_description_flag"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -47,9 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="South African Rand"
-            android:textColor="@color/widget_text_secondary"
-            android:textSize="11sp" />
+            android:text="South Africa"
+            android:textColor="@color/widget_text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"

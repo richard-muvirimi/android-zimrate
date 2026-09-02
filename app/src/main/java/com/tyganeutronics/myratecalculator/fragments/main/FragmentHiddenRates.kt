@@ -16,6 +16,7 @@ import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.database.viewmodels.RatesViewModel
 import com.tyganeutronics.myratecalculator.utils.CurrencyFlagUtil
+import com.tyganeutronics.myratecalculator.utils.resolveAttr
 
 class FragmentHiddenRates : BottomSheetDialogFragment() {
 
@@ -74,9 +75,15 @@ class FragmentHiddenRates : BottomSheetDialogFragment() {
             private val btnRestore: Button = view.findViewById(R.id.btn_restore)
 
             fun bind(entity: RateEntity) {
-                val countryCode = CurrencyFlagUtil.countryCode(entity.currency)
-                val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(itemView.context, countryCode) else 0
-                imgFlag.setImageResource(if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
+                // Matches the rates list: a custom code has no country, so it shows the
+                // currency mark rather than an unrelated flag.
+                if (entity.custom) {
+                    imgFlag.setImageResource(itemView.context.resolveAttr(R.attr.ic_dollar))
+                } else {
+                    val countryCode = CurrencyFlagUtil.countryCode(entity.currency)
+                    val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(itemView.context, countryCode) else 0
+                    imgFlag.setImageResource(if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
+                }
 
                 txtCode.text = entity.currency
                 txtName.text = entity.name.ifEmpty { entity.currency }

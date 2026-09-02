@@ -6,4 +6,5 @@
     <string name="no_rates">Hakuna viwango vinavyopendwa.\nFungua ZimRate kwenye simu yako ili kuongeza baadhi.</string>
     <string name="updated_at">Ilisasishwa %s</string>
     <string name="pick_currency">Chagua sarafu ya kionyeshi</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
 </resources>

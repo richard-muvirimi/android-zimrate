@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 10" tablets in landscape. -->
+    <integer name="rates_columns">3</integer>
+
+</resources>

@@ -1,7 +1,7 @@
 package com.tyganeutronics.myratecalculator.database.models
 
 import android.content.Context
-import com.apollographql.apollo3.api.Optional
+import com.apollographql.apollo.api.Optional
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.graphql.FetchRatesQuery
@@ -38,6 +38,10 @@ object RatesModel {
             .query(FetchRatesQuery(prefer = Optional.present(prefer)))
             .execute()
 
+        // Apollo 4+ surfaces fetch errors on the response instead of throwing. Callers tell
+        // "no rates" apart from "request failed", so keep failures propagating as before.
+        response.exception?.let { throw it }
+
         return response.data?.rates?.mapNotNull { r ->
             if (singleCurrency != null && r.currency != singleCurrency) return@mapNotNull null
 
@@ -62,7 +66,7 @@ object RatesModel {
         AppZimRate.database.runInTransaction {
             // Only inject a synthetic USD base for full refreshes (more than one currency).
             // Single-currency per-row refreshes should not touch USD.
-            val ratesToSave = when {
+            val candidates = when {
                 apiRates.any { it.currency == "USD" } -> apiRates
                 apiRates.size > 1 -> apiRates + RateEntity().apply {
                     currency = "USD"
@@ -73,6 +77,10 @@ object RatesModel {
 
                 else -> apiRates
             }
+
+            // A currency the user defined owns that code outright. Should the server ever start
+            // returning it, their row stays as they typed it rather than being overwritten.
+            val ratesToSave = candidates.filterNot { dao.findByCurrency(it.currency)?.custom == true }
 
             val now = Instant.now()
             ratesToSave.forEach { incoming ->

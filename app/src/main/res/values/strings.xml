@@ -42,7 +42,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_calculator">Calculator</string>
 
-    <string name="info_message">1. To refresh rates at any time, you can swipe from the top on this screen.\n\n2. You can also add a widget to your home screen to view last loaded rates without opening app. (Rates are not loaded in the background)\n\n3. You can instantly use the calculated result for further calculation by pressing the desired result.</string>
+    <string name="info_message">1. Pull down on the rates list to refresh, or use Refresh All from the menu. Each refresh spends a coin.\n\n2. Rates also refresh on their own in the background. Settings controls how often, or turns it off.\n\n3. Type an amount into any currency to convert from it. Every other rate updates to match.\n\n4. Tap the star to keep a currency at the top, or swipe a card away to hide it. Hidden currencies come back from the menu.\n\n5. Use the + button to add a rate of your own, for anything the app does not carry.\n\n6. Tap the country name under a rate to see where it came from.\n\n7. Add a widget to your home screen to read your rates without opening the app.</string>
     <string name="info_dismiss">OK</string>
     <string name="about">About</string>
     <string name="author">Author</string>
@@ -76,6 +76,7 @@
     <!-- Rate list sections -->
     <string name="section_favourites">Favourites</string>
     <string name="section_suggested">Suggested favourites</string>
+    <string name="section_custom_rates">Your rates</string>
     <string name="section_other_rates">Other rates</string>
 
     <!-- Empty state -->
@@ -89,9 +90,32 @@
     <string name="no_pinned_rates">No favourited rates</string>
     <string name="restore">Restore</string>
 
+    <!-- Custom rates -->
+    <string name="custom_rate_add">Add custom rate</string>
+    <string name="custom_rate_summary">Track a rate the app does not carry — a parallel market rate, or a currency of your own. It stays exactly as you enter it and is never replaced by a refresh.</string>
+    <string name="custom_rate_hint_code">Code</string>
+    <string name="custom_rate_helper_code">Short label shown on the card, such as OMIR</string>
+    <string name="custom_rate_hint_name">Name</string>
+    <string name="custom_rate_hint_rate">Rate for 1 USD</string>
+    <string name="custom_rate_save">Save</string>
+    <string name="custom_rate_error_code">Enter a code</string>
+    <string name="custom_rate_error_duplicate">%s is already in your list</string>
+    <string name="custom_rate_error_rate">Enter a rate above zero</string>
+    <string name="custom_rate_added">%s added</string>
+    <string name="custom_rate_delete_title">Delete %s?</string>
+    <string name="custom_rate_delete_message">This removes the rate from your list, your widgets and your watch. Rates from the server are hidden instead of deleted, so only your own are removed this way.</string>
+    <string name="custom_rate_delete_confirm">Delete</string>
+    <string name="custom_rate_deleted">%s deleted</string>
+    <string name="content_description_delete">Delete custom rate</string>
+
     <!-- Rates list / calculator -->
     <string name="hint_rate">Rate</string>
     <string name="hint_amount">Amount</string>
+    <!--
+        The currency code, then the country or custom name: ZAR · South Africa. Code first so it
+        survives where the label is ellipsized — widgets and the watch both clip this hard.
+    -->
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Currency flag</string>
     <string name="content_description_pin">Pin currency</string>
     <string name="content_description_refresh">Refresh currency rate</string>

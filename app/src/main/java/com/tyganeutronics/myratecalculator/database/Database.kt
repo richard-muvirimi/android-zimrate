@@ -27,6 +27,13 @@ abstract class Database : RoomDatabase() {
     abstract fun spends(): SpendsDao
 
     companion object {
+        /** v4 → v5: flag rates the user entered themselves, so a refresh cannot replace them. */
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE rates ADD COLUMN custom INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         /** v3 → v4: add sort_order so the rates list keeps a user defined order. */
         val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {

@@ -16,31 +16,16 @@
         android:scaleType="fitCenter"
         android:src="@mipmap/ic_launcher" />
 
-    <LinearLayout
+    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_8"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="ZAR"
-            android:textColor="@color/widget_text_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="South African Rand"
-            android:textColor="@color/widget_text_secondary"
-            android:textSize="10sp" />
-
-    </LinearLayout>
+        android:singleLine="true"
+        android:text="South Africa"
+        android:textColor="@color/widget_text_primary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"

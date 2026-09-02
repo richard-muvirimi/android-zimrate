@@ -15,6 +15,7 @@ object RatesContract {
     const val COLUMN_NAME_PINNED = "pinned"
     const val COLUMN_NAME_HIDDEN = "hidden"
     const val COLUMN_NAME_SORT_ORDER = "sort_order"
+    const val COLUMN_NAME_CUSTOM = "custom"
     const val COLUMN_NAME_LAST_UPDATED = "last_updated"
     const val COLUMN_NAME_LAST_CHECKED = "last_checked"
 }

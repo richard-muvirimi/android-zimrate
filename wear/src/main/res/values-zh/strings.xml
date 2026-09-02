@@ -6,4 +6,5 @@
     <string name="no_rates">没有收藏的汇率。\n请在手机上打开 ZimRate 添加。</string>
     <string name="updated_at">更新于%s</string>
     <string name="pick_currency">选择复杂功能显示的货币</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Phone in landscape, and 7" tablets. -->
+    <integer name="rates_columns">2</integer>
+
+</resources>

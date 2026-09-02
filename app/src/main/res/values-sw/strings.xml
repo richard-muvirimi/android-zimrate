@@ -33,7 +33,7 @@
     <string name="menu_home">Nyumbani</string>
     <string name="menu_calculator">Kikokotoo</string>
 
-    <string name="info_message">1. Ili kuburudisha viwango wakati wowote, unaweza kutelezesha kutoka juu kwenye skrini hii.\n\n2. Unaweza pia kuongeza wijeti kwenye skrini yako ya nyumbani ili kuona viwango vilivyopakiwa vya mwisho bila kufungua programu. (Viwango havipakiwa chinichini)\n\n3. Unaweza mara moja kutumia matokeo yaliyohesabiwa kwa mahesabu zaidi kwa kubonyeza matokeo unayoyataka.</string>
+    <string name="info_message">1. Vuta chini orodha ya viwango ili kuburudisha, au tumia Burudisha Yote kwenye menyu. Kila uburudishaji hutumia sarafu moja.\n\n2. Viwango pia hujiburudisha vyenyewe chinichini. Mipangilio hudhibiti mara ngapi, au huzima kabisa.\n\n3. Andika kiasi katika sarafu yoyote ili kubadilisha kutoka kwake. Viwango vingine vyote hujirekebisha.\n\n4. Gusa nyota ili kuweka sarafu juu, au telezesha kadi ili kuificha. Sarafu zilizofichwa hurudi kupitia menyu.\n\n5. Tumia kitufe cha + kuongeza kiwango chako mwenyewe, kwa chochote ambacho programu haina.\n\n6. Gusa jina la nchi chini ya kiwango ili kuona kilikotoka.\n\n7. Ongeza wijeti kwenye skrini yako ya nyumbani ili kusoma viwango bila kufungua programu.</string>
     <string name="info_dismiss">Sawa</string>
     <string name="about">Kuhusu</string>
     <string name="author">Mwandishi</string>
@@ -79,6 +79,7 @@
 
     <string name="hint_rate">Kiwango</string>
     <string name="hint_amount">Kiasi</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Bendera ya sarafu</string>
     <string name="content_description_pin">Piga pini sarafu</string>
     <string name="content_description_refresh">Burudisha kiwango cha ubadilishaji</string>
@@ -86,6 +87,24 @@
 
     <string name="section_favourites">Vipendwa</string>
     <string name="section_suggested">Vipendwa vinavyopendekezwa</string>
+    <string name="custom_rate_add">Ongeza kiwango chako</string>
+    <string name="custom_rate_summary">Fuatilia kiwango ambacho programu haina — kiwango cha soko lisilo rasmi, au sarafu yako mwenyewe. Hubaki kama ulivyokiweka na hakibadilishwi kamwe na uburudishaji.</string>
+    <string name="custom_rate_hint_code">Msimbo</string>
+    <string name="custom_rate_helper_code">Lebo fupi inayoonyeshwa kwenye kadi, kama OMIR</string>
+    <string name="custom_rate_hint_name">Jina</string>
+    <string name="custom_rate_hint_rate">Kiwango cha USD 1</string>
+    <string name="custom_rate_save">Hifadhi</string>
+    <string name="custom_rate_error_code">Weka msimbo</string>
+    <string name="custom_rate_error_duplicate">%s tayari ipo kwenye orodha yako</string>
+    <string name="custom_rate_error_rate">Weka kiwango zaidi ya sifuri</string>
+    <string name="custom_rate_added">%s imeongezwa</string>
+    <string name="custom_rate_delete_title">Futa %s?</string>
+    <string name="custom_rate_delete_message">Hii huondoa kiwango kwenye orodha yako, wijeti zako na saa yako. Viwango vitokavyo kwenye seva hufichwa badala ya kufutwa, hivyo vyako pekee ndivyo huondolewa hivi.</string>
+    <string name="custom_rate_delete_confirm">Futa</string>
+    <string name="custom_rate_deleted">%s imefutwa</string>
+    <string name="content_description_delete">Futa kiwango chako</string>
+
+    <string name="section_custom_rates">Viwango vyako</string>
     <string name="section_other_rates">Viwango vingine</string>
 
     <string name="empty_rates_title">Hakuna viwango bado</string>

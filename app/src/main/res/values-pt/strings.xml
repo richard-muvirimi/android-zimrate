@@ -33,7 +33,7 @@
     <string name="menu_home">Início</string>
     <string name="menu_calculator">Calculadora</string>
 
-    <string name="info_message">1. Para atualizar as taxas a qualquer momento, pode deslizar de cima neste ecrã.\n\n2. Também pode adicionar um widget ao seu ecrã inicial para ver as últimas taxas carregadas sem abrir a aplicação. (As taxas não são carregadas em segundo plano)\n\n3. Pode usar instantaneamente o resultado calculado para cálculos adicionais premindo o resultado pretendido.</string>
+    <string name="info_message">1. Puxe a lista de taxas para baixo para atualizar, ou use Atualizar tudo no menu. Cada atualização gasta uma moeda.\n\n2. As taxas também se atualizam sozinhas em segundo plano. As definições controlam a frequência, ou desativam a função.\n\n3. Escreva um valor em qualquer moeda para converter a partir dela. As restantes taxas atualizam-se em conformidade.\n\n4. Toque na estrela para manter uma moeda no topo, ou deslize um cartão para a ocultar. As moedas ocultas voltam a partir do menu.\n\n5. Use o botão + para adicionar uma taxa sua, para o que a aplicação não incluir.\n\n6. Toque no nome do país por baixo de uma taxa para ver a sua origem.\n\n7. Adicione um widget ao ecrã principal para ver as suas taxas sem abrir a aplicação.</string>
     <string name="info_dismiss">OK</string>
     <string name="about">Sobre</string>
     <string name="author">Autor</string>
@@ -79,6 +79,7 @@
 
     <string name="hint_rate">Taxa</string>
     <string name="hint_amount">Valor</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Bandeira da moeda</string>
     <string name="content_description_pin">Fixar moeda</string>
     <string name="content_description_refresh">Atualizar taxa de câmbio</string>
@@ -86,6 +87,24 @@
 
     <string name="section_favourites">Favoritas</string>
     <string name="section_suggested">Favoritas sugeridas</string>
+    <string name="custom_rate_add">Adicionar taxa própria</string>
+    <string name="custom_rate_summary">Acompanhe uma taxa que a aplicação não inclui — uma taxa do mercado paralelo, ou uma moeda sua. Mantém-se exatamente como a introduzir e nunca é substituída por uma atualização.</string>
+    <string name="custom_rate_hint_code">Código</string>
+    <string name="custom_rate_helper_code">Etiqueta curta mostrada no cartão, como OMIR</string>
+    <string name="custom_rate_hint_name">Nome</string>
+    <string name="custom_rate_hint_rate">Taxa para 1 USD</string>
+    <string name="custom_rate_save">Guardar</string>
+    <string name="custom_rate_error_code">Introduza um código</string>
+    <string name="custom_rate_error_duplicate">%s já está na sua lista</string>
+    <string name="custom_rate_error_rate">Introduza uma taxa acima de zero</string>
+    <string name="custom_rate_added">%s adicionada</string>
+    <string name="custom_rate_delete_title">Eliminar %s?</string>
+    <string name="custom_rate_delete_message">Isto remove a taxa da sua lista, dos seus widgets e do seu relógio. As taxas do servidor são ocultadas em vez de eliminadas, por isso só as suas são removidas desta forma.</string>
+    <string name="custom_rate_delete_confirm">Eliminar</string>
+    <string name="custom_rate_deleted">%s eliminada</string>
+    <string name="content_description_delete">Eliminar taxa própria</string>
+
+    <string name="section_custom_rates">As suas taxas</string>
     <string name="section_other_rates">Outras taxas</string>
 
     <string name="empty_rates_title">Ainda não há taxas</string>

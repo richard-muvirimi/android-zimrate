@@ -33,7 +33,7 @@
     <string name="menu_home">Tuis</string>
     <string name="menu_calculator">Sakrekenaar</string>
 
-    <string name="info_message">1. Om koerse te enige tyd te verfris, kan u van bo-af op hierdie skerm swiep.\n\n2. U kan ook \'n widget by u tuisskerm voeg om laas gelaaide koerse te sien sonder om die program te open. (Koerse word nie op die agtergrond gelaai nie)\n\n3. U kan die berekende resultaat onmiddellik vir verdere berekening gebruik deur op die gewenste resultaat te druk.</string>
+    <string name="info_message">1. Trek die koerslys af om te verfris, of gebruik Verfris alles in die kieslys. Elke verfrissing kos een muntstuk.\n\n2. Koerse verfris ook self op die agtergrond. Instellings bepaal hoe gereeld, of skakel dit af.\n\n3. Tik \'n bedrag in enige geldeenheid in om daarvandaan om te skakel. Al die ander koerse werk by.\n\n4. Tik die ster om \'n geldeenheid bo te hou, of swiep \'n kaart weg om dit te versteek. Versteekte geldeenhede kom uit die kieslys terug.\n\n5. Gebruik die + knoppie om jou eie koers by te voeg, vir enigiets wat die program nie het nie.\n\n6. Tik die landnaam onder \'n koers om te sien waarvandaan dit kom.\n\n7. Voeg \'n legstuk by jou tuisskerm om jou koerse te lees sonder om die program oop te maak.</string>
     <string name="info_dismiss">OK</string>
     <string name="about">Oor</string>
     <string name="author">Outeur</string>
@@ -79,6 +79,7 @@
 
     <string name="hint_rate">Koers</string>
     <string name="hint_amount">Bedrag</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
     <string name="content_description_flag">Geldeenheid vlag</string>
     <string name="content_description_pin">Vaspen geldeenheid</string>
     <string name="content_description_refresh">Verfris wisselkoers</string>
@@ -86,6 +87,24 @@
 
     <string name="section_favourites">Gunstelinge</string>
     <string name="section_suggested">Voorgestelde gunstelinge</string>
+    <string name="custom_rate_add">Voeg eie koers by</string>
+    <string name="custom_rate_summary">Volg \'n koers wat die program nie het nie — \'n parallelmarkkoers, of jou eie geldeenheid. Dit bly presies soos jy dit invoer en word nooit deur \'n verfrissing vervang nie.</string>
+    <string name="custom_rate_hint_code">Kode</string>
+    <string name="custom_rate_helper_code">Kort etiket wat op die kaart wys, soos OMIR</string>
+    <string name="custom_rate_hint_name">Naam</string>
+    <string name="custom_rate_hint_rate">Koers vir 1 USD</string>
+    <string name="custom_rate_save">Stoor</string>
+    <string name="custom_rate_error_code">Voer \'n kode in</string>
+    <string name="custom_rate_error_duplicate">%s is reeds in jou lys</string>
+    <string name="custom_rate_error_rate">Voer \'n koers groter as nul in</string>
+    <string name="custom_rate_added">%s bygevoeg</string>
+    <string name="custom_rate_delete_title">Skrap %s?</string>
+    <string name="custom_rate_delete_message">Dit verwyder die koers uit jou lys, jou legstukke en jou horlosie. Koerse van die bediener word versteek in plaas van geskrap, so net jou eies word so verwyder.</string>
+    <string name="custom_rate_delete_confirm">Skrap</string>
+    <string name="custom_rate_deleted">%s geskrap</string>
+    <string name="content_description_delete">Skrap eie koers</string>
+
+    <string name="section_custom_rates">Jou koerse</string>
     <string name="section_other_rates">Ander koerse</string>
 
     <string name="empty_rates_title">Nog geen koerse nie</string>

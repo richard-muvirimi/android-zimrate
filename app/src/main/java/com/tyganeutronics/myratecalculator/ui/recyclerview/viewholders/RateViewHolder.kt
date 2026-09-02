@@ -29,13 +29,13 @@ class RateViewHolder(
     private val viewModel: RatesViewModel,
     private val onPinClick: (RateEntity) -> Unit,
     private val onRefreshClick: (RateEntity) -> Unit,
+    private val onDeleteClick: (RateEntity) -> Unit,
     private val onCalcClick: (entity: RateEntity, field: CalcField, currentValue: BigDecimal) -> Unit,
     private val onAmountsChanged: (exceptCurrency: String?) -> Unit,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_rate, parent, false)
 ) {
     private val imgFlag: ImageView = itemView.findViewById(R.id.img_flag)
-    private val txtCode: TextView = itemView.findViewById(R.id.txt_currency_code)
     private val txtName: TextView = itemView.findViewById(R.id.txt_currency_name)
     private val tilRate: TextInputLayout = itemView.findViewById(R.id.til_rate)
     private val etRate: TextInputEditText = itemView.findViewById(R.id.et_rate)
@@ -52,11 +52,18 @@ class RateViewHolder(
 
     fun bind(entity: RateEntity) {
         this.entity = entity
-        val countryCode = CurrencyFlagUtil.countryCode(entity.currency)
-        val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(itemView.context, countryCode) else 0
-        imgFlag.setImageResource(if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
 
-        txtCode.text = entity.currency
+        // A code the user invented is not an ISO currency, so resolving it to a country would
+        // dress it in an unrelated flag — OMIR would come back as Oman. It gets the generic
+        // currency mark instead, themed so night mode picks up its own drawable.
+        if (entity.custom) {
+            imgFlag.setImageResource(itemView.context.resolveAttr(R.attr.ic_dollar))
+        } else {
+            val countryCode = CurrencyFlagUtil.countryCode(entity.currency)
+            val flagRes =
+                if (countryCode.isNotEmpty()) FlagKit.getResId(itemView.context, countryCode) else 0
+            imgFlag.setImageResource(if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
+        }
 
         val isBase = entity.currency == "USD" && entity.url.isEmpty()
         etRate.isEnabled = !isBase
@@ -76,7 +83,20 @@ class RateViewHolder(
         updateFootnote(entity)
 
         btnPin.setOnClickListener { onPinClick(entity) }
-        btnRefresh.setOnClickListener { onRefreshClick(entity) }
+
+        // Nothing to re-fetch for a rate the user owns, so the same slot deletes it instead.
+        // Both branches set the icon because holders are recycled between the two kinds of row.
+        if (entity.custom) {
+            btnRefresh.setImageResource(R.drawable.ic_delete)
+            btnRefresh.contentDescription =
+                itemView.context.getString(R.string.content_description_delete)
+            btnRefresh.setOnClickListener { onDeleteClick(entity) }
+        } else {
+            btnRefresh.setImageResource(itemView.context.resolveAttr(R.attr.ic_refresh))
+            btnRefresh.contentDescription =
+                itemView.context.getString(R.string.content_description_refresh)
+            btnRefresh.setOnClickListener { onRefreshClick(entity) }
+        }
 
         tilRate.setEndIconOnClickListener {
             val v = etRate.text?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
@@ -89,6 +109,19 @@ class RateViewHolder(
 
         rateWatcher?.let { etRate.removeTextChangedListener(it) }
         amountWatcher?.let { etAmount.removeTextChangedListener(it) }
+
+        // A custom rate has no server copy to fall back on, so an edit is committed once the
+        // field is done being typed in. Set on every bind because holders are recycled.
+        etRate.onFocusChangeListener = if (entity.custom) {
+            View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    etRate.text?.toString()?.toBigDecimalOrNull()
+                        ?.let { viewModel.updateCustomRate(entity, it) }
+                }
+            }
+        } else {
+            null
+        }
 
         rateWatcher = etRate.addTextChangedListener {
             if (!isUpdating) {
@@ -130,7 +163,13 @@ class RateViewHolder(
     }
 
     private fun updateFootnote(entity: RateEntity) {
-        txtName.text = entity.name.ifEmpty { entity.currency }
+        val name = if (entity.custom) {
+            entity.name.ifEmpty { entity.currency }
+        } else {
+            CurrencyFlagUtil.countryName(entity.currency)
+        }
+        txtName.text =
+            CurrencyFlagUtil.codeWithName(itemView.context, entity.currency, name)
         txtName.isSelected = true
 
         val dateStr = formatSyncDate(entity.lastChecked)

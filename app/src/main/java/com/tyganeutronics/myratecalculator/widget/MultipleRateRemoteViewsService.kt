@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
-import com.tyganeutronics.myratecalculator.utils.CurrencyFlagUtil
+import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import java.math.RoundingMode
 
 class MultipleRateRemoteViewsService : RemoteViewsService() {
@@ -31,12 +30,15 @@ private class Factory(private val context: Context) : RemoteViewsService.RemoteV
         val entity = rates[position]
         val views = RemoteViews(context.packageName, R.layout.widget_multiple_item)
 
-        val countryCode = CurrencyFlagUtil.countryCode(entity.currency)
-        val flagRes = if (countryCode.isNotEmpty()) FlagKit.getResId(context, countryCode) else 0
-        views.setImageViewResource(R.id.img_widget_item_flag, if (flagRes != 0) flagRes else R.mipmap.ic_launcher)
+        views.setImageViewResource(
+            R.id.img_widget_item_flag,
+            WidgetUtils.flagRes(context, entity.currency, entity.custom),
+        )
 
-        views.setTextViewText(R.id.txt_widget_item_code, entity.currency)
-        views.setTextViewText(R.id.txt_widget_item_name, entity.name.ifEmpty { entity.currency })
+        views.setTextViewText(
+            R.id.txt_widget_item_code,
+            WidgetUtils.label(context, entity.currency, entity.custom, entity.name),
+        )
         views.setTextViewText(
             R.id.txt_widget_item_rate,
             entity.rate.setScale(2, RoundingMode.HALF_UP).toPlainString()

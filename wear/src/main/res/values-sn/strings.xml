@@ -6,4 +6,5 @@
     <string name="no_rates">Hapana marates asarudzwa.\nVhura ZimRate pafoni yako kuti uwedzere.</string>
     <string name="updated_at">Zvavandudzwa %s</string>
     <string name="pick_currency">Sarudza mari yechiratidzo</string>
+    <string name="currency_code_with_name">%1$s · %2$s</string>
 </resources>

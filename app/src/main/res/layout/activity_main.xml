@@ -63,32 +63,30 @@
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        app:backgroundTint="@android:color/transparent"
-        app:contentInsetEnd="0dp"
-        app:elevation="0dp"
+        android:layout_gravity="bottom"
+        app:contentInsetEnd="@dimen/dimen_100dp"
+        app:contentInsetStart="0dp"
         app:fabAlignmentMode="end"
-        app:fabCradleVerticalOffset="24dp">
+        app:fabAnimationMode="slide"
+        app:fabCradleMargin="@dimen/padding_8">
 
-        <androidx.cardview.widget.CardView
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/padding_8"
-            app:cardCornerRadius="@dimen/padding_8"
-            app:cardElevation="5dp"
-            app:contentPadding="@dimen/padding_4">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                app:labelVisibilityMode="selected"
-                app:menu="@menu/navigation_main" />
-
-        </androidx.cardview.widget.CardView>
+            app:backgroundTint="@android:color/transparent"
+            app:elevation="0dp"
+            app:labelVisibilityMode="selected"
+            app:menu="@menu/navigation_main" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/custom_rate_add"
+        app:layout_anchor="@id/bottomAppBar"
+        app:srcCompat="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
