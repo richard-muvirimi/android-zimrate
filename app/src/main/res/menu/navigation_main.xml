@@ -12,7 +12,6 @@
         android:id="@+id/navigation_home"
         android:checkable="true"
         android:contentDescription="@string/menu_home"
-        android:visible="false"
         android:icon="@drawable/selector_navigation_home"
         android:title="@string/menu_home" />
 

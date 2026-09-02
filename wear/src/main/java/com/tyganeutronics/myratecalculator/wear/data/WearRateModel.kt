@@ -13,6 +13,8 @@ data class WearRateModel(
     val lastChecked: Long,
     /** Added by the user on the phone, so its code is not ISO and resolves to no country. */
     val custom: Boolean = false,
+    /** What [rate] is compared against for the movement mark. Empty from an older phone build. */
+    val lastRate: String = "",
 ) {
     companion object {
         fun fromJson(obj: JSONObject) = WearRateModel(
@@ -21,6 +23,7 @@ data class WearRateModel(
             rate = obj.getString("rate"),
             lastChecked = obj.optLong("lastChecked", 0L),
             custom = obj.optBoolean("custom", false),
+            lastRate = obj.optString("lastRate", ""),
         )
 
         fun listFromJson(json: String): List<WearRateModel> = runCatching {
@@ -35,6 +38,7 @@ data class WearRateModel(
         put("rate", rate)
         put("lastChecked", lastChecked)
         put("custom", custom)
+        put("lastRate", lastRate)
     }
 }
 

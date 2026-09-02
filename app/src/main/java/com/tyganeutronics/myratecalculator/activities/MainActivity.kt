@@ -22,6 +22,7 @@ import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentAbout
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentCustomRate
+import com.tyganeutronics.myratecalculator.fragments.main.FragmentGlance
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentRates
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentCoinsBalance
 import com.tyganeutronics.myratecalculator.fragments.rewards.FragmentRewards
@@ -94,8 +95,12 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         remoteConfig.fetchAndActivate()
     }
 
+    /**
+     * Opening the app lands on the glance screen. Most openings are someone checking a rate, and
+     * that read costs nothing — the calculator is a tap away for anyone who came to work with it.
+     */
     private fun selectHomeFragment() {
-        getBottomNavigationView().selectedItemId = R.id.navigation_calculator
+        getBottomNavigationView().selectedItemId = R.id.navigation_home
     }
 
     private fun getBottomNavigationView(): BottomNavigationView {
@@ -132,6 +137,12 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
             R.id.navigation_calculator -> {
                 transaction.replace(R.id.nav_host_fragment, FragmentRates(), FragmentRates.TAG)
                 getAddRateFab().show()
+            }
+
+            R.id.navigation_home -> {
+                transaction.replace(R.id.nav_host_fragment, FragmentGlance(), FragmentGlance.TAG)
+                // Nothing on the glance screen adds a rate, so the FAB would land on a bubble.
+                getAddRateFab().hide()
             }
 
             R.id.navigation_about -> {

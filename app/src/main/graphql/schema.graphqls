@@ -15,6 +15,7 @@ type Rate {
     last_updated: Int
     name: String
     rate: Float
+    last_rate: Float
     url: String
 }
 

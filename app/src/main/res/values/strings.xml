@@ -116,6 +116,14 @@
         survives where the label is ellipsized — widgets and the watch both clip this hard.
     -->
     <string name="currency_code_with_name">%1$s · %2$s</string>
+
+    <!--
+        Announced after a glance bubble's rate, so a screen reader conveys what the bubble's
+        colour and arrow show: "ZAR · South Africa 16.65. Rose from 16.40". A rate is units per
+        USD, so rising means that currency weakened — state the direction, not whether it is good.
+    -->
+    <string name="glance_rate_rose">Rose from %1$s</string>
+    <string name="glance_rate_fell">Fell from %1$s</string>
     <string name="content_description_flag">Currency flag</string>
     <string name="content_description_pin">Pin currency</string>
     <string name="content_description_refresh">Refresh currency rate</string>

@@ -13,4 +13,21 @@
     <color name="widget_stroke">#1F000000</color>
     <color name="widget_text_primary">#DE000000</color>
     <color name="widget_text_secondary">#8A000000</color>
+
+    <!--
+        Glance bubbles, by which way the rate moved against the hour before. A rate here is units
+        per USD, so a rise means that currency got weaker — hence warm for up, not the other way
+        round. The arrow in each bubble carries the same meaning, because colour alone is no use
+        to a red green colour blind reader. Dark counterparts in values-night.
+    -->
+    <color name="glance_bubble_rose">#FFFBE3E0</color>
+    <color name="glance_bubble_fell">#FFE0F2E4</color>
+    <!--
+        Not a grey. Most rates are not moving most of the time, so this is what the screen looks
+        like nearly always, and a flat grey read as broken rather than calm. It carries no meaning
+        beyond "did not move" — the two colours that do mean something sit either side of it.
+    -->
+    <color name="glance_bubble_flat">#FFE7EEF7</color>
+    <color name="glance_trend_rose">#FFC62828</color>
+    <color name="glance_trend_fell">#FF2E7D32</color>
 </resources>

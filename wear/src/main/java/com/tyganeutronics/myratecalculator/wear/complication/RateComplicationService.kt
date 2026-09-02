@@ -18,7 +18,9 @@ import androidx.wear.watchface.complications.datasource.SuspendingComplicationDa
 import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
 import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
+import com.tyganeutronics.myratecalculator.wear.data.append
 import com.tyganeutronics.myratecalculator.wear.data.displayName
+import com.tyganeutronics.myratecalculator.wear.data.move
 import com.tyganeutronics.myratecalculator.wear.data.label
 import com.tyganeutronics.myratecalculator.wear.presentation.MainActivity
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
@@ -83,7 +85,10 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
      */
     private fun shortText(rate: WearRateModel, tap: PendingIntent? = null) =
         ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(rate.rate).build(),
+            // Only the mark, no colour: a complication hands the watch face data, and the face
+            // decides how to paint it. The arrow is the one channel a data source controls.
+            // No separator either — a short text slot renders very few characters.
+            text = PlainComplicationText.Builder(rate.move().append(rate.rate, "")).build(),
             contentDescription =
                 PlainComplicationText.Builder("${rate.currency} ${rate.rate}").build(),
         )
@@ -94,7 +99,7 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
 
     private fun longText(rate: WearRateModel, tap: PendingIntent? = null) =
         LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(rate.rate).build(),
+            text = PlainComplicationText.Builder(rate.move().append(rate.rate)).build(),
             contentDescription =
                 PlainComplicationText.Builder("${rate.currency} ${rate.rate}").build(),
         )

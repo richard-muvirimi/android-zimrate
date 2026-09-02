@@ -80,6 +80,8 @@
     <string name="hint_rate">السعر</string>
     <string name="hint_amount">المبلغ</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="glance_rate_rose">ارتفع من %1$s</string>
+    <string name="glance_rate_fell">انخفض من %1$s</string>
     <string name="content_description_flag">علم العملة</string>
     <string name="content_description_pin">تثبيت العملة</string>
     <string name="content_description_refresh">تحديث سعر الصرف</string>

@@ -7,4 +7,11 @@
     <color name="widget_text_primary">#FFFFFFFF</color>
     <color name="widget_text_secondary">#B3FFFFFF</color>
 
+    <!-- Dark counterparts of the glance bubble colours declared in values/colors.xml. -->
+    <color name="glance_bubble_rose">#FF3B2523</color>
+    <color name="glance_bubble_fell">#FF1D3324</color>
+    <color name="glance_bubble_flat">#FF1F2A38</color>
+    <color name="glance_trend_rose">#FFEF9A9A</color>
+    <color name="glance_trend_fell">#FFA5D6A7</color>
+
 </resources>

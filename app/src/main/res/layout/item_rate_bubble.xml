@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Sized in code from the whole set, so the width and height here are placeholders. The
+    percentage corner size keeps it a circle at whatever diameter it ends up with, and the
+    content padding is set in code because how much of a circle's width is usable depends on
+    how big the circle is.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_bubble"
+    android:layout_width="96dp"
+    android:layout_height="96dp"
+    app:cardElevation="2dp"
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.Zimrate.Bubble">
+
+    <LinearLayout
+        android:id="@+id/layout_bubble_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_bubble_flag"
+            android:layout_width="24dp"
+            android:layout_height="16dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            tools:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_2"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_bubble_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="16.65" />
+
+            <!-- Says the same thing as the bubble's colour, for anyone who cannot use it. -->
+            <ImageView
+                android:id="@+id/img_bubble_trend"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="@dimen/padding_2"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                tools:src="@drawable/ic_trend_up"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <!-- Wraps to a second line rather than truncating: "South Africa" says more than "ZAR". -->
+        <TextView
+            android:id="@+id/txt_bubble_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lineSpacingMultiplier="0.9"
+            android:maxLines="2"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="10sp"
+            tools:text="South Africa" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
