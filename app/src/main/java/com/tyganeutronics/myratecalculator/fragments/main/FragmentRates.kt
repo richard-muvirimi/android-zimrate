@@ -24,6 +24,7 @@ import com.tyganeutronics.myratecalculator.database.models.SpendModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RatesViewModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.FragmentCalculator
+import com.tyganeutronics.myratecalculator.interfaces.ReviewableActivity
 import com.tyganeutronics.myratecalculator.interfaces.RewardModelInterface
 import com.tyganeutronics.myratecalculator.interfaces.RewardsActivity
 import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
@@ -388,6 +389,11 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
             CALC_REQUEST_AMOUNT -> {
                 adapter.applyCalcResult(currency, CalcField.AMOUNT, amount)
                 didCalculate = true
+
+                // A finished conversion is the one moment the app has demonstrably done its job,
+                // and the calculator has just closed, so nothing is being interrupted. The two
+                // month throttle inside decides whether this actually surfaces anything.
+                (requireActivity() as ReviewableActivity).requestReview()
             }
 
             CALC_REQUEST_RATE -> {
