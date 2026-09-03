@@ -35,7 +35,9 @@ abstract class BaseAdActivity : BaseActivity() {
                     getString(R.string.ads_appodeal_app_id),
                     Appodeal.BANNER or Appodeal.INTERSTITIAL or Appodeal.REWARDED_VIDEO
                 ) {
-                    // Appodeal initialization finished
+                    // Initialization lands well after the first layout pass, so this is the only
+                    // point at which the banner can actually be placed.
+                    findViewById<ViewGroup>(R.id.adView)?.let { showBanner(it) }
                 }
             }
 
@@ -69,28 +71,41 @@ abstract class BaseAdActivity : BaseActivity() {
 
             adView.post {
 
-                if (Appodeal.isInitialized(Appodeal.BANNER) && TokenUtils.canShowAds(baseContext)) {
-
-                    AppoBannerAdListener.apply {
-                        contextRef = WeakReference(baseContext)
-                    }
-
-                    Appodeal.setBannerViewId(R.id.adView)
-                    Appodeal.setBannerCallbacks(AppoBannerAdListener)
-
-                    val banner: View = Appodeal.getBannerView(this)
-
-                    Appodeal.show(this, Appodeal.BANNER_VIEW)
-
-                    adView.addView(banner)
-                    adView.isVisible = true
-                } else {
-                    adView.isGone = true
-                }
+                showBanner(adView)
 
                 setupInterstitial()
             }
         }
+    }
+
+    /**
+     * Runs both at layout time and again once Appodeal reports itself initialized: on a cold start
+     * the SDK is never ready for the first pass, and without the second run the slot stayed hidden
+     * for the whole session. Guarded against filling the slot twice on the way through.
+     */
+    private fun showBanner(adView: ViewGroup) {
+        if (!Appodeal.isInitialized(Appodeal.BANNER) || !TokenUtils.canShowAds(baseContext)) {
+            adView.isGone = true
+            return
+        }
+
+        if (adView.childCount > 0) {
+            return
+        }
+
+        AppoBannerAdListener.apply {
+            contextRef = WeakReference(baseContext)
+        }
+
+        Appodeal.setBannerViewId(R.id.adView)
+        Appodeal.setBannerCallbacks(AppoBannerAdListener)
+
+        val banner: View = Appodeal.getBannerView(this)
+
+        Appodeal.show(this, Appodeal.BANNER_VIEW)
+
+        adView.addView(banner)
+        adView.isVisible = true
     }
 
     private fun setupInterstitial() {

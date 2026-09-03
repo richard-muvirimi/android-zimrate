@@ -14,17 +14,20 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/layout_adverts" />
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/bottom_navigation_height">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/bottom_navigation_height" />
+                android:layout_weight="1" />
+
+            <!--
+                Sits below the content and above the bottom bar, so the banner takes a row of its
+                own instead of overlaying a rate, and collapses away when no ad is served.
+            -->
+            <include layout="@layout/layout_adverts" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
