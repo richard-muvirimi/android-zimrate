@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="menu_help">Help</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Keep it at the top</string>
+    <string name="prompt_pin_description">Tap the star to keep a currency at the top of the list. Starred currencies are also the ones your widgets, your watch and the Rates screen show.</string>
+
+    <string name="prompt_hide">Hide what you do not use</string>
+    <string name="prompt_hide_description">Swipe a card away to hide that currency. Hidden currencies come back from the menu.</string>
+
+    <string name="prompt_coins">Refreshing spends a coin</string>
+    <string name="prompt_coins_description">Each refresh of the rates costs one coin. Tap your balance to top it up.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Tap to convert</string>
+    <string name="prompt_bubble_description">Tap any circle to convert from that currency, then enter an amount to see what it is worth in the others.</string>
+
+</resources>

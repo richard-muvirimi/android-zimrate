@@ -30,7 +30,7 @@
     <string name="menu_close">Fechar</string>
 
     <string name="menu_history">Histórico</string>
-    <string name="menu_home">Início</string>
+    <string name="menu_rates">Taxas</string>
     <string name="menu_calculator">Calculadora</string>
 
     <string name="info_message">1. Puxe a lista de taxas para baixo para atualizar, ou use Atualizar tudo no menu. Cada atualização gasta uma moeda.\n\n2. As taxas também se atualizam sozinhas em segundo plano. As definições controlam a frequência, ou desativam a função.\n\n3. Escreva um valor em qualquer moeda para converter a partir dela. As restantes taxas atualizam-se em conformidade.\n\n4. Toque na estrela para manter uma moeda no topo, ou deslize um cartão para a ocultar. As moedas ocultas voltam a partir do menu.\n\n5. Use o botão + para adicionar uma taxa sua, para o que a aplicação não incluir.\n\n6. Toque no nome do país por baixo de uma taxa para ver a sua origem.\n\n7. Adicione um widget ao ecrã principal para ver as suas taxas sem abrir a aplicação.</string>

@@ -2,30 +2,53 @@ package com.tyganeutronics.myratecalculator.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.maltaisn.calcdialog.CalcDialog
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.database.viewmodels.RatesViewModel
+import com.tyganeutronics.myratecalculator.fragments.FragmentCalculator
 import com.tyganeutronics.myratecalculator.ui.BubbleFlowLayout
 import com.tyganeutronics.myratecalculator.ui.RateBubbleBinder
 import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
+import com.tyganeutronics.myratecalculator.utils.traits.helpPrompt
 import com.tyganeutronics.myratecalculator.utils.traits.requireViewById
 import com.tyganeutronics.myratecalculator.utils.traits.setTitle
+import com.tyganeutronics.myratecalculator.utils.traits.showHelpOnce
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 
 /**
- * The favourites as bubbles, for reading rather than working with. Nothing here fetches, so
- * opening it costs no coins — the calculator screen owns refreshing.
+ * The favourites as bubbles. Reading at a glance is the point, and nothing here fetches, so it
+ * costs no coins — but tapping through converts between them without leaving the screen.
+ *
+ * What is tapped in here stays in here. The base and the amount are the screen's own, not the
+ * shared view model's, so a sum worked out at a glance never turns up later on the calculator
+ * screen or outlives leaving this one. It also means the rates shown are always the real ones —
+ * a rate typed over by hand on the calculator screen is scratch work and does not reach here.
  */
-class FragmentGlance : BaseFragment() {
+class FragmentGlance : BaseFragment(), CalcDialog.CalcDialogCallback {
 
     private lateinit var ratesViewModel: RatesViewModel
 
+    private var favourites: List<RateEntity> = emptyList()
+
+    /** What everything is converted from, and how much of it. Deliberately not persisted. */
+    private var baseCurrency: String = DEFAULT_BASE
+    private var amount: BigDecimal = BigDecimal.ONE
+
     companion object {
         const val TAG = "FragmentGlance"
+        private const val CALC_REQUEST_AMOUNT = 1
+        private const val DEFAULT_BASE = "USD"
+        private const val HELP_KEY = "showGlanceHelp"
     }
 
     override fun onCreateView(
@@ -36,29 +59,65 @@ class FragmentGlance : BaseFragment() {
         return inflater.inflate(R.layout.fragment_glance, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_glance, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_help -> {
+                firebaseAnalytics.logEvent("show_help_sequence", null)
+                showHelp()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * That a circle can be tapped at all is the one thing this screen has no way of showing.
+     *
+     * The bubbles are held still for the duration: the prompt reads its focal circle off the
+     * target once, when it is shown, so a bubble that kept drifting would slide out of its own
+     * spotlight.
+     */
+    private fun showHelp() {
+        val flow = requireViewById<BubbleFlowLayout>(R.id.flow_bubbles)
+        val bubble = flow.getChildAt(0) ?: return
+
+        flow.pauseDrift()
+        MaterialTapTargetSequence()
+            .addPrompt(
+                helpPrompt(R.string.prompt_bubble, R.string.prompt_bubble_description)
+                    .setTarget(bubble)
+            )
+            .setSequenceCompleteListener { flow.resumeDrift() }
+            .show()
+    }
+
     override fun bindViews() {
         super.bindViews()
 
         ratesViewModel = ViewModelProvider(requireActivity())[RatesViewModel::class.java]
+
+        // Bound to the view's lifecycle and registered once here rather than in syncViews, which
+        // runs on every start and would stack up a fresh observer each time.
+        ratesViewModel.rates.observe(viewLifecycleOwner) { rates ->
+            favourites = rates.filter { it.pinned }
+            render()
+        }
     }
 
     override fun syncViews() {
         super.syncViews()
-
-        setTitle(R.string.menu_home)
-
-        ratesViewModel.rates.observe(this) { rates ->
-            // Someone glancing wants the currencies they follow, not the whole list. USD is always
-            // pinned, so this is never empty while there are rates at all.
-            val favourites = rates.filter { it.pinned }
-            renderBubbles(favourites)
-
-            val empty = favourites.isEmpty()
-            requireViewById<View>(R.id.layout_empty).visibility =
-                if (empty) View.VISIBLE else View.GONE
-            requireViewById<View>(R.id.sv_bubbles).visibility =
-                if (empty) View.GONE else View.VISIBLE
-        }
+        setTitle(R.string.menu_rates)
     }
 
     /**
@@ -66,24 +125,75 @@ class FragmentGlance : BaseFragment() {
      * bubble's size depends on the rest of the set, so a partial update would have to resize
      * everything anyway.
      */
-    private fun renderBubbles(favourites: List<RateEntity>) {
+    private fun render() {
         val flow = requireViewById<BubbleFlowLayout>(R.id.flow_bubbles)
         flow.removeAllViews()
 
+        // Only favourites are drawn, so a base that is not one of them has no bubble to mark.
+        val base = favourites.firstOrNull { it.currency == baseCurrency }
+            ?: favourites.firstOrNull { it.currency == DEFAULT_BASE }
+
         val diameters = RateBubbleBinder.diameters(requireContext(), favourites)
         favourites.forEachIndexed { index, entity ->
-            RateBubbleBinder.addBubble(flow, entity, diameters[index], ::openInCalculator)
+            RateBubbleBinder.addBubble(
+                parent = flow,
+                entity = entity,
+                diameterPx = diameters[index],
+                value = convert(entity, base),
+                isBase = entity.currency == base?.currency,
+                onClick = ::onBubbleTap,
+            )
         }
+
+        val empty = favourites.isEmpty()
+        requireViewById<View>(R.id.layout_empty).visibility =
+            if (empty) View.VISIBLE else View.GONE
+        requireViewById<View>(R.id.sv_bubbles).visibility =
+            if (empty) View.GONE else View.VISIBLE
+
+        // Posted so the bubble being pointed at has been laid out. Nothing is spent while the
+        // screen is empty, so someone who has not favourited anything yet still gets the prompt
+        // the first time they have a circle to tap.
+        if (!empty) flow.post { showHelpOnce(HELP_KEY) { showHelp() } }
     }
 
     /**
-     * Hands the tapped currency to the calculator as the amount being converted from, so the rest
-     * of the list reads as what one unit of it is worth. The view model is scoped to the activity,
-     * so the value is already in place by the time the other screen binds.
+     * What [entity] is worth, given [amount] of [base]. Falls back to the rate as published when
+     * there is no base to convert from, which is what the screen shows before anything is tapped.
      */
-    private fun openInCalculator(entity: RateEntity) {
-        ratesViewModel.setActiveAmount(entity.currency, BigDecimal.ONE)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavView)
-            .selectedItemId = R.id.navigation_calculator
+    private fun convert(entity: RateEntity, base: RateEntity?): BigDecimal {
+        if (base == null || base.rate.signum() == 0) {
+            return entity.rate.setScale(2, RoundingMode.HALF_UP)
+        }
+
+        return amount
+            .multiply(entity.rate)
+            .divide(base.rate, MathContext(10, RoundingMode.HALF_UP))
+            .setScale(2, RoundingMode.HALF_UP)
+    }
+
+    /**
+     * One tap does the whole job: the bubble becomes what the sum is counted in, and the pad
+     * opens straight away to take the amount. Ringing it before the pad appears means the
+     * change has already landed behind the dialog rather than waiting on it.
+     */
+    private fun onBubbleTap(entity: RateEntity) {
+        baseCurrency = entity.currency
+        render()
+
+        FragmentCalculator().apply {
+            settings.apply {
+                requestCode = CALC_REQUEST_AMOUNT
+                initialValue = amount
+                isSignBtnShown = false
+                minValue = BigDecimal.ZERO
+            }
+        }.show(childFragmentManager, "calc")
+    }
+
+    override fun onValueEntered(requestCode: Int, value: BigDecimal?) {
+        if (requestCode != CALC_REQUEST_AMOUNT) return
+        amount = value ?: BigDecimal.ONE
+        render()
     }
 }

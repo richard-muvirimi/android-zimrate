@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TODO native review -->
+
+    <string name="menu_help">Usizo</string>
+
+    <!-- Rates list -->
+    <string name="prompt_pin">Yigcine phezulu</string>
+    <string name="prompt_pin_description">Thinta inkanyezi ukuze imali ihlale phezulu ohlwini. Imali elenkanyezi yiyo etshengiswa ngamawijethi akho, liwatshi lakho lesikrini sama-Amazinga.</string>
+
+    <string name="prompt_hide">Fihla ongakusebenzisiyo</string>
+    <string name="prompt_hide_description">Swayiphe ikhadi ukuze ufihle leyo mali. Imali efihliweyo ibuya ngemenyu.</string>
+
+    <string name="prompt_coins">Ukuvuselela kudla uhlamvu</string>
+    <string name="prompt_coins_description">Ukuvuselela ngakunye kwamazinga kudla uhlamvu olulodwa. Thinta ibhalansi yakho ukuyengeza.</string>
+
+    <!-- Rates at a glance -->
+    <string name="prompt_bubble">Thinta ukuze uguqule</string>
+    <string name="prompt_bubble_description">Thinta loba yisiphi isiyingi ukuze uguqule usuka kuleyo mali, ubusufaka inani ukuze ubone ukuthi lilingana lokungakanani kwezinye.</string>
+
+</resources>

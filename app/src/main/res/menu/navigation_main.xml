@@ -11,9 +11,9 @@
     <item
         android:id="@+id/navigation_home"
         android:checkable="true"
-        android:contentDescription="@string/menu_home"
+        android:contentDescription="@string/menu_rates"
         android:icon="@drawable/selector_navigation_home"
-        android:title="@string/menu_home" />
+        android:title="@string/menu_rates" />
 
     <item
         android:id="@+id/navigation_about"

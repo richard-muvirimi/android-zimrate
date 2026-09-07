@@ -134,6 +134,7 @@ class BubbleFlowLayout @JvmOverloads constructor(
 
     private val drifts = mutableListOf<Drift>()
     private var driftStartNanos = 0L
+    private var driftPausedNanos = 0L
 
     private val driftAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
         duration = DRIFT_FRAME_MS
@@ -182,6 +183,28 @@ class BubbleFlowLayout @JvmOverloads constructor(
     override fun onWindowVisibilityChanged(visibility: Int) {
         super.onWindowVisibilityChanged(visibility)
         if (visibility == VISIBLE) startDrift() else driftAnimator.cancel()
+    }
+
+    /**
+     * Holds the bubbles where they are. A tap target prompt reads its focal circle off the
+     * target's position once, when it is shown, so a bubble that keeps wandering leaves the
+     * circle behind and the whole thing reads as broken.
+     */
+    fun pauseDrift() {
+        if (!driftAnimator.isStarted) return
+        driftPausedNanos = System.nanoTime()
+        driftAnimator.cancel()
+    }
+
+    /**
+     * Picks the wander back up where it stopped. The clock is carried forward by the length of
+     * the pause, so no bubble snaps back to the start of its cycle on the way.
+     */
+    fun resumeDrift() {
+        if (driftPausedNanos == 0L) return
+        driftStartNanos += System.nanoTime() - driftPausedNanos
+        driftPausedNanos = 0L
+        if (animatorScale() != 0f) driftAnimator.start()
     }
 
     /**

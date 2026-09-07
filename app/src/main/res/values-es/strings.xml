@@ -30,7 +30,7 @@
     <string name="menu_close">Cerrar</string>
 
     <string name="menu_history">Historial</string>
-    <string name="menu_home">Inicio</string>
+    <string name="menu_rates">Tasas</string>
     <string name="menu_calculator">Calculadora</string>
 
     <string name="info_message">1. Desliza la lista de tasas hacia abajo para actualizar, o usa Actualizar todo en el menú. Cada actualización gasta una moneda.\n\n2. Las tasas también se actualizan solas en segundo plano. Los ajustes controlan la frecuencia, o lo desactivan.\n\n3. Escribe un importe en cualquier moneda para convertir desde ella. El resto de tasas se actualiza en consecuencia.\n\n4. Toca la estrella para mantener una moneda arriba, o desliza una tarjeta para ocultarla. Las monedas ocultas vuelven desde el menú.\n\n5. Usa el botón + para añadir una tasa propia, para lo que la aplicación no incluya.\n\n6. Toca el nombre del país bajo una tasa para ver de dónde procede.\n\n7. Añade un widget a tu pantalla de inicio para leer tus tasas sin abrir la aplicación.</string>

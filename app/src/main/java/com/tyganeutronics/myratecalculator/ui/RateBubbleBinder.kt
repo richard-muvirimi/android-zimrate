@@ -17,6 +17,7 @@ import com.tyganeutronics.myratecalculator.utils.CurrencyFlagUtil
 import com.tyganeutronics.myratecalculator.utils.resolveAttr
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.text.NumberFormat
 import kotlin.math.ln
 import kotlin.math.roundToInt
 
@@ -36,6 +37,9 @@ object RateBubbleBinder {
 
     /** Content inset either side, as a share of the diameter. */
     private const val CONTENT_INSET = 0.16
+
+    /** At or above this the cents are dropped. */
+    private val LARGE_AMOUNT = BigDecimal(1000)
 
     /**
      * A diameter for each of [rates], in the order given.
@@ -66,11 +70,18 @@ object RateBubbleBinder {
         }
     }
 
-    /** Inflates one bubble into [parent] and fills it in. */
+    /**
+     * Inflates one bubble into [parent] and fills it in.
+     *
+     * [value] is what the bubble shows — the rate itself at an amount of one, or what the amount
+     * converts to otherwise. [isBase] marks the currency everything else is converted from.
+     */
     fun addBubble(
         parent: BubbleFlowLayout,
         entity: RateEntity,
         diameterPx: Int,
+        value: BigDecimal,
+        isBase: Boolean,
         onClick: (RateEntity) -> Unit,
     ) {
         val card = LayoutInflater.from(parent.context)
@@ -82,6 +93,13 @@ object RateBubbleBinder {
         }
         card.setOnClickListener { onClick(entity) }
 
+        card.strokeWidth = if (isBase) {
+            card.resources.getDimensionPixelSize(R.dimen.padding_2)
+        } else {
+            0
+        }
+        card.strokeColor = ContextCompat.getColor(card.context, R.color.glance_base_stroke)
+
         // A circle is only as wide as its diameter at the very middle, so the content has to be
         // inset proportionally or a two line name would run out past the edge of a small one.
         val inset = (diameterPx * CONTENT_INSET).roundToInt()
@@ -90,13 +108,23 @@ object RateBubbleBinder {
 
         bindFlag(card.findViewById(R.id.img_bubble_flag), entity)
 
-        val rate = entity.rate.setScale(2, RoundingMode.HALF_UP).toPlainString()
-        card.findViewById<TextView>(R.id.txt_bubble_rate).text = rate
+        val shown = format(value)
+        card.findViewById<TextView>(R.id.txt_bubble_rate).apply {
+            text = shown
+            // A converted amount can be far longer than a rate, and a circle has no room to
+            // spare. Stepping the size down beats ellipsizing a number, where the truncated
+            // part is the part that matters.
+            textSize = when {
+                shown.length <= 6 -> 14f
+                shown.length <= 9 -> 12f
+                else -> 10f
+            }
+        }
         card.findViewById<TextView>(R.id.txt_bubble_name).text = nameOf(card.context, entity)
 
         val move = moveOf(entity)
         applyMove(card, move)
-        card.contentDescription = describe(card.context, entity, rate, move)
+        card.contentDescription = describe(card.context, entity, shown, move)
 
         parent.addView(card)
     }
@@ -157,6 +185,19 @@ object RateBubbleBinder {
         }.orEmpty()
 
         return "$label $rate.$movement"
+    }
+
+    /**
+     * Grouped, and without the cents once the number is big enough that they add nothing — at
+     * 450,000 the pennies are noise, and they are what pushes the number past the edge.
+     * [NumberFormat] so the separators follow the reader's locale rather than being hardcoded.
+     */
+    private fun format(value: BigDecimal): String {
+        val large = value.abs() >= LARGE_AMOUNT
+        return NumberFormat.getNumberInstance().apply {
+            minimumFractionDigits = if (large) 0 else 2
+            maximumFractionDigits = if (large) 0 else 2
+        }.format(value)
     }
 
     /**

@@ -30,7 +30,7 @@
     <string name="menu_close">关闭</string>
 
     <string name="menu_history">历史</string>
-    <string name="menu_home">首页</string>
+    <string name="menu_rates">汇率</string>
     <string name="menu_calculator">计算器</string>
 
     <string name="info_message">1. 在汇率列表上下拉即可刷新，或使用菜单中的全部刷新。每次刷新会消耗一枚金币。\n\n2. 汇率也会在后台自动刷新。可在设置中调整频率或将其关闭。\n\n3. 在任意货币中输入金额即可从该货币换算，其他汇率会随之更新。\n\n4. 点按星标可将货币固定在顶部，滑动卡片可将其隐藏。已隐藏的货币可从菜单中找回。\n\n5. 使用 + 按钮添加你自己的汇率，用于应用未收录的货币。\n\n6. 点按汇率下方的国家名称，可查看其来源。\n\n7. 将小部件添加到主屏幕，无需打开应用即可查看汇率。</string>

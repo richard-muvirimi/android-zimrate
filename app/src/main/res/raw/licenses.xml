@@ -7,6 +7,12 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
+        <name>Material Tap Target Prompt</name>
+        <url>https://github.com/sjwall/MaterialTapTargetPrompt</url>
+        <copyright>Copyright (C) 2016 Samuel Wall</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
         <name>Material Design Icons</name>
         <url>https://github.com/Templarian/MaterialDesign</url>
         <copyright>Copyright (c) 2014, Austin Andrews</copyright>

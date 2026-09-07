@@ -18,8 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.ListHeader
+import androidx.wear.compose.material.PositionIndicator
+import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.scrollAway
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
 import com.tyganeutronics.myratecalculator.wear.R
 import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
@@ -65,43 +70,54 @@ private fun CurrencyPickerScreen(
     selected: String?,
     onPick: (String) -> Unit,
 ) {
-    ScalingLazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        // Denser than this is hard to hit accurately on a watch.
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        item {
-            ListHeader {
-                Text(
-                    text = stringResource(R.string.pick_currency),
-                    fontSize = 12.sp,
-                )
-            }
-        }
+    val listState = rememberScalingLazyListState()
 
-        if (rates.isEmpty()) {
+    // Scaffold draws the scroll position indicator beside the list while it scrolls, and the
+    // clock above it. scrollAway lets the clock give way to the list once it moves, defaulting
+    // to the item after the header.
+    Scaffold(
+        positionIndicator = { PositionIndicator(scalingLazyListState = listState) },
+        timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
+    ) {
+        ScalingLazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            // Denser than this is hard to hit accurately on a watch.
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
             item {
-                Text(
-                    text = stringResource(R.string.no_rates),
-                    fontSize = 12.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                )
+                ListHeader {
+                    Text(
+                        text = stringResource(R.string.pick_currency),
+                        fontSize = 12.sp,
+                    )
+                }
             }
-        } else {
-            // Same row treatment as the main screen: flag, code and the current rate.
-            items(rates) { rate ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onPick(rate.currency) }
-                        // Applied inside the clickable, so it grows the touch target rather
-                        // than just insetting the text. RateRow alone is about 21dp tall.
-                        .padding(vertical = 12.dp),
-                ) {
-                    RateRow(rate, highlighted = rate.currency == selected)
+
+            if (rates.isEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(R.string.no_rates),
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                    )
+                }
+            } else {
+                // Same row treatment as the main screen: flag, code and the current rate.
+                items(rates) { rate ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onPick(rate.currency) }
+                            // Applied inside the clickable, so it grows the touch target rather
+                            // than just insetting the text. RateRow alone is about 21dp tall.
+                            .padding(vertical = 12.dp),
+                    ) {
+                        RateRow(rate, highlighted = rate.currency == selected)
+                    }
                 }
             }
         }

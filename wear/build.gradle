@@ -32,6 +32,12 @@ android {
         compose true
     }
 
+    androidResources {
+        // See the note in the app module: generated from the values-* folders so the two stay
+        // in step without a hand-maintained list in each.
+        generateLocaleConfig true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

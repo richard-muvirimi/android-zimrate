@@ -38,7 +38,11 @@ import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.PositionIndicator
+import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.scrollAway
 import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.wear.R
 import com.tyganeutronics.myratecalculator.wear.data.WearRateModel
@@ -96,50 +100,58 @@ fun RatesScreen(rates: List<WearRateModel>, focused: String? = null) {
         if (index >= 0) listState.animateScrollToItem(index + 1)
     }
 
-    ScalingLazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = listState,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+    // Scaffold draws the scroll position indicator beside the list while it scrolls, and the
+    // clock above it. scrollAway lets the clock give way to the list once it moves, defaulting
+    // to the item after the header.
+    Scaffold(
+        positionIndicator = { PositionIndicator(scalingLazyListState = listState) },
+        timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
     ) {
-        item {
-            ListHeader {
-                Text(
-                    text = stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.title3,
-                )
-            }
-        }
-
-        if (rates.isEmpty()) {
+        ScalingLazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
             item {
-                Text(
-                    text = stringResource(R.string.no_rates),
-                    textAlign = TextAlign.Center,
-                    fontSize = 12.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                )
-            }
-        } else {
-            items(rates) { rate ->
-                RateRow(rate, highlighted = rate.currency == focused)
-            }
-
-            item {
-                Spacer(Modifier.height(4.dp))
-                val lastChecked = rates.maxOfOrNull { it.lastChecked } ?: 0L
-                if (lastChecked > 0L) {
+                ListHeader {
                     Text(
-                        text = stringResource(
-                            R.string.updated_at,
-                            DateUtils.getRelativeTimeSpanString(lastChecked),
-                        ),
-                        fontSize = 10.sp,
-                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.6f),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(R.string.app_name),
+                        style = MaterialTheme.typography.title3,
                     )
+                }
+            }
+
+            if (rates.isEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(R.string.no_rates),
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                    )
+                }
+            } else {
+                items(rates) { rate ->
+                    RateRow(rate, highlighted = rate.currency == focused)
+                }
+
+                item {
+                    Spacer(Modifier.height(4.dp))
+                    val lastChecked = rates.maxOfOrNull { it.lastChecked } ?: 0L
+                    if (lastChecked > 0L) {
+                        Text(
+                            text = stringResource(
+                                R.string.updated_at,
+                                DateUtils.getRelativeTimeSpanString(lastChecked),
+                            ),
+                            fontSize = 10.sp,
+                            color = MaterialTheme.colors.onBackground.copy(alpha = 0.6f),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                 }
             }
         }
