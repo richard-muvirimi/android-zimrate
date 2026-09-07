@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.appodeal.ads.Appodeal
@@ -127,7 +126,7 @@ abstract class BaseAdActivity : BaseActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            findViewById<CoordinatorLayout>(R.id.layout_container).let {
+            findViewById<View>(R.id.layout_container).let {
                 if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
                     Appodeal.show(this, Appodeal.INTERSTITIAL)
                 } else {
@@ -138,7 +137,7 @@ abstract class BaseAdActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        findViewById<CoordinatorLayout>(R.id.layout_container)?.removeCallbacks(interstitialRunnable)
+        findViewById<View>(R.id.layout_container)?.removeCallbacks(interstitialRunnable)
 
         super.onDestroy()
     }
