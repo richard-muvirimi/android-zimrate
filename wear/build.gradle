@@ -5,20 +5,20 @@ plugins {
 }
 
 android {
-    compileSdkVersion 36
-    buildToolsVersion = '36.0.0'
+    compileSdkVersion 37
+    buildToolsVersion = '37.0.0'
 
     defaultConfig {
         applicationId "com.tyganeutronics.myratecalculator"
         minSdk 26
-        targetSdk 36
+        targetSdk 37
 
         // A watch APK's version code must be unique across form factors, and Google
         // recommends a scheme independent of the phone app rather than one kept in step
         // with it: <targetSdk><3 digit wear release>.
         // https://developer.android.com/training/wearables/apps/packaging
-        versionCode 36003
-        versionName "1.1.0"
+        versionCode 37001
+        versionName "1.1.1"
     }
 
     buildTypes {
