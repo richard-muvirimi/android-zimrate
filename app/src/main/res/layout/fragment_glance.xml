@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".fragments.main.FragmentGlance">
 
-    <ScrollView
+    <!--
+        NestedScrollView, not ScrollView: a plain ScrollView does not dispatch nested scrolls, so
+        the collapsing toolbar stayed open here and the bottom of the screen was never reachable.
+    -->
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/sv_bubbles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:padding="@dimen/padding_16" />
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <!-- No refresh button here: fetching belongs to the calculator screen, which owns the coins. -->
     <LinearLayout
