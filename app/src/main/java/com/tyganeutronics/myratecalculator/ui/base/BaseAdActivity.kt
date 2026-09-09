@@ -1,6 +1,7 @@
 package com.tyganeutronics.myratecalculator.ui.base
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -22,6 +23,24 @@ import java.lang.ref.WeakReference
 abstract class BaseAdActivity : BaseActivity() {
 
     val interstitialRunnable = Runnable { showInterstitialAd() }
+
+    /** Separate from [interstitialRunnable]: this one shows, it does not go round again. */
+    private val showInterstitialRunnable = Runnable {
+        if (!isFinishing) Appodeal.show(this, Appodeal.INTERSTITIAL)
+    }
+
+    /** When the current wait began, so it can be given up on. */
+    private var interstitialWaitStarted = 0L
+
+    companion object {
+        private const val INTERSTITIAL_RETRY_MS = 3000L
+
+        /** A beat for the toast to be read before the ad lands on top of it. */
+        private const val INTERSTITIAL_LEAD_MS = 2000L
+
+        /** How long an ad stays plausible enough to keep saying it is coming. */
+        private const val INTERSTITIAL_WAIT_LIMIT_MS = 30000L
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,30 +133,49 @@ abstract class BaseAdActivity : BaseActivity() {
 
         Appodeal.setInterstitialCallbacks(AppoInterstitialListener)
 
+        interstitialWaitStarted = SystemClock.uptimeMillis()
         showInterstitialAd()
     }
 
+    /**
+     * Keeps the user told that an advert is on its way for as long as one genuinely is, so it
+     * never arrives out of nowhere onto a tap meant for something else.
+     *
+     * The promise has to be true to be worth making, which is what the two guards are for: no ad
+     * is requested at all during the install grace period or for a user holding paid tokens, and
+     * one that has not filled within [INTERSTITIAL_WAIT_LIMIT_MS] is not coming.
+     */
     private fun showInterstitialAd() {
-        if (TokenUtils.hasLowTokenBalance()) {
+        if (!TokenUtils.canShowAds(baseContext) || !TokenUtils.hasLowTokenBalance()) return
 
-            Toast.makeText(
-                this,
-                R.string.rewards_earn_advert_loading,
-                Toast.LENGTH_SHORT
-            ).show()
+        val container = findViewById<View>(R.id.layout_container) ?: return
+        val loaded = Appodeal.isLoaded(Appodeal.INTERSTITIAL)
 
-            findViewById<View>(R.id.layout_container).let {
-                if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-                    Appodeal.show(this, Appodeal.INTERSTITIAL)
-                } else {
-                    it.postDelayed(interstitialRunnable, 3000)
-                }
-            }
+        if (!loaded &&
+            SystemClock.uptimeMillis() - interstitialWaitStarted >= INTERSTITIAL_WAIT_LIMIT_MS
+        ) return
+
+        Toast.makeText(
+            this,
+            R.string.rewards_earn_advert_loading,
+            Toast.LENGTH_SHORT
+        ).show()
+
+        if (loaded) {
+            // Delayed even though it could be shown right now: cached from a previous session,
+            // the very first pass through here is already loaded, and showing on the same tick
+            // as the first toast is the ambush this whole loop exists to prevent.
+            container.postDelayed(showInterstitialRunnable, INTERSTITIAL_LEAD_MS)
+        } else {
+            container.postDelayed(interstitialRunnable, INTERSTITIAL_RETRY_MS)
         }
     }
 
     override fun onDestroy() {
-        findViewById<View>(R.id.layout_container)?.removeCallbacks(interstitialRunnable)
+        findViewById<View>(R.id.layout_container)?.apply {
+            removeCallbacks(interstitialRunnable)
+            removeCallbacks(showInterstitialRunnable)
+        }
 
         super.onDestroy()
     }
