@@ -1,6 +1,7 @@
 package com.tyganeutronics.myratecalculator.ui.base
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +15,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.models.SpendModel
 import com.tyganeutronics.myratecalculator.interfaces.ReviewableActivity
@@ -29,6 +31,9 @@ abstract class BaseAppActivity : BaseAdActivity(), ReviewableActivity {
     companion object {
         /** When the rating sheet was last put in front of the user, as an epoch second. */
         private const val LAST_RATING_REQUESTED = "last_rating_requested"
+
+        /** When the user last turned down an update, as an epoch second. */
+        private const val LAST_UPDATE_DECLINED = "last_update_declined"
     }
 
     private lateinit var reviewManager: ReviewManager
@@ -46,10 +51,17 @@ abstract class BaseAppActivity : BaseAdActivity(), ReviewableActivity {
      * Offers the restart that finishes a flexible update. Indefinite on purpose: the download is
      * already on disk and installing it is one tap, so there is no reason to let the offer time
      * out and strand it.
+     *
+     * Both callers arrive from a task that can land after the activity is on its way out, and
+     * there is no view left to hang a snackbar on by then.
      */
     private fun offerToInstallUpdate() {
+        if (isFinishing || isDestroyed) return
+
+        val container = findViewById<View>(R.id.layout_container) ?: return
+
         Snackbar.make(
-            findViewById(R.id.layout_container),
+            container,
             getString(R.string.app_update_downloaded),
             Snackbar.LENGTH_INDEFINITE
         ).apply {
@@ -139,14 +151,10 @@ abstract class BaseAppActivity : BaseAdActivity(), ReviewableActivity {
         if (!this::appUpdateManager.isInitialized) return
 
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-            // The task can land after the activity is on its way out, and there is no view left
-            // to hang a snackbar on by then.
-            if (isFinishing || isDestroyed) return@addOnSuccessListener
-
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 offerToInstallUpdate()
             }
-        }
+        }.addOnFailureListener(::recordUpdateCheckFailure)
     }
 
     override fun onStop() {
@@ -162,16 +170,23 @@ abstract class BaseAppActivity : BaseAdActivity(), ReviewableActivity {
 
         val activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartIntentSenderForResult()
-        ) { _: ActivityResult ->
-            // handle callback
+        ) { result: ActivityResult ->
+            // Anything short of an accepted offer stands for a week. Left unrecorded, the next
+            // rotation recreates the activity and puts the same dialog up again.
+            if (result.resultCode != RESULT_OK) {
+                putLongPref(LAST_UPDATE_DECLINED, Instant.now().epochSecond)
+            }
         }
 
         appUpdateManager
             .appUpdateInfo
             .addOnSuccessListener { appUpdateInfo ->
+                if (isFinishing || isDestroyed) return@addOnSuccessListener
+
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                     && (appUpdateInfo.clientVersionStalenessDays() ?: -1) >= 7
                     && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+                    && refusalHasAgedOut()
                 ) {
                     // Request the update.
                     appUpdateManager.startUpdateFlowForResult(
@@ -182,6 +197,26 @@ abstract class BaseAppActivity : BaseAdActivity(), ReviewableActivity {
 
                 }
             }
+            .addOnFailureListener(::recordUpdateCheckFailure)
+    }
+
+    /**
+     * Whether a refused offer has aged out. Same epoch second convention as [requestReview]: the
+     * value written above is a true epoch second, so the other half of the comparison has to be
+     * built from [ZonedDateTime] rather than local wall clock time.
+     */
+    private fun refusalHasAgedOut(): Boolean =
+        getLongPref(LAST_UPDATE_DECLINED, 0) < ZonedDateTime.now().minusDays(7).toEpochSecond()
+
+    /**
+     * A failed check is routine away from Play — there is no store there to answer it — so only a
+     * play build has anything to learn from one. Recorded rather than logged: the point is to hear
+     * about a check that has quietly stopped working for real users, which logcat cannot tell you.
+     */
+    private fun recordUpdateCheckFailure(error: Exception) {
+        if (!BaseUtils.isPlayBuild) return
+
+        FirebaseCrashlytics.getInstance().recordException(error)
     }
 
 }
