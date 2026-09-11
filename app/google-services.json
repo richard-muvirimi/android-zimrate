@@ -3,7 +3,7 @@
     "project_number": "517253029311",
     "firebase_url": "https://my-rate-calculator.firebaseio.com",
     "project_id": "my-rate-calculator",
-    "storage_bucket": "my-rate-calculator.appspot.com"
+    "storage_bucket": "my-rate-calculator.firebasestorage.app"
   },
   "client": [
     {
@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "517253029311-296i2g95i3l76ehug4bt1jpkqnrophlh.apps.googleusercontent.com",
+          "client_id": "517253029311-daugkd9du9s5qlurpt7dbad1rj2ge8om.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tyganeutronics.myratecalculator",
+            "certificate_hash": "cbed5a0868c762be52d373480ed883a5f62d4d97"
+          }
+        },
+        {
+          "client_id": "517253029311-3fuo8q2fi7147b05pjjsttqu2utkc1en.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,35 +43,6 @@
         }
       },
       "admob_app_id": "ca-app-pub-5305936235957258~9422111874"
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:517253029311:android:fd3aa19d089e5fd9e0550a",
-        "android_client_info": {
-          "package_name": "com.tyganeutronics.myratecalculator.debug"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "517253029311-296i2g95i3l76ehug4bt1jpkqnrophlh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAagb8YmgaKKEBECtsfG3pkkbxw57zBjrc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "517253029311-296i2g95i3l76ehug4bt1jpkqnrophlh.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"

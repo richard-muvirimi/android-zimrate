@@ -40,4 +40,13 @@
         white on white and disappears inside its own spotlight. Dark counterpart in values-night.
     -->
     <color name="prompt_focal">#FFFFFFFF</color>
+
+    <!--
+        Google sign-in button, from their branding guidelines. Light variant here, dark in
+        values-night. These are fixed brand values rather than theme colours — the button is
+        required to look like Google's, not like the app's.
+    -->
+    <color name="google_btn_background">#FFFFFFFF</color>
+    <color name="google_btn_text">#FF1F1F1F</color>
+    <color name="google_btn_stroke">#FF747775</color>
 </resources>

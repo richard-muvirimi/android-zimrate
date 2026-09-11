@@ -241,9 +241,14 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
+        // A balance that has not arrived yet is not a balance of zero, and labelling it "0 Coins"
+        // tells someone with a full wallet that it is empty.
         val coins = rewardViewModel.coins.value
-        menu.findItem(R.id.menu_coins)?.title =
-            getString(R.string.menu_coins_balance, coins ?: 0)
+        menu.findItem(R.id.menu_coins)?.title = if (coins == null) {
+            getString(R.string.menu_coins_loading)
+        } else {
+            getString(R.string.menu_coins_balance, coins)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

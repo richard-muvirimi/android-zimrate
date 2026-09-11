@@ -17,7 +17,7 @@ class SpendsAdapter(private val itemInterFace: SpendItemInterface) :
     }
 
     override fun getItemId(position: Int): Long {
-        return itemInterFace.items[position].id
+        return itemInterFace.items[position].itemId
     }
 
     override fun getItemCount(): Int {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Upgrade path: there was a database to move across -->
+    <string name="setup_migrating">Updating your coins…</string>
+    <!-- Fresh install: nothing to move, only an account to take -->
+    <string name="setup_working">Setting up ZimRate…</string>
+
+    <string name="setup_offline">ZimRate needs to connect once to set up your account.\n\nYour coins are safe — connect to the internet and tap Retry.</string>
+    <string name="setup_retry">Retry</string>
+
+</resources>

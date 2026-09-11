@@ -1,12 +1,6 @@
 package com.tyganeutronics.myratecalculator.database.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.TypeConverters
-import com.tyganeutronics.myratecalculator.database.Database
 import com.tyganeutronics.myratecalculator.database.contract.RatesContract
-import com.tyganeutronics.myratecalculator.database.converter.BigDecimalConverter
-import com.tyganeutronics.myratecalculator.database.converter.InstantConverter
 import com.tyganeutronics.myratecalculator.utils.traits.optBigDecimal
 import com.tyganeutronics.myratecalculator.utils.traits.optInstant
 import com.tyganeutronics.myratecalculator.utils.traits.putBigDecimal
@@ -16,39 +10,43 @@ import org.json.JSONObject
 import java.math.BigDecimal
 import java.time.Instant
 
-@Entity(tableName = RatesContract.TABLE_NAME)
-@TypeConverters(value = [InstantConverter::class, BigDecimalConverter::class])
-open class RateEntity : BaseEntity() {
+/**
+ * A currency and its rate, as the app passes it around.
+ *
+ * Was a Room entity; the annotations, the base class and the save/insert/update helpers went
+ * with the database. It is now a plain holder that
+ * [com.tyganeutronics.myratecalculator.database.rtdb.CurrencyMapping] fills from the tree, which
+ * is why the adapters, view holders, glance bubbles, watch sync and widgets all carried across
+ * the store change untouched.
+ */
+open class RateEntity {
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_URL)
+    /** A hash of [currency], so RecyclerView's stable ids survive a reinstall. */
+    var id: Long = 0
+
+    var createdAt: Instant = Instant.EPOCH
+
+    var updatedAt: Instant = Instant.EPOCH
+
     var url: String = ""
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_NAME)
     var name: String = ""
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_CURRENCY)
     var currency: String = ""
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_RATE)
     var rate: BigDecimal = BigDecimal(0)
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_LAST_RATE)
     var lastRate: BigDecimal = BigDecimal(0)
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_LAST_CHECKED)
-    var lastChecked: Instant = Instant.MIN
+    var lastChecked: Instant = Instant.EPOCH
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_PINNED)
     var pinned: Boolean = false
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_HIDDEN)
     var hidden: Boolean = false
 
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_SORT_ORDER)
     var sortOrder: Int = Int.MAX_VALUE
 
     /** Entered by the user rather than returned by the API. Server rates never overwrite one. */
-    @ColumnInfo(name = RatesContract.COLUMN_NAME_CUSTOM, defaultValue = "0")
     var custom: Boolean = false
 
     fun duplicateWithPinned(pinned: Boolean = this.pinned): RateEntity {
@@ -69,20 +67,8 @@ open class RateEntity : BaseEntity() {
         }
     }
 
-    override fun doInsert(database: Database) {
-        database.rates().insert(this)
-    }
-
-    override fun doUpdate(database: Database) {
-        database.rates().update(this)
-    }
-
-    override fun doDelete(database: Database) {
-        database.rates().delete(this)
-    }
-
-    override fun toJson(): String {
-        val jsonObject = JSONObject(super.toJson())
+    open fun toJson(): String {
+        val jsonObject = JSONObject()
         try {
             jsonObject.put(RatesContract.COLUMN_NAME_NAME, name)
             jsonObject.put(RatesContract.COLUMN_NAME_URL, url)
@@ -97,9 +83,7 @@ open class RateEntity : BaseEntity() {
         return jsonObject.toString()
     }
 
-    override fun fromJson(json: String) {
-        super.fromJson(json)
-
+    open fun fromJson(json: String) {
         try {
             val jsonObject = JSONObject(json)
 

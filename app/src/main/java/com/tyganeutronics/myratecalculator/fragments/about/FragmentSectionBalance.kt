@@ -39,9 +39,11 @@ class FragmentSectionBalance : BaseFragment(), OnClickListener {
     override fun syncViews() {
         super.syncViews()
 
-        val observer = Observer { balance: Long ->
+        val observer = Observer { balance: Long? ->
             requireViewById<AppCompatTextView>(R.id.txt_rewards_balance).apply {
-                text = String.format(Locale.getDefault(), "%d", balance)
+                // Null is "not read yet", which is not the same as nothing — a dash says so
+                // without claiming a number the wallet has not actually reported.
+                text = balance?.let { String.format(Locale.getDefault(), "%d", it) } ?: "—"
             }
         }
 

@@ -98,6 +98,18 @@
                 android:resource="@xml/widget_single" />
         </receiver>
 
+        <!--
+            Amazon's MRAID expand host reads the ad_state extra in onCreate and calls equals on it
+            unguarded, so it dies on launch whenever the system re-creates it without the extras it
+            was started with. The SDK only ever starts it with that extra, which leaves a restored
+            background activity as the way in; noHistory finishes it once it leaves the screen, so
+            there is nothing left to restore. Still unfixed upstream as of aps-sdk 12.0.1.
+        -->
+        <activity
+            android:name="com.amazon.device.ads.DTBAdActivity"
+            android:noHistory="true"
+            tools:node="merge" />
+
     </application>
 
 </manifest>

@@ -18,4 +18,9 @@
     <!-- Dark counterpart of the prompt focal declared in values/colors.xml. -->
     <color name="prompt_focal">#FF121212</color>
 
+
+    <!-- Dark counterparts of the Google sign-in button colours. See values/colors.xml. -->
+    <color name="google_btn_background">#FF131314</color>
+    <color name="google_btn_text">#FFE3E3E3</color>
+    <color name="google_btn_stroke">#FF8E918F</color>
 </resources>

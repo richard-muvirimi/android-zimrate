@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Sign in sheet -->
+    <string name="account_title">Sign in</string>
+    <!--
+        Says coins, not "coins you buy". Once signed in there is no difference: every grant lives
+        under the account and syncs, however it was earned. Only an account you cannot sign back
+        into is stuck on one phone, which is what the anonymous wording below is about.
+    -->
+    <string name="account_why">Your coins and rates are saved to your account, so they follow you to a new phone. Buying coins needs an account so they can never be lost.</string>
+    <string name="account_google">Continue with Google</string>
+    <string name="account_or">or</string>
+    <string name="account_email_hint">Email address</string>
+    <string name="account_password_hint">Password</string>
+    <string name="account_submit">Continue</string>
+    <string name="account_forgot">Forgot password</string>
+
+    <!-- Outcomes -->
+    <string name="account_linked">Signed in as %s. Your coins came with you.</string>
+    <string name="account_switched">Signed in as %s. That account already existed, so your coins and rates were moved onto it.</string>
+    <string name="account_error_email">Enter a valid email address</string>
+    <string name="account_error_password_short">Use at least 6 characters</string>
+    <string name="account_error_wrong_password">That email already has an account and the password does not match it</string>
+    <string name="account_error_google">Google sign-in could not be completed. Try email instead, or try again later.</string>
+    <string name="account_error_generic">Could not sign in. Check your connection and try again.</string>
+    <string name="account_reset_sent">Password reset sent to %s</string>
+    <string name="account_reset_failed">Could not send a reset email to %s</string>
+
+    <!-- Account section on the settings tab -->
+    <string name="account_section_title">Account</string>
+    <string name="account_not_signed_in">Not signed in</string>
+    <string name="account_detail_signed_in">Your coins and rates are saved to this account.</string>
+    <string name="account_detail_anonymous">Your coins are on this phone only. Sign in to keep them if you change phone.</string>
+    <string name="account_sign_out">Sign out</string>
+
+    <!-- Purchase gate -->
+    <string name="account_required_to_buy">Sign in first so your coins cannot be lost</string>
+
+</resources>

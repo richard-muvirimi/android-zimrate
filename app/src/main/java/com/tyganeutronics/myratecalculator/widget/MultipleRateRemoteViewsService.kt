@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.tyganeutronics.myratecalculator.AppZimRate
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
 import com.tyganeutronics.myratecalculator.R
+import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 import java.math.RoundingMode
 
 class MultipleRateRemoteViewsService : RemoteViewsService() {
@@ -16,7 +19,7 @@ class MultipleRateRemoteViewsService : RemoteViewsService() {
 
 private class Factory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
 
-    private var rates = listOf<com.tyganeutronics.myratecalculator.database.entities.RateEntity>()
+    private var rates = listOf<RateEntity>()
 
     override fun onCreate() = reload()
 
@@ -55,11 +58,19 @@ private class Factory(private val context: Context) : RemoteViewsService.RemoteV
 
     override fun hasStableIds() = true
 
+    /**
+     * Blocking on purpose. [RemoteViewsService.RemoteViewsFactory.onDataSetChanged] is handed a
+     * binder thread precisely so it can do expensive work synchronously, which is why this class
+     * needed no restructuring when the store changed — unlike the providers, it was never on the
+     * broadcast thread. The timeout is only there so a listener that never fires cannot wedge
+     * the thread.
+     */
     private fun reload() {
-        rates = try {
-            AppZimRate.database.rates().getAllPinned()
-        } catch (e: Exception) {
-            emptyList()
+        rates = runBlocking {
+            withTimeoutOrNull(WidgetUtils.READ_TIMEOUT_MS) {
+                CurrencyRepository.awaitLoaded()
+                CurrencyRepository.allPinned()
+            } ?: emptyList()
         }
     }
 }

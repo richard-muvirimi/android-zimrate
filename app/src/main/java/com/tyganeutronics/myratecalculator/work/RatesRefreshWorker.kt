@@ -3,12 +3,12 @@ package com.tyganeutronics.myratecalculator.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.contract.PurchasesContract
 import com.tyganeutronics.myratecalculator.database.models.RatesModel
 import com.tyganeutronics.myratecalculator.database.models.SpendModel
 import com.tyganeutronics.myratecalculator.utils.RatesNotifier
+import com.tyganeutronics.myratecalculator.utils.TokenUtils
 import com.tyganeutronics.myratecalculator.utils.contracts.CurrencyContract
 import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
 import com.tyganeutronics.myratecalculator.utils.traits.putLongPref
@@ -34,7 +34,12 @@ class RatesRefreshWorker(
             return Result.success()
         }
 
-        if (AppZimRate.database.rewards().tokenBalance() <= 0) {
+        // An unknown balance is not an empty one. Cancelling the schedule on a read that simply
+        // had not arrived would silently stop refreshing for someone with coins to spend, and
+        // they would only find out by noticing stale rates — so skip this run and try the next.
+        val balance = TokenUtils.balance() ?: return Result.success()
+
+        if (balance <= 0) {
             RatesNotifier.notifyCoinsExhausted(context)
             RatesRefreshScheduler.cancel(context)
             return Result.success()

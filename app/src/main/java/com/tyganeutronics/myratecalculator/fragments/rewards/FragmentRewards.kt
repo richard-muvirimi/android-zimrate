@@ -1,28 +1,33 @@
 package com.tyganeutronics.myratecalculator.fragments.rewards
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.AsyncTaskLoader
-import androidx.loader.content.Loader
-import com.tyganeutronics.myratecalculator.AppZimRate
+import androidx.lifecycle.lifecycleScope
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.contract.RewardContract
-import com.tyganeutronics.myratecalculator.database.entities.RewardEntity
+import com.tyganeutronics.myratecalculator.database.rtdb.Reward
+import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
 import com.tyganeutronics.myratecalculator.interfaces.RewardItemInterface
 import com.tyganeutronics.myratecalculator.ui.base.BaseListFragment
 import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.RewardsAdapter
 import com.tyganeutronics.myratecalculator.utils.traits.displayBackButton
 import com.tyganeutronics.myratecalculator.utils.traits.hideBackButton
 import com.tyganeutronics.myratecalculator.utils.traits.setTitle
+import kotlinx.coroutines.launch
 
-class FragmentRewards : BaseListFragment(), RewardItemInterface,
-    LoaderManager.LoaderCallbacks<List<RewardEntity>> {
+/**
+ * Grant history, live off the wallet listener.
+ *
+ * The AsyncTaskLoader this used to run on went with Room. It existed to get a blocking query
+ * off the main thread; there is no blocking query any more, only a list that is already in
+ * memory, and collecting it means the screen also redraws when a grant lands while it is open.
+ */
+class FragmentRewards : BaseListFragment(), RewardItemInterface {
 
-    override var items: List<RewardEntity> = emptyList()
+    override var items: List<Reward> = emptyList()
+
     override fun hasItems(): Boolean {
         return items.isNotEmpty()
     }
@@ -32,64 +37,58 @@ class FragmentRewards : BaseListFragment(), RewardItemInterface,
 
         displayBackButton()
 
-        val type = arguments?.getString(RewardContract.COLUMN_NAME_TYPE, "") ?: ""
-
-        if (type == RewardContract.TYPES.PURCHASE) {
+        if (type().isNotEmpty()) {
             setTitle(R.string.rewards_purchases_history_title)
         } else {
             setTitle(R.string.rewards_awarded_history_title)
         }
+
+        // Both variants share the expiry-first order, so both get the explanation.
+        setCaption(R.string.rewards_sort_note)
     }
 
     override fun search(): String? {
         return null
     }
 
-    companion object {
-        const val TAG = "FragmentRewards"
-    }
-
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<RewardEntity>> {
-        val loader = @SuppressLint("StaticFieldLeak")
-        object : AsyncTaskLoader<List<RewardEntity>>(requireContext()) {
-            override fun onStartLoading() {
-                super.onStartLoading()
-                contentLoading()
-                forceLoad()
-            }
-
-            override fun loadInBackground(): List<RewardEntity> {
-
-                val type = args?.getString(RewardContract.COLUMN_NAME_TYPE, "") ?: ""
-
-                return if (args !== null && type.isNotEmpty()) {
-                    AppZimRate.database.rewards().getType(type)
-                } else {
-                    AppZimRate.database.rewards().getActive()
-                }
-            }
-        }
-
-        return loader
-    }
-
-    override fun onLoaderReset(loader: Loader<List<RewardEntity>>) {
-
-    }
-
-    override fun onLoadFinished(loader: Loader<List<RewardEntity>>, data: List<RewardEntity>) {
-        items = data
-        contentReady()
-    }
+    private fun type(): String =
+        arguments?.getString(RewardContract.COLUMN_NAME_TYPE, "") ?: ""
 
     override fun onStart() {
         super.onStart()
-        LoaderManager.getInstance(this).initLoader(1, arguments, this);
+
+        contentLoading()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            WalletRepository.rewards.collect { loaded ->
+                // Null means the wallet has not been read yet — keep the loading state rather
+                // than reporting an empty history.
+                if (loaded == null) return@collect
+
+                val type = type()
+                items = if (type.isNotEmpty()) {
+                    WalletRepository.activeRewardsOfType(type)
+                } else {
+                    WalletRepository.activeRewards()
+                }
+
+                deliver()
+            }
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
-        LoaderManager.getInstance(this).destroyLoader(1)
+    /**
+     * Posted rather than called straight through, and that is load bearing.
+     *
+     * [BaseListFragment] sizes its list from the fragment's own view — `setMeasuredDimension` on
+     * `requireView().width, requireView().height`. The loader this replaced always arrived after
+     * the first layout pass, so those were real numbers. A StateFlow hands over its current value
+     * the instant it is collected, which here is inside onStart, before any layout has happened
+     * and while both are still zero — so the list measured to nothing and drew nothing, while
+     * every log along the way insisted it had items.
+     */
+    private fun deliver() {
+        view?.post { if (isAdded) contentReady() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,5 +114,9 @@ class FragmentRewards : BaseListFragment(), RewardItemInterface,
         super.onDestroyView()
 
         hideBackButton()
+    }
+
+    companion object {
+        const val TAG = "FragmentRewards"
     }
 }

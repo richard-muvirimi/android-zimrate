@@ -8,11 +8,52 @@ import android.content.res.Configuration
 import android.text.format.DateUtils
 import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.R
+import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
+import com.tyganeutronics.myratecalculator.utils.traits.putBooleanPref
+import com.tyganeutronics.myratecalculator.utils.traits.removePref
 import com.tyganeutronics.myratecalculator.widget.MultipleRateProvider
 import com.tyganeutronics.myratecalculator.widget.SingleRateProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import java.time.Instant
 
 object WidgetUtils {
+
+    /**
+     * How long a widget may spend reading before it gives up and says so. A broadcast has
+     * roughly ten seconds before the system loses patience, and drawing the fallback has to
+     * happen inside that, so the read gets rather less than all of it.
+     */
+    const val READ_TIMEOUT_MS = 6_000L
+
+    /**
+     * Outlives any one broadcast on purpose — [android.content.BroadcastReceiver.PendingResult]
+     * keeps the process alive for the work, and the receiver instance itself is discarded as
+     * soon as onReceive returns.
+     */
+    val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    /**
+     * Whether this widget has ever drawn real data.
+     *
+     * The launcher keeps the last RemoteViews it was handed, so after a reboot a placed widget
+     * still shows its previous values until something replaces them. Pushing a loading view on
+     * every update would throw that away and make the widget blink on a cadence, so the loading
+     * state is only ever drawn when there is genuinely nothing there yet.
+     */
+    fun hasRendered(context: Context, appWidgetId: Int): Boolean =
+        context.getBooleanPref(renderedKey(appWidgetId), false)
+
+    fun markRendered(context: Context, appWidgetId: Int) {
+        context.putBooleanPref(renderedKey(appWidgetId), true)
+    }
+
+    fun clearRendered(context: Context, appWidgetId: Int) {
+        context.removePref(renderedKey(appWidgetId))
+    }
+
+    private fun renderedKey(appWidgetId: Int) = "widget-rendered-$appWidgetId"
 
     /**
      * Relative "3 hours ago" stamp, matching the footnote on the rates screen. Empty for the

@@ -20,6 +20,25 @@
         android:paddingBottom="@dimen/bottom_navigation_offset"
         android:visibility="gone" />
 
+    <!--
+        Explains a sort order that is not the obvious one. Hidden unless a fragment opts in via
+        BaseListFragment.setCaption, so every other list is untouched. Opaque and top-gravity so
+        the list scrolls underneath it rather than pushing it away.
+    -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_list_caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="?android:attr/colorBackground"
+        android:paddingHorizontal="@dimen/paddingWidth"
+        android:paddingVertical="@dimen/padding_8"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        tools:text="@string/rewards_sort_note"
+        tools:visibility="visible" />
+
     <include
         layout="@layout/abstract_item_list_empty"
         android:visibility="gone"
