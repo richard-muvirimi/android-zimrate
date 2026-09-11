@@ -4,6 +4,7 @@ import android.content.Context
 import com.apollographql.apollo.api.Optional
 import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
 import com.tyganeutronics.myratecalculator.graphql.FetchRatesQuery
 import com.tyganeutronics.myratecalculator.graphql.type.Prefer
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
@@ -58,63 +59,33 @@ object RatesModel {
     }
 
     /**
-     * Persists [apiRates] in a single transaction so Room fires LiveData exactly once, then
-     * pushes the pinned rows to the watch. Existing pin/hide/order state is carried over.
+     * Persists [apiRates] as one atomic multi-path write, then pushes the pinned rows to the
+     * watch. Existing pin, hide and order state is carried over by the repository, and rates
+     * whose values did not move are skipped so the watch and widgets are not told about
+     * non-events.
      */
-    fun save(context: Context, apiRates: List<RateEntity>) {
-        val dao = AppZimRate.database.rates()
-
-        AppZimRate.database.runInTransaction {
-            // Only inject a synthetic USD base for full refreshes (more than one currency).
-            // Single-currency per-row refreshes should not touch USD.
-            val candidates = when {
-                apiRates.any { it.currency == "USD" } -> apiRates
-                apiRates.size > 1 -> apiRates + RateEntity().apply {
-                    currency = "USD"
-                    name = "US Dollar"
-                    rate = BigDecimal.ONE
-                    url = ""
-                }
-
-                else -> apiRates
+    suspend fun save(context: Context, apiRates: List<RateEntity>) {
+        // Only inject a synthetic USD base for full refreshes (more than one currency).
+        // Single-currency per-row refreshes should not touch USD.
+        val candidates = when {
+            apiRates.any { it.currency == "USD" } -> apiRates
+            apiRates.size > 1 -> apiRates + RateEntity().apply {
+                currency = "USD"
+                name = "US Dollar"
+                rate = BigDecimal.ONE
+                url = ""
             }
 
-            // A currency the user defined owns that code outright. Should the server ever start
-            // returning it, their row stays as they typed it rather than being overwritten.
-            val ratesToSave = candidates.filterNot { dao.findByCurrency(it.currency)?.custom == true }
-
-            val now = Instant.now()
-            ratesToSave.forEach { incoming ->
-                val existing = dao.findByCurrency(incoming.currency)
-                if (existing != null) {
-                    incoming.id = existing.id
-                    incoming.pinned = existing.pinned
-                    incoming.hidden = existing.hidden
-                    incoming.createdAt = existing.createdAt
-                    incoming.sortOrder = existing.sortOrder
-                } else {
-                    incoming.createdAt = now
-                    incoming.sortOrder = Int.MAX_VALUE
-                }
-                if (incoming.currency == "USD") {
-                    incoming.pinned = true
-                }
-                incoming.updatedAt = now
-            }
-
-            val sorted = ratesToSave.sortedWith(
-                compareBy(
-                    { it.currency != "USD" },
-                    { !it.pinned },
-                    { it.sortOrder },
-                    { it.currency }
-                )
-            )
-            sorted.forEachIndexed { index, entity -> entity.sortOrder = index }
-            dao.insertAll(sorted)
+            else -> apiRates
         }
 
-        WearSyncHelper.pushPinnedRates(context, dao.getAllPinned())
+        CurrencyRepository.saveFetched(candidates)
+
+        // Renumbering is a separate atomic call rather than folded into the upsert, because a
+        // currency arriving for the first time has to exist before it can be given a position.
+        CurrencyRepository.applyOrder(CurrencyRepository.visibleSorted())
+
+        WearSyncHelper.pushPinnedRates(context, CurrencyRepository.allPinned())
         WidgetUtils.refreshAll(context)
     }
 }

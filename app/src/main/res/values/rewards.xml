@@ -24,12 +24,17 @@
 
     <string name="rewards_coins">Coins</string>
     <string name="menu_coins_balance">%d Coins</string>
+    <!-- Shown in place of a balance that has not been read yet, rather than a misleading 0 -->
+    <string name="menu_coins_loading">Coins</string>
+    <string name="rewards_coins_loading">Checking your balance…</string>
 
     <string name="rewards_toast_watched_advert">Reward awarded, Advert Watched.</string>
     <string name="rewards_toast_advert_failed">Failed to load advert.</string>
 
     <string name="rewards_awarded_history_title">Reward History</string>
     <string name="rewards_purchases_history_title">Purchased Coins</string>
+    <!-- Explains the reward list sort, which is not the obvious newest-first -->
+    <string name="rewards_sort_note">Soonest to expire first — coins are spent in this order.</string>
     <string name="rewards_coin_spends_history_title">Coin Spends History</string>
 
     <string name="rewards_balance_amount" translatable="false">%1$d / %2$d</string>

@@ -2,24 +2,25 @@ package com.tyganeutronics.myratecalculator
 
 import androidx.multidex.MultiDexApplication
 import androidx.preference.PreferenceManager
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.Firebase
 import com.google.firebase.appcheck.appCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
+import com.google.firebase.database.database
 import com.google.firebase.initialize
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
-import com.tyganeutronics.myratecalculator.database.Database
-import com.tyganeutronics.myratecalculator.database.contract.DatabaseContract
-import com.tyganeutronics.myratecalculator.database.models.RewardModel
-import com.tyganeutronics.myratecalculator.utils.TokenUtils
+import com.tyganeutronics.myratecalculator.auth.AuthManager
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
+import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
+import com.tyganeutronics.myratecalculator.migration.SetupState
 import com.tyganeutronics.myratecalculator.utils.PreferenceMigrations
 import com.tyganeutronics.myratecalculator.utils.contracts.ApiContract
 import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AppZimRate : MultiDexApplication() {
     override fun onCreate() {
@@ -33,8 +34,44 @@ class AppZimRate : MultiDexApplication() {
         RatesRefreshScheduler.sync(this)
 
         initializeAppCheck()
-        setUpDataBase()
+        setUpRealtimeDatabase()
+        signIn()
         setUpRemoteConfig()
+    }
+
+    /**
+     * Turns on the offline cache, and has to happen before anything asks the database for a
+     * reference — calling it afterwards throws at runtime rather than failing to compile. That
+     * is the only reason it sits this high in onCreate.
+     */
+    private fun setUpRealtimeDatabase() {
+        Firebase.database.setPersistenceEnabled(true)
+    }
+
+    /**
+     * Starts first-launch setup, and keeps the wallet pointed at whichever account is current.
+     *
+     * [SetupState] owns the sign in, because a failure there is not something to swallow — it
+     * is the gate the user has to be told about.
+     */
+    private fun signIn() {
+        SetupState.begin(this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            // Follows the account rather than being attached once, so signing out drops the
+            // cached wallet and signing back in picks up the right one.
+            AuthManager.state.collect {
+                val uid = AuthManager.uid
+                if (uid == null) {
+                    WalletRepository.detach()
+                    CurrencyRepository.detach()
+                } else {
+                    WalletRepository.attach(uid)
+                    CurrencyRepository.attach(uid)
+                }
+            }
+        }
     }
 
     private fun initializeAppCheck() {
@@ -56,50 +93,6 @@ class AppZimRate : MultiDexApplication() {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
     }
 
-    private fun setUpDataBase() {
-        val database = Room.databaseBuilder(
-            applicationContext,
-            Database::class.java,
-            DatabaseContract.DATABASE_NAME
-        )
-        database.allowMainThreadQueries()
-        database.addMigrations(
-            Database.MIGRATION_1_2,
-            Database.MIGRATION_2_3,
-            Database.MIGRATION_3_4,
-            Database.MIGRATION_4_5,
-        )
-        database.fallbackToDestructiveMigrationOnDowngrade()
-        database.enableMultiInstanceInvalidation()
-        database.addCallback(object : RoomDatabase.Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-
-                if (!TokenUtils.installOlderThan(
-                        applicationContext,
-                        1
-                    )
-                ) {
-                    RewardModel.rewardStarterPack(applicationContext)
-                }
-            }
-
-            override fun onOpen(db: SupportSQLiteDatabase) {
-                super.onOpen(db)
-
-                //clear old history
-                AppZimRate.database.apply {
-                    transactionExecutor.execute {
-                        rewards().cleanExpired()
-                        spends().cleanExpired()
-                    }
-                }
-            }
-        })
-
-        Companion.database = database.build()
-    }
-
     private fun setUpApollo() {
         apolloClient = ApolloClient.Builder()
             .serverUrl(ApiContract.getRatesUrl(this))
@@ -108,6 +101,5 @@ class AppZimRate : MultiDexApplication() {
 
     companion object {
         lateinit var apolloClient: ApolloClient
-        lateinit var database: Database
     }
 }

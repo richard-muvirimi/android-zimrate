@@ -47,19 +47,24 @@ class FragmentCoinsBalance : BaseExpandedDialogFragment() {
     override fun syncViews() {
         super.syncViews()
 
-        val observer = Observer { balance: Long ->
+        // Starts as "checking" rather than "exhausted" — the balance is not known until the
+        // observer first fires, and an unread wallet must not be reported as an empty one.
+        requireViewById<AppCompatTextView>(R.id.txt_rewards_status).text =
+            getString(R.string.rewards_coins_loading)
 
-            requireViewById<AppCompatTextView>(R.id.txt_rewards_status).text = run {
-                if (balance > 0) {
-                    getString(R.string.rewards_coins_available)
-                } else {
-                    getString(R.string.rewards_coins_exhausted)
-                }
+        val observer = Observer { balance: Long? ->
+
+            requireViewById<AppCompatTextView>(R.id.txt_rewards_status).text = when {
+                // Still waiting on the wallet — keep saying so rather than declaring it empty.
+                balance == null -> getString(R.string.rewards_coins_loading)
+                balance > 0 -> getString(R.string.rewards_coins_available)
+                else -> getString(R.string.rewards_coins_exhausted)
             }
         }
 
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
         rewardViewModel.coins.observe(this, observer)
+
     }
 
     companion object {

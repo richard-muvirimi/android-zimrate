@@ -1,9 +1,9 @@
 package com.tyganeutronics.myratecalculator.interfaces
 
-import com.tyganeutronics.myratecalculator.database.entities.RewardEntity
+import com.tyganeutronics.myratecalculator.database.rtdb.Reward
 
 interface RewardItemInterface {
 
-    val items: List<RewardEntity>
+    val items: List<Reward>
 
 }

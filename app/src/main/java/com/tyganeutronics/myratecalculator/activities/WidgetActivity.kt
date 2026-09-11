@@ -13,9 +13,9 @@ import android.widget.ListView
 import android.widget.RemoteViews
 import androidx.appcompat.widget.AppCompatButton
 import com.murgupluoglu.flagkit.FlagKit
-import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
 import com.tyganeutronics.myratecalculator.ui.base.BaseAppActivity
 import com.tyganeutronics.myratecalculator.utils.CurrencyFlagUtil
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
@@ -55,7 +55,7 @@ class WidgetActivity : BaseAppActivity(), View.OnClickListener {
         }
 
         rates.clear()
-        rates.addAll(AppZimRate.database.rates().getAll().sortedBy { it.currency })
+        rates.addAll(CurrencyRepository.all().sortedBy { it.currency })
 
         val lv = findViewById<ListView>(R.id.lv_currencies)
         lv.adapter = CurrencyAdapter(this, rates)

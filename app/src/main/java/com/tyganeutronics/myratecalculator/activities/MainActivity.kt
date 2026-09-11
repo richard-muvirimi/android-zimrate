@@ -6,11 +6,13 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationBarView
@@ -19,6 +21,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.remoteConfig
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
+import com.tyganeutronics.myratecalculator.fragments.FragmentSetup
+import com.tyganeutronics.myratecalculator.migration.SetupState
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentAbout
 import com.tyganeutronics.myratecalculator.fragments.main.FragmentCustomRate
@@ -36,6 +40,8 @@ import com.tyganeutronics.myratecalculator.utils.traits.putBooleanPref
 import com.tyganeutronics.myratecalculator.widget.MultipleRateProvider
 import com.tyganeutronics.myratecalculator.widget.SingleRateProvider
 import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener, RewardsActivity,
     RewardModelInterface {
@@ -47,10 +53,13 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
 
     companion object {
         private const val PREF_ASKED_NOTIFICATIONS = "asked_notifications"
+
+        /** How long the splash may hold before setup gets a screen of its own. */
+        private const val SPLASH_CEILING_MS = 800L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        holdSplashForSetup()
 
         //Do not remove before create activity, crushes on rotate device
         rewardViewModel = ViewModelProvider(this)[RewardViewModel::class.java]
@@ -74,6 +83,48 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         }
 
         requestNotificationPermission()
+        watchSetup()
+    }
+
+    /**
+     * Keeps the launch splash up while setup resolves, rather than introducing a second screen
+     * that has to appear and then disappear.
+     *
+     * Most upgrades finish inside [SPLASH_CEILING_MS] and nobody sees anything — what is on
+     * screen never changes, which is the only way to be certain there is no flash. The ceiling
+     * is not optional: a condition that never goes false is an app that looks hung.
+     */
+    private fun holdSplashForSetup() {
+        val startedAt = SystemClock.uptimeMillis()
+
+        installSplashScreen().setKeepOnScreenCondition {
+            SetupState.status.value == SetupState.Status.Working &&
+                SystemClock.uptimeMillis() - startedAt < SPLASH_CEILING_MS
+        }
+    }
+
+    /**
+     * Past the ceiling, or with no connection, setup gets a real screen and an explanation.
+     *
+     * The wait is the whole point and not a tidy-up: without it this collects the initial
+     * Working state the instant the activity starts and puts the screen up on every single
+     * launch, which the splash is there to prevent. Setup that resolves inside the ceiling is
+     * never seen at all — the first status this observes is already Ready.
+     */
+    private fun watchSetup() {
+        lifecycleScope.launch {
+            delay(SPLASH_CEILING_MS)
+
+            SetupState.status.collect { status ->
+                if (status == SetupState.Status.Ready) return@collect
+                if (supportFragmentManager.isStateSaved) return@collect
+                if (supportFragmentManager.findFragmentByTag(FragmentSetup.TAG) != null) {
+                    return@collect
+                }
+
+                FragmentSetup().show(supportFragmentManager, FragmentSetup.TAG)
+            }
+        }
     }
 
     /**

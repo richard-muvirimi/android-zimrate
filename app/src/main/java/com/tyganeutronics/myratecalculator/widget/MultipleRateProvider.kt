@@ -10,10 +10,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.activities.MainActivity
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import java.time.Instant
 
 class MultipleRateProvider : AppWidgetProvider() {
@@ -24,11 +26,8 @@ class MultipleRateProvider : AppWidgetProvider() {
         appWidgetIds: IntArray?
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        appWidgetIds?.forEach { id ->
-            if (context != null && appWidgetManager != null) {
-                updateWidget(context, appWidgetManager, id)
-            }
-        }
+        if (context == null || appWidgetManager == null || appWidgetIds == null) return
+        renderAsync(context, appWidgetManager, appWidgetIds)
     }
 
     override fun onEnabled(context: Context?) {
@@ -38,26 +37,78 @@ class MultipleRateProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        if (context != null) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val componentName = ComponentName(context, MultipleRateProvider::class.java)
-            val ids = appWidgetManager.getAppWidgetIds(componentName)
-            ids?.forEach { id -> updateWidget(context, appWidgetManager, id) }
-            // Notify the list adapter that data may have changed
-            appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.lv_rates)
+        if (context == null) return
+
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val componentName = ComponentName(context, MultipleRateProvider::class.java)
+        val ids = appWidgetManager.getAppWidgetIds(componentName) ?: return
+
+        renderAsync(context, appWidgetManager, ids)
+        // Notify the list adapter that data may have changed
+        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.lv_rates)
+    }
+
+    /**
+     * Only the sync stamp is read here — the list itself is filled by
+     * [MultipleRateRemoteViewsService], which is handed a binder thread and is allowed to block
+     * on it. So this is the sole part of the multiple-rate widget that needs moving off the
+     * broadcast thread ahead of the store swap.
+     *
+     * The adapter is wired up front rather than after the read, so the list starts loading while
+     * the stamp is still being worked out.
+     */
+    private fun renderAsync(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
+        val pendingResult = goAsync()
+
+        appWidgetIds.forEach { id ->
+            val message = if (WidgetUtils.hasRendered(context, id)) "" else {
+                context.getString(R.string.widget_loading)
+            }
+            appWidgetManager.updateAppWidget(id, buildViews(context, id, message))
+        }
+
+        WidgetUtils.scope.launch {
+            try {
+                appWidgetIds.forEach { id ->
+                    val stamp = withTimeoutOrNull(WidgetUtils.READ_TIMEOUT_MS) { lastChecked() }
+
+                    if (stamp == null) {
+                        if (!WidgetUtils.hasRendered(context, id)) {
+                            val message = context.getString(R.string.widget_unavailable)
+                            appWidgetManager.updateAppWidget(id, buildViews(context, id, message))
+                        }
+                        return@forEach
+                    }
+
+                    val message = WidgetUtils.formatChecked(stamp)
+                    appWidgetManager.updateAppWidget(id, buildViews(context, id, message))
+                    WidgetUtils.markRendered(context, id)
+                }
+            } finally {
+                pendingResult.finish()
+            }
         }
     }
 
-    private fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        val views = RemoteViews(context.packageName, R.layout.widget_multiple)
+    /** Date stamp — the most recently checked pinned rate. */
+    private suspend fun lastChecked(): Instant {
+        CurrencyRepository.awaitLoaded()
+        val rates = CurrencyRepository.allPinned()
 
-        // Date stamp — use the most recently checked pinned rate
-        val rates = try { AppZimRate.database.rates().getAllPinned() } catch (e: Exception) { emptyList() }
         // Skip the Instant.MIN "never checked" sentinel — it is not representable in millis.
-        val lastChecked = rates.map { it.lastChecked }
+        return rates.map { it.lastChecked }
             .filter { it > Instant.EPOCH }
             .maxOrNull() ?: Instant.now()
-        views.setTextViewText(R.id.txt_date_checked, WidgetUtils.formatChecked(lastChecked))
+    }
+
+    private fun buildViews(context: Context, appWidgetId: Int, checked: String): RemoteViews {
+        val views = RemoteViews(context.packageName, R.layout.widget_multiple)
+
+        views.setTextViewText(R.id.txt_date_checked, checked)
 
         // Wire the scrollable list to the RemoteViewsService
         val serviceIntent = Intent(context, MultipleRateRemoteViewsService::class.java).apply {
@@ -76,6 +127,13 @@ class MultipleRateProvider : AppWidgetProvider() {
         )
         views.setOnClickPendingIntent(R.id.widget_main, pendingIntent)
 
-        appWidgetManager.updateAppWidget(appWidgetId, views)
+        return views
+    }
+
+    override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
+        super.onDeleted(context, appWidgetIds)
+        appWidgetIds?.forEach { id ->
+            context?.let { WidgetUtils.clearRendered(it, id) }
+        }
     }
 }

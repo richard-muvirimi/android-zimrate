@@ -1,5 +1,6 @@
 package com.tyganeutronics.myratecalculator.fragments.rewards
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,17 +29,26 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryProductDetailsParams.Product
 import com.android.billingclient.api.QueryPurchasesParams
 import com.tyganeutronics.myratecalculator.R
+import com.tyganeutronics.myratecalculator.auth.AuthManager
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
 import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
 import com.tyganeutronics.myratecalculator.utils.contracts.BillingContract
 import com.tyganeutronics.myratecalculator.utils.traits.findViewById
 import com.tyganeutronics.myratecalculator.utils.traits.hideBackButton
 import com.tyganeutronics.myratecalculator.utils.traits.requireViewById
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedListener,
     PurchasesResponseListener {
 
     private lateinit var billingClient: BillingClient
+
+    /** Held so a purchase arriving after the sheet closes still has somewhere to credit from. */
+    private var appContext: Context? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +60,8 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        appContext = requireContext().applicationContext
 
         // Create and initialize BillingManager which talks to BillingLibrary
         billingClient = BillingClient.newBuilder(requireContext())
@@ -219,6 +231,20 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
 
         queryPurchases()
 
+        // Money must never land in an anonymous account: it cannot be recovered on another
+        // handset, and clearing storage would take it with no way back. Free coins are earned
+        // without any of this — the ask only appears where its point is obvious.
+        if (!AuthManager.hasAccount) {
+            Toast.makeText(
+                requireContext(),
+                R.string.account_required_to_buy,
+                Toast.LENGTH_LONG
+            ).show()
+
+            FragmentSignIn().show(parentFragmentManager, FragmentSignIn.TAG)
+            return
+        }
+
         if (BillingContract.ids.contains(BillingContract.mapViewIdToSku(v.id))) {
             val productDetails = v.tag as ProductDetails
 
@@ -255,8 +281,70 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
 
     }
 
+    /**
+     * Credits the coins BEFORE consuming the purchase, which is the opposite of the order this
+     * used to run in and the whole point of it.
+     *
+     * Play forgets a purchase the moment it is consumed and will never hand it back, so
+     * consuming first leaves a window where a crash — or the activity being destroyed mid flow —
+     * destroys paid coins with nothing left to recover them from. Recording first means the
+     * worst case is an unconsumed purchase, which Play returns on the next query so the consume
+     * simply retries. [RewardModel.rewardPurchaseCoins] is keyed on the purchase token, so being
+     * handed the same purchase again credits nothing further.
+     */
+    private fun creditThenConsume(purchase: Purchase) {
+        // A PENDING purchase is not paid for yet. enablePendingPurchases() is on, so these do
+        // arrive here, and the old code would have consumed and credited one.
+        if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) return
+
+        val productId = purchase.products.firstOrNull() ?: return
+        val pack = BillingContract.coins[productId] ?: return
+
+        // One grant for the whole order rather than one per unit — quantity is part of the
+        // amount, not a reason to mint several rows.
+        val coins = (pack.first + pack.second) * purchase.quantity
+
+        // Not requireContext() — a purchase can land after the sheet is gone, which is the very
+        // case this method exists to survive.
+        val context = appContext ?: return
+        val orderId = purchase.orderId.orEmpty()
+
+        // Deliberately not tied to this fragment's lifecycle: money has changed hands, so the
+        // grant has to land even if the sheet is dismissed while it is being written.
+        billingScope.launch {
+            val credited = RewardModel.rewardPurchaseCoins(context, coins, purchase.purchaseToken)
+
+            billingClient.consumeAsync(
+                ConsumeParams.newBuilder()
+                    .setPurchaseToken(purchase.purchaseToken)
+                    .build()
+            ) { result, _ ->
+                // A failed consume is self healing — Play returns the purchase on the next
+                // query and this runs again, crediting nothing and retrying the consume.
+                if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+                    Log.w(TAG, "Consume failed (${result.responseCode}), will retry on next query")
+                }
+            }
+
+            if (credited) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.billing_coins_credited, coins, orderId),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    if (isAdded) dismiss()
+                }
+            }
+        }
+    }
+
     companion object {
         const val TAG = "FragmentPurchase"
+
+        /** Outlives the fragment on purpose — see [creditThenConsume]. */
+        private val billingScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     }
 
     override fun onPurchasesUpdated(
@@ -265,43 +353,7 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
     ) {
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                if (purchases != null) {
-                    for (purchase in purchases) {
-
-                        billingClient.consumeAsync(
-                            ConsumeParams.newBuilder()
-                                .setPurchaseToken(purchase.purchaseToken)
-                                .build()
-                        ) { consume, text ->
-                            if (consume.responseCode == BillingClient.BillingResponseCode.OK) {
-
-                                var total = 0L
-
-                                for (i in 0 until purchase.quantity) {
-
-                                    val rewards = BillingContract.coins[purchase.products.first()]!!
-
-                                    val coins = rewards.first + rewards.second
-                                    total += coins
-
-                                    RewardModel.rewardPurchaseCoins(requireContext(), coins)
-                                }
-
-                                Toast.makeText(
-                                    requireContext().applicationContext,
-                                    getString(
-                                        R.string.billing_coins_credited,
-                                        total,
-                                        purchase.orderId
-                                    ),
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-                                dismiss()
-                            }
-                        }
-                    }
-                }
+                purchases?.forEach { creditThenConsume(it) }
             }
 
             BillingClient.BillingResponseCode.USER_CANCELED -> {

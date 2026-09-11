@@ -1,27 +1,25 @@
 package com.tyganeutronics.myratecalculator.fragments.rewards
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.AsyncTaskLoader
-import androidx.loader.content.Loader
-import com.tyganeutronics.myratecalculator.AppZimRate
+import androidx.lifecycle.lifecycleScope
 import com.tyganeutronics.myratecalculator.R
-import com.tyganeutronics.myratecalculator.database.entities.SpendEntity
+import com.tyganeutronics.myratecalculator.database.rtdb.Spend
+import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
 import com.tyganeutronics.myratecalculator.interfaces.SpendItemInterface
 import com.tyganeutronics.myratecalculator.ui.base.BaseListFragment
 import com.tyganeutronics.myratecalculator.ui.recyclerview.adapters.SpendsAdapter
 import com.tyganeutronics.myratecalculator.utils.traits.displayBackButton
 import com.tyganeutronics.myratecalculator.utils.traits.hideBackButton
 import com.tyganeutronics.myratecalculator.utils.traits.setTitle
+import kotlinx.coroutines.launch
 
-class FragmentSpends : BaseListFragment(), SpendItemInterface,
-    LoaderManager.LoaderCallbacks<List<SpendEntity>> {
+/** Spend history, live off the wallet listener. See [FragmentRewards] on the loader's removal. */
+class FragmentSpends : BaseListFragment(), SpendItemInterface {
 
-    override var items: List<SpendEntity> = emptyList()
+    override var items: List<Spend> = emptyList()
 
     override fun hasItems(): Boolean {
         return items.isNotEmpty()
@@ -39,44 +37,33 @@ class FragmentSpends : BaseListFragment(), SpendItemInterface,
         return null
     }
 
-    companion object {
-        const val TAG = "FragmentSpends"
-    }
-
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<SpendEntity>> {
-        val loader = @SuppressLint("StaticFieldLeak")
-        object : AsyncTaskLoader<List<SpendEntity>>(requireContext()) {
-            override fun onStartLoading() {
-                super.onStartLoading()
-                contentLoading()
-                forceLoad()
-            }
-
-            override fun loadInBackground(): List<SpendEntity> {
-                return AppZimRate.database.spends().getAll()
-            }
-        }
-
-        return loader
-    }
-
-    override fun onLoaderReset(loader: Loader<List<SpendEntity>>) {
-
-    }
-
-    override fun onLoadFinished(loader: Loader<List<SpendEntity>>, data: List<SpendEntity>) {
-        items = data
-        contentReady()
-    }
-
     override fun onStart() {
         super.onStart()
-        LoaderManager.getInstance(this).initLoader(1, null, this);
+
+        contentLoading()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            WalletRepository.spends.collect { loaded ->
+                if (loaded == null) return@collect
+
+                items = WalletRepository.spendHistory()
+                deliver()
+            }
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
-        LoaderManager.getInstance(this).destroyLoader(1)
+    /**
+     * Posted rather than called straight through, and that is load bearing.
+     *
+     * [BaseListFragment] sizes its list from the fragment's own view — `setMeasuredDimension` on
+     * `requireView().width, requireView().height`. The loader this replaced always arrived after
+     * the first layout pass, so those were real numbers. A StateFlow hands over its current value
+     * the instant it is collected, which here is inside onStart, before any layout has happened
+     * and while both are still zero — so the list measured to nothing and drew nothing, while
+     * every log along the way insisted it had items.
+     */
+    private fun deliver() {
+        view?.post { if (isAdded) contentReady() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,5 +89,9 @@ class FragmentSpends : BaseListFragment(), SpendItemInterface,
         super.onDestroyView()
 
         hideBackButton()
+    }
+
+    companion object {
+        const val TAG = "FragmentSpends"
     }
 }

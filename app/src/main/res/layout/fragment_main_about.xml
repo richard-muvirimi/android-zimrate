@@ -5,6 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Above the balance: who you are, then what you have. -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/paddingWidth"
+        android:layout_marginVertical="@dimen/padding_4"
+        app:cardCornerRadius="@dimen/padding_4"
+        app:cardElevation="@dimen/padding_4"
+        app:contentPadding="@dimen/padding_8">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_account_container"
+            android:name="com.tyganeutronics.myratecalculator.fragments.about.FragmentSectionAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/paddingWidth"
+            android:layout_marginVertical="@dimen/padding_4"
+            android:tag="FragmentAccount" />
+
+    </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

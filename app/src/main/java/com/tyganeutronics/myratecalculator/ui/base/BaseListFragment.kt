@@ -3,8 +3,11 @@ package com.tyganeutronics.myratecalculator.ui.base
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.FrameLayout
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,6 +92,24 @@ abstract class BaseListFragment : BaseFragment(), SearchableInterface {
 
     protected fun contentLoading() {
         loadingProgressBar.show()
+    }
+
+    /**
+     * Shows a line above the list explaining how it is sorted.
+     *
+     * For orders that are deliberate but not guessable — the reward list runs soonest-to-expire
+     * first rather than newest first, which looks like a mistake until you know coins are spent
+     * in that order.
+     *
+     * The padding is applied once the caption has been measured rather than from a fixed dimen,
+     * so a line that wraps on a narrow screen still clears the first row.
+     */
+    protected fun setCaption(@StringRes text: Int) {
+        val caption = requireViewById<AppCompatTextView>(R.id.txt_list_caption)
+
+        caption.setText(text)
+        caption.isVisible = true
+        caption.post { recyclerView.updatePadding(top = caption.height) }
     }
 
     protected val recyclerView: RecyclerView

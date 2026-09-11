@@ -90,6 +90,10 @@
     <string name="no_pinned_rates">No favourited rates</string>
     <string name="restore">Restore</string>
 
+    <!-- Widget states shown while a rate is being read, or when it could not be -->
+    <string name="widget_loading">Loading…</string>
+    <string name="widget_unavailable">Open ZimRate</string>
+
     <!-- Custom rates -->
     <string name="custom_rate_add">Add custom rate</string>
     <string name="custom_rate_summary">Track a rate the app does not carry — a parallel market rate, or a currency of your own. It stays exactly as you enter it and is never replaced by a refresh.</string>

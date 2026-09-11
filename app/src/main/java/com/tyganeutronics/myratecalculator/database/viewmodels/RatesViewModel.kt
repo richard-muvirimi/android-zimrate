@@ -3,10 +3,12 @@ package com.tyganeutronics.myratecalculator.database.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.tyganeutronics.myratecalculator.AppZimRate
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
 import com.tyganeutronics.myratecalculator.database.models.RatesModel
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
+import com.tyganeutronics.myratecalculator.database.rtdb.WalletContract
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import com.tyganeutronics.myratecalculator.wear.WearSyncHelper
 import kotlinx.coroutines.Dispatchers
@@ -21,25 +23,20 @@ import java.time.Instant
 
 class RatesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dao = AppZimRate.database.rates()
-
-
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            AppZimRate.database.runInTransaction {
-                dao.pinUsd()
-                normalizeVisibleSortOrder()
-            }
+            CurrencyRepository.awaitLoaded()
+            normalizeVisibleSortOrder()
         }
     }
 
-    /** Visible rates from Room, ordered by USD first, then pinned, then the rest. */
-    val rates: LiveData<List<RateEntity>> = dao.getAllSorted()
+    /** Visible rates, ordered by USD first, then pinned, then the rest. */
+    val rates: LiveData<List<RateEntity>> = CurrencyRepository.visible.asLiveData()
 
     /** Rates the user has hidden. */
-    val hiddenRates: LiveData<List<RateEntity>> = dao.getAllHidden()
+    val hiddenRates: LiveData<List<RateEntity>> = CurrencyRepository.hidden.asLiveData()
 
-    /** In-memory rate overrides entered by the user (not persisted to DB). */
+    /** In-memory rate overrides entered by the user (not persisted). */
     private val _rateOverrides = MutableStateFlow<Map<String, BigDecimal>>(emptyMap())
     val rateOverrides: StateFlow<Map<String, BigDecimal>> = _rateOverrides.asStateFlow()
 
@@ -62,7 +59,7 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
         _rateOverrides.value = _rateOverrides.value + (currency to rate)
     }
 
-    /** Returns the effective rate for a currency (override takes precedence over DB value). */
+    /** Returns the effective rate for a currency (override takes precedence over stored value). */
     fun effectiveRate(entity: RateEntity): BigDecimal =
         _rateOverrides.value[entity.currency] ?: entity.rate
 
@@ -98,40 +95,42 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
         if (code.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            AppZimRate.database.runInTransaction {
-                val now = Instant.now()
-                dao.insert(RateEntity().apply {
-                    this.currency = code
-                    this.name = name.trim().ifEmpty { code }
-                    this.rate = rate
-                    this.custom = true
-                    this.lastChecked = now
-                    this.createdAt = now
-                    this.updatedAt = now
-                })
-                normalizeVisibleSortOrder()
-            }
+            val now = Instant.now()
+
+            CurrencyRepository.put(RateEntity().apply {
+                this.currency = code
+                this.name = name.trim().ifEmpty { code }
+                this.rate = rate
+                this.custom = true
+                this.sortOrder = Int.MAX_VALUE
+                this.lastChecked = now
+                this.createdAt = now
+                this.updatedAt = now
+            })
+
+            normalizeVisibleSortOrder()
             syncWatch()
             WidgetUtils.refreshAll(getApplication())
         }
     }
 
     /**
-     * Writes an edited custom rate back to Room. Typed rates are otherwise held in memory only
-     * and cleared by the next refresh, which would quietly undo an edit to a rate the user owns.
+     * Writes an edited custom rate back. Typed rates are otherwise held in memory only and
+     * cleared by the next refresh, which would quietly undo an edit to a rate the user owns.
      */
     fun updateCustomRate(entity: RateEntity, rate: BigDecimal) {
         if (!entity.custom || rate <= BigDecimal.ZERO) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            val fresh = dao.findByCurrency(entity.currency) ?: return@launch
+            val fresh = CurrencyRepository.findByCurrency(entity.currency) ?: return@launch
             if (fresh.rate.compareTo(rate) == 0) return@launch
 
-            fresh.lastRate = fresh.rate
-            fresh.rate = rate
-            fresh.lastChecked = Instant.now()
-            fresh.updatedAt = Instant.now()
-            dao.update(fresh)
+            CurrencyRepository.put(fresh.apply {
+                this.lastRate = this.rate
+                this.rate = rate
+                this.lastChecked = Instant.now()
+                this.updatedAt = Instant.now()
+            })
 
             syncWatch()
             WidgetUtils.refreshAll(getApplication())
@@ -143,10 +142,8 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
         if (!entity.custom) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            AppZimRate.database.runInTransaction {
-                dao.deleteByCurrency(entity.currency)
-                normalizeVisibleSortOrder()
-            }
+            CurrencyRepository.delete(entity.currency)
+            normalizeVisibleSortOrder()
             syncWatch()
             WidgetUtils.refreshAll(getApplication())
         }
@@ -154,13 +151,13 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
 
     /** True when [currency] is already in the list, so the add dialog can reject a duplicate. */
     fun currencyExists(currency: String): Boolean =
-        dao.findByCurrency(currency.trim().uppercase()) != null
+        CurrencyRepository.findByCurrency(currency.trim().uppercase()) != null
 
     /** Hide a rate from the main list. USD cannot be hidden. */
     fun hideRate(entity: RateEntity) {
         if (entity.currency == "USD") return
         viewModelScope.launch(Dispatchers.IO) {
-            dao.setHidden(entity.currency, true)
+            CurrencyRepository.setField(entity.currency, WalletContract.HIDDEN, true)
             syncWatch()
         }
     }
@@ -168,40 +165,39 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
     /** Restore a previously hidden rate back to the main list. */
     fun restoreRate(entity: RateEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            dao.setHidden(entity.currency, false)
+            CurrencyRepository.setField(entity.currency, WalletContract.HIDDEN, false)
             syncWatch()
         }
     }
 
-    /** Toggle the pinned state for a rate and persist it to Room. USD stays pinned always. */
+    /** Toggle the pinned state for a rate. USD stays pinned always. */
     fun togglePin(entity: RateEntity) {
         if (entity.currency == "USD") return
         viewModelScope.launch(Dispatchers.IO) {
-            AppZimRate.database.runInTransaction {
-                val fresh = dao.findByCurrency(entity.currency) ?: return@runInTransaction
-                fresh.pinned = !fresh.pinned
-                fresh.sortOrder = Int.MAX_VALUE
-                fresh.updatedAt = Instant.now()
-                dao.update(fresh)
-                normalizeVisibleSortOrder()
-            }
+            val fresh = CurrencyRepository.findByCurrency(entity.currency) ?: return@launch
+
+            CurrencyRepository.put(fresh.apply {
+                this.pinned = !this.pinned
+                this.sortOrder = Int.MAX_VALUE
+                this.updatedAt = Instant.now()
+            })
+
+            normalizeVisibleSortOrder()
             syncWatch()
         }
     }
 
     fun persistOrder(entities: List<RateEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
-            AppZimRate.database.runInTransaction {
-                applyTieredSortOrder(entities)
-            }
+            CurrencyRepository.applyOrder(entities)
             syncWatch()
         }
     }
 
     /**
-     * Upsert a list of fresh rates from the API into Room, discarding any rates or amounts
-     * the user typed. Only call this for a user-initiated refresh — background refreshes go
-     * straight through [RatesModel.save] so they never clobber typed input.
+     * Upsert a list of fresh rates from the API, discarding any rates or amounts the user typed.
+     * Only call this for a user-initiated refresh — background refreshes go straight through
+     * [RatesModel.save] so they never clobber typed input.
      */
     fun saveApiRates(apiRates: List<RateEntity>) {
         _rateOverrides.value = emptyMap()
@@ -213,31 +209,15 @@ class RatesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * Mirrors the pinned set to the watch. Pin, hide and order changes all alter what
-     * [dao] returns for pinned rows, so each of them has to re-push — a refresh is not the
-     * only thing the watch needs to hear about.
+     * Mirrors the pinned set to the watch. Pin, hide and order changes all alter what is
+     * pinned, so each of them has to re-push — a refresh is not the only thing the watch
+     * needs to hear about.
      */
     private fun syncWatch() {
-        WearSyncHelper.pushPinnedRates(getApplication(), dao.getAllPinned())
+        WearSyncHelper.pushPinnedRates(getApplication(), CurrencyRepository.allPinned())
     }
 
-    private fun normalizeVisibleSortOrder() {
-        val normalized = dao.getAll()
-            .sortedWith(
-                compareBy<RateEntity>(
-                    { it.currency != "USD" },
-                    { !it.pinned },
-                    { it.sortOrder },
-                    { it.currency }
-                )
-            )
-        applyTieredSortOrder(normalized)
-    }
-
-    private fun applyTieredSortOrder(entities: List<RateEntity>) {
-        entities.forEachIndexed { index, entity ->
-            dao.setSortOrder(entity.currency, index)
-            dao.setPinned(entity.currency, entity.currency == "USD" || entity.pinned)
-        }
+    private suspend fun normalizeVisibleSortOrder() {
+        CurrencyRepository.applyOrder(CurrencyRepository.visibleSorted())
     }
 }
