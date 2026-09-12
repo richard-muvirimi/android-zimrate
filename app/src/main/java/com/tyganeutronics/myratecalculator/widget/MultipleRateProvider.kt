@@ -3,7 +3,6 @@ package com.tyganeutronics.myratecalculator.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -28,24 +27,15 @@ class MultipleRateProvider : AppWidgetProvider() {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         if (context == null || appWidgetManager == null || appWidgetIds == null) return
         renderAsync(context, appWidgetManager, appWidgetIds)
+
+        // The stamp is redrawn above, but the rows come from MultipleRateRemoteViewsService and
+        // only reload when told to.
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lv_rates)
     }
 
     override fun onEnabled(context: Context?) {
         super.onEnabled(context)
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("add_multiple_widget", Bundle()) }
-    }
-
-    override fun onReceive(context: Context?, intent: Intent?) {
-        super.onReceive(context, intent)
-        if (context == null) return
-
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-        val componentName = ComponentName(context, MultipleRateProvider::class.java)
-        val ids = appWidgetManager.getAppWidgetIds(componentName) ?: return
-
-        renderAsync(context, appWidgetManager, ids)
-        // Notify the list adapter that data may have changed
-        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.lv_rates)
     }
 
     /**
@@ -56,6 +46,12 @@ class MultipleRateProvider : AppWidgetProvider() {
      *
      * The adapter is wired up front rather than after the read, so the list starts loading while
      * the stamp is still being worked out.
+     *
+     * Reached only through [onUpdate], and there must be no onReceive override calling it as well.
+     * [goAsync] hands out the pending result once and nulls its own reference, so a second call
+     * inside one broadcast returns null — and since [AppWidgetProvider.onReceive] already routes
+     * an APPWIDGET_UPDATE here, an override that rendered again would take that null and crash on
+     * finish. That is exactly what used to happen on every rate refresh.
      */
     private fun renderAsync(
         context: Context,
@@ -89,7 +85,9 @@ class MultipleRateProvider : AppWidgetProvider() {
                     WidgetUtils.markRendered(context, id)
                 }
             } finally {
-                pendingResult.finish()
+                // Nullable by contract — see the note above. Not crashing is the only sane
+                // response: there is no broadcast left to release.
+                pendingResult?.finish()
             }
         }
     }
