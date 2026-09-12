@@ -2,6 +2,7 @@ package com.tyganeutronics.myratecalculator.auth
 
 import android.util.Log
 import com.google.firebase.Firebase
+import com.google.firebase.appcheck.appCheck
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -16,10 +17,15 @@ import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
 import com.tyganeutronics.myratecalculator.database.rtdb.WalletContract
 import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
 import com.tyganeutronics.myratecalculator.database.rtdb.WalletSnapshot
+import com.tyganeutronics.myratecalculator.utils.contracts.ApiContract
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * Owns the Firebase Auth account the wallet hangs off.
@@ -34,6 +40,8 @@ import kotlinx.coroutines.tasks.await
 object AuthManager {
 
     private const val TAG = "AuthManager"
+
+    private const val TIMEOUT_MS = 15_000
 
     private val auth: FirebaseAuth get() = Firebase.auth
 
@@ -255,6 +263,69 @@ object AuthManager {
         auth.signOut()
         publish()
         return ensureSignedIn()
+    }
+
+    /**
+     * Erases the account and everything stored under it, then takes a fresh anonymous one so the
+     * app is still usable afterwards rather than sitting with no uid to write under.
+     *
+     * The work happens on the server. It has to: the database rules deny a client the delete —
+     * `users/$uid` has no top-level write rule, and rewards and spends require `newData.exists()`
+     * so an overdrawn grant cannot be made to disappear. Routing through the API means those rules
+     * stay exactly as strict as they are, the website can share the one implementation, and
+     * [FirebaseUser.delete]'s recent-login requirement never comes into it, so nobody is asked to
+     * sign in again just to leave.
+     *
+     * Deliberately offered to anonymous accounts as well. They hold coins and a currency setup
+     * like any other, and hiding the option behind signing in first would put it out of reach of
+     * most installs — which is the opposite of what it is for.
+     */
+    suspend fun deleteAccount(): Result<Unit> {
+        val current = user ?: return Result.failure(IllegalStateException("No account to delete"))
+
+        return try {
+            val idToken = current.getIdToken(true).await().token
+                ?: error("No ID token to authorise the deletion with")
+
+            // Best effort: the server checks App Check in soft mode, and failing the deletion
+            // because an integrity token could not be minted would be the wrong trade.
+            val appCheckToken = runCatching {
+                Firebase.appCheck.getAppCheckToken(false).await().token
+            }.getOrNull()
+
+            withContext(Dispatchers.IO) { requestDeletion(idToken, appCheckToken) }
+
+            auth.signOut()
+            publish()
+            ensureSignedIn()
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Log.w(TAG, "Account deletion failed", e)
+            Result.failure(e)
+        }
+    }
+
+    /** Throws on anything but a 2xx, so a refusal is never mistaken for a deletion. */
+    private fun requestDeletion(idToken: String, appCheckToken: String?) {
+        val connection = (URL(ApiContract.getAccountUrl()).openConnection() as HttpURLConnection)
+            .apply {
+                requestMethod = "DELETE"
+                setRequestProperty("Authorization", "Bearer $idToken")
+                appCheckToken?.let { setRequestProperty("X-Firebase-AppCheck", it) }
+                connectTimeout = TIMEOUT_MS
+                readTimeout = TIMEOUT_MS
+            }
+
+        try {
+            val code = connection.responseCode
+            if (code !in 200..299) {
+                val detail = connection.errorStream?.bufferedReader()?.use { it.readText() }.orEmpty()
+                error("Deletion refused with $code $detail")
+            }
+        } finally {
+            connection.disconnect()
+        }
     }
 
     private fun publish() {

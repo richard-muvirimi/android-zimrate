@@ -34,6 +34,15 @@
     <string name="account_detail_anonymous">Your coins are on this phone only. Sign in to keep them if you change phone.</string>
     <string name="account_sign_out">Sign out</string>
 
+    <!-- Deletion. Offered to anonymous accounts too: they hold coins and a currency setup like
+         any other, and the option has to stay reachable without signing in first. -->
+    <string name="account_delete">Delete account</string>
+    <string name="account_delete_title">Delete account and data?</string>
+    <string name="account_delete_message">This permanently removes your coins and their history, what you have spent them on, your saved and custom currencies, and your sign in.\n\nCoins you paid for are included and cannot be restored or refunded. This cannot be undone.</string>
+    <string name="account_delete_confirm">Delete everything</string>
+    <string name="account_deleted">Your account and data have been deleted.</string>
+    <string name="account_delete_failed">Could not delete your account. Check your connection and try again.</string>
+
     <!-- Purchase gate -->
     <string name="account_required_to_buy">Sign in first so your coins cannot be lost</string>
 

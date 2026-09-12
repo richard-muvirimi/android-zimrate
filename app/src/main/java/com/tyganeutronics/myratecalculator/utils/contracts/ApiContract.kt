@@ -11,6 +11,17 @@ object ApiContract {
         return "https://zimrate.tyganeutronics.com/api/graphql"
     }
 
+    /**
+     * Where a user asks for their own account to be erased.
+     *
+     * Server side because the database rules deny a client the write: `users/$uid` has no
+     * top-level write rule, and the rewards and spends rules require `newData.exists()` so that
+     * an overdrawn grant cannot simply be deleted. The website calls the same endpoint.
+     */
+    fun getAccountUrl(): String {
+        return "https://zimrate.tyganeutronics.com/api/account"
+    }
+
     private fun getBaseApiUrl(context: Context): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
             && (context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager).isCharging

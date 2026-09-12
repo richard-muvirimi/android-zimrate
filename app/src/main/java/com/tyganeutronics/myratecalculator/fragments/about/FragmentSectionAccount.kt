@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
@@ -35,6 +37,7 @@ class FragmentSectionAccount : BaseFragment(), View.OnClickListener {
 
         requireViewById<MaterialButton>(R.id.btn_account_sign_in).setOnClickListener(this)
         requireViewById<MaterialButton>(R.id.btn_account_sign_out).setOnClickListener(this)
+        requireViewById<MaterialButton>(R.id.btn_account_delete).setOnClickListener(this)
 
         // Redraws when a credential is linked or dropped, so the section cannot sit stale
         // behind the sheet that just changed it.
@@ -75,6 +78,8 @@ class FragmentSectionAccount : BaseFragment(), View.OnClickListener {
                 FragmentSignIn().show(parentFragmentManager, FragmentSignIn.TAG)
 
             R.id.btn_account_sign_out -> signOut()
+
+            R.id.btn_account_delete -> confirmDelete()
         }
     }
 
@@ -86,6 +91,39 @@ class FragmentSectionAccount : BaseFragment(), View.OnClickListener {
     private fun signOut() {
         viewLifecycleOwner.lifecycleScope.launch {
             AuthManager.signOut()
+        }
+    }
+
+    /**
+     * Irreversible and takes paid-for coins with it, so it is spelled out in full before anything
+     * happens. Shown for anonymous accounts as well as signed-in ones — they hold the same coins
+     * and currency setup, and most installs never sign in at all.
+     */
+    private fun confirmDelete() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.account_delete_title)
+            .setMessage(R.string.account_delete_message)
+            .setNegativeButton(R.string.calculator_dialog_cancel, null)
+            .setPositiveButton(R.string.account_delete_confirm) { _, _ -> delete() }
+            .show()
+    }
+
+    /**
+     * The account is erased server side and a fresh anonymous one taken, so the app is usable the
+     * moment this returns. Nothing here has to clear the wallet: the repositories follow
+     * [AuthManager.state], so the new uid attaches and the old cache is dropped on its own.
+     */
+    private fun delete() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val deleted = AuthManager.deleteAccount().isSuccess
+
+            Toast.makeText(
+                requireContext().applicationContext,
+                getString(
+                    if (deleted) R.string.account_deleted else R.string.account_delete_failed
+                ),
+                Toast.LENGTH_LONG,
+            ).show()
         }
     }
 
