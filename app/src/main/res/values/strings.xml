@@ -52,6 +52,8 @@
     <string name="pref_dev_brief">Please feel free to contact me below if you have any issue, query, suggestions or simply want to view what else I have worked on.</string>
     <string name="pref_dev_name" translatable="false">Richard Muvirimi</string>
     <string name="pref_dev_url" translatable="false">https://richard.co.zw</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="privacy_policy_url" translatable="false">https://zimrate.tyganeutronics.com/privacy</string>
 
     <string name="pref_app_version">Version %s</string>
 

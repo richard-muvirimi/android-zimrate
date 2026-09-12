@@ -3,7 +3,6 @@ package com.tyganeutronics.myratecalculator.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -38,16 +37,6 @@ class SingleRateProvider : AppWidgetProvider() {
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("add_single_widget", Bundle()) }
     }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
-        super.onReceive(context, intent)
-        if (context == null) return
-
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-        val componentName = ComponentName(context, SingleRateProvider::class.java)
-        val ids = appWidgetManager.getAppWidgetIds(componentName) ?: return
-        renderAsync(context, ids)
-    }
-
     /**
      * Reads the rate off the broadcast thread rather than on it.
      *
@@ -58,6 +47,12 @@ class SingleRateProvider : AppWidgetProvider() {
      * [goAsync] keeps the broadcast alive for the read. The loading view is only drawn when this
      * widget has never shown anything: the launcher retains the last RemoteViews it was given,
      * so an existing widget keeps its values on screen until real ones replace them.
+     *
+     * Reached only through [onUpdate], and there must be no onReceive override calling it as well.
+     * [goAsync] hands out the pending result once and nulls its own reference, so a second call
+     * inside one broadcast returns null — and since [AppWidgetProvider.onReceive] already routes
+     * an APPWIDGET_UPDATE here, an override that rendered again would take that null and crash on
+     * finish. That is exactly what used to happen on every rate refresh.
      */
     private fun renderAsync(context: Context, appWidgetIds: IntArray) {
         val pendingResult = goAsync()
@@ -83,7 +78,9 @@ class SingleRateProvider : AppWidgetProvider() {
                     }
                 }
             } finally {
-                pendingResult.finish()
+                // Nullable by contract — see the note above. Not crashing is the only sane
+                // response: there is no broadcast left to release.
+                pendingResult?.finish()
             }
         }
     }

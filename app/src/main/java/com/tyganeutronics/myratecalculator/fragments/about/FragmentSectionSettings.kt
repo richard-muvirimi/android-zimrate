@@ -51,6 +51,7 @@ class FragmentSectionSettings : PreferenceFragmentCompat(),
             getString(R.string.pref_dev_name),
             getString(R.string.pref_dev_url),
             getString(R.string.rates_source),
+            getString(R.string.privacy_policy_url),
         ).forEach { key ->
             findPreference<Preference>(key)?.onPreferenceClickListener = this
         }
@@ -59,6 +60,7 @@ class FragmentSectionSettings : PreferenceFragmentCompat(),
     override fun onPreferenceClick(preference: Preference): Boolean {
         val devUrl = getString(R.string.pref_dev_url)
         val ratesUrl = getString(R.string.rates_source)
+        val privacyUrl = getString(R.string.privacy_policy_url)
 
         return when (preference.key) {
             getString(R.string.license) -> {
@@ -75,6 +77,10 @@ class FragmentSectionSettings : PreferenceFragmentCompat(),
             }
             ratesUrl -> {
                 BrowserUtils.openUrl(requireContext(), ratesUrl)
+                true
+            }
+            privacyUrl -> {
+                BrowserUtils.openUrl(requireContext(), privacyUrl)
                 true
             }
             else -> false
