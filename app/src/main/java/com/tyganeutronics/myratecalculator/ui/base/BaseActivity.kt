@@ -23,8 +23,17 @@ abstract class BaseActivity : AppCompatActivity() {
         title = getString(titleId)
     }
 
+    /**
+     * Safe cast, because not every screen has a collapsing toolbar to put a title in:
+     * `ctb_layout` is declared in activity_main.xml and nowhere else, so on a screen like
+     * WidgetActivity this finds nothing at all.
+     *
+     * The same trap as the `findViewById<CoordinatorLayout>(R.id.layout_container)` that used to
+     * be here — an id that means one thing in one layout and is absent or another type in the
+     * next. A title with nowhere to go is not worth taking the activity down for.
+     */
     override fun setTitle(title: CharSequence) {
-        (findViewById<View>(R.id.ctb_layout) as CollapsingToolbarLayout).title = title
+        (findViewById<View>(R.id.ctb_layout) as? CollapsingToolbarLayout)?.title = title
     }
 
     override fun setContentView(view: View?) {
