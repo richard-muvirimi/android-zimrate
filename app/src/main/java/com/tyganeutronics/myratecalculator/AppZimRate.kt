@@ -2,6 +2,7 @@ package com.tyganeutronics.myratecalculator
 
 import androidx.multidex.MultiDexApplication
 import androidx.preference.PreferenceManager
+import androidx.work.Configuration
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.Firebase
 import com.google.firebase.appcheck.appCheck
@@ -22,7 +23,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AppZimRate : MultiDexApplication() {
+class AppZimRate : MultiDexApplication(), Configuration.Provider {
+
+    /**
+     * Read the first time anything asks for WorkManager, rather than at process start — see the
+     * provider note in AndroidManifest.xml. Defaults throughout: the only worker is
+     * [com.tyganeutronics.myratecalculator.work.RatesRefreshWorker], which the stock factory
+     * builds from its two-argument constructor.
+     */
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder().build()
+
     override fun onCreate() {
         super.onCreate()
 

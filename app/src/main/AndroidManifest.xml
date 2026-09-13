@@ -110,6 +110,34 @@
             android:noHistory="true"
             tools:node="merge" />
 
+        <!--
+            Takes WorkManager off the app-startup path.
+
+            Its default initializer runs inside androidx.startup's InitializationProvider, which
+            the system creates during ContentProvider.attachInfo — before Application.onCreate, and
+            with nothing above it to catch anything. So when WorkManager's own
+            JobScheduler34.forNamespace call hits a device whose framework reports SDK_INT 34 but
+            has no JobScheduler.forNamespace (custom ROMs, spoofed SDK_INT, preview builds), the
+            resulting NoSuchMethodError is not a failure to schedule work — it is the app being
+            unable to start at all.
+
+            Removing just this one meta-data leaves the provider in place for the other
+            initializers that share it, ProfileInstaller included. WorkManager then initialises
+            on first use, from AppZimRate's Configuration, inside the guard in
+            RatesRefreshScheduler. On a device like that the schedule quietly does not run; the
+            app still opens.
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
     </application>
 
 </manifest>
