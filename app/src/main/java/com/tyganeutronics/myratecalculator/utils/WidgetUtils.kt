@@ -119,7 +119,12 @@ object WidgetUtils {
     }
 
     private fun refresh(context: Context, provider: Class<*>) {
-        val manager = AppWidgetManager.getInstance(context)
+        // Nullable, and Kotlin does not say so because it is a platform type. There is no
+        // AppWidget service at all on a device or profile without the widget host — Android TV,
+        // some managed profiles — and this runs on every rate save, whether or not a widget was
+        // ever placed. Nothing to refresh there, so nothing to do.
+        val manager = AppWidgetManager.getInstance(context) ?: return
+
         val ids = manager.getAppWidgetIds(ComponentName(context, provider))
         if (ids.isEmpty()) return
 

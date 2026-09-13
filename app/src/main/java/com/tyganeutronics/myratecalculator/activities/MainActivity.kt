@@ -1,9 +1,6 @@
 package com.tyganeutronics.myratecalculator.activities
 
 import android.Manifest
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
@@ -35,10 +32,9 @@ import com.tyganeutronics.myratecalculator.interfaces.RewardModelInterface
 import com.tyganeutronics.myratecalculator.interfaces.RewardsActivity
 import com.tyganeutronics.myratecalculator.ui.base.BaseAppActivity
 import com.tyganeutronics.myratecalculator.utils.RatesNotifier
+import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
 import com.tyganeutronics.myratecalculator.utils.traits.putBooleanPref
-import com.tyganeutronics.myratecalculator.widget.MultipleRateProvider
-import com.tyganeutronics.myratecalculator.widget.SingleRateProvider
 import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -238,38 +234,19 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         }
     }
 
+    /**
+     * Leaving the app is a good moment to redraw the widgets, since the rates behind them may
+     * have moved while it was open.
+     *
+     * Through [WidgetUtils.refreshAll], which is the same broadcast this used to build by hand,
+     * twice, once per provider. The hand-rolled pair called AppWidgetManager.getInstance and used
+     * the result without checking it — and it is nullable, so on a device with no widget host
+     * every single backgrounding brought the activity down in onStop. Fixing that in the shared
+     * one rather than in two more copies is the point of using it.
+     */
     override fun onStop() {
         super.onStop()
 
-        updateMultipleWidget()
-        updateSingleWidget()
-    }
-
-    private fun updateMultipleWidget() {
-
-        val componentName = ComponentName(this, MultipleRateProvider::class.java)
-
-        val appWidgetManager = AppWidgetManager.getInstance(this)
-
-        val intent = Intent(this, MultipleRateProvider::class.java)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
-        val multipleIds = appWidgetManager.getAppWidgetIds(componentName)
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, multipleIds)
-        sendBroadcast(intent)
-    }
-
-    private fun updateSingleWidget() {
-
-        val componentName = ComponentName(this, SingleRateProvider::class.java)
-
-        val appWidgetManager = AppWidgetManager.getInstance(this)
-
-        val intent = Intent(this, SingleRateProvider::class.java)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
-        val multipleIds = appWidgetManager.getAppWidgetIds(componentName)
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, multipleIds)
-        sendBroadcast(intent)
+        WidgetUtils.refreshAll(this)
     }
 }
