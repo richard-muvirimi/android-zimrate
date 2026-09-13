@@ -52,7 +52,12 @@ object RatesModel {
                 url = r.url ?: ""
                 rate = r.rate?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
                 lastRate = r.last_rate?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
-                lastChecked = r.last_updated?.toLong()
+                // last_checked, not last_updated. The server bumps last_checked every time
+                // the scraper touches a rate, and last_updated only when the value moves — and
+                // it takes that from the source page's own stamp, which can sit still for days.
+                // Reading last_updated into a field the UI shows as "when this was synced" meant
+                // the date froze until the rate itself changed.
+                lastChecked = r.last_checked?.toLong()
                     ?.let { Instant.ofEpochSecond(it) } ?: Instant.now()
             }
         } ?: emptyList()
