@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
@@ -131,28 +132,15 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
                     }
 
                     BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE,
-                    BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.billing_coin_purchase_not_supported,
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        dismiss()
-                    }
+                    BillingClient.BillingResponseCode.BILLING_UNAVAILABLE ->
+                        closeWithMessage(R.string.billing_coin_purchase_not_supported)
                 }
             }
 
             override fun onBillingServiceDisconnected() {
                 Log.i(TAG, "Billing service disconnected")
 
-                Toast.makeText(
-                    requireContext(),
-                    R.string.billing_coin_purchase_failed,
-                    Toast.LENGTH_LONG
-                ).show()
-
-                dismiss()
+                closeWithMessage(R.string.billing_coin_purchase_failed)
             }
         })
     }
@@ -184,13 +172,7 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
             Handler(Looper.getMainLooper()).post {
 
                 if (productDetailsList.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.billing_coin_purchase_failed,
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    dismiss()
+                    closeWithMessage(R.string.billing_coin_purchase_failed)
                 }
 
                 if (activity !== null) {
@@ -340,6 +322,26 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
         }
     }
 
+    /**
+     * Tells the user why the sheet is closing, and closes it, from a callback that may arrive
+     * after it has already gone.
+     *
+     * Every Play Billing callback in this class is asynchronous and none of them are cancelled
+     * when the fragment detaches — a connection dropping, a product query returning, a purchase
+     * being cancelled. So `requireContext()` and a bare `dismiss()` were each one dismissed sheet
+     * away from throwing, which is exactly what happened on the cancellation path.
+     *
+     * [appContext] and `isAdded` are not new here: [creditThenConsume] already had to reach for
+     * both for the same reason. This just puts them everywhere they were needed.
+     */
+    private fun closeWithMessage(@StringRes message: Int) {
+        val context = appContext ?: return
+
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+
+        if (isAdded) dismiss()
+    }
+
     companion object {
         const val TAG = "FragmentPurchase"
 
@@ -356,17 +358,11 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
                 purchases?.forEach { creditThenConsume(it) }
             }
 
-            BillingClient.BillingResponseCode.USER_CANCELED -> {
-                // Handle an error caused by a user cancelling the purchase flow.
-
-                Toast.makeText(
-                    requireContext().applicationContext,
-                    R.string.billing_coin_purchase_cancelled,
-                    Toast.LENGTH_LONG
-                ).show()
-
-                dismiss()
-            }
+            // The cancellation reaches us as a broadcast from Play, and that broadcast outlives
+            // the sheet. requireContext() here is what crashed: by the time it arrives the
+            // fragment is routinely detached.
+            BillingClient.BillingResponseCode.USER_CANCELED ->
+                closeWithMessage(R.string.billing_coin_purchase_cancelled)
 
             else -> {
                 // Handle any other error codes.
