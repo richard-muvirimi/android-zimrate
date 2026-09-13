@@ -48,7 +48,7 @@
             android:textSize="10sp"
             android:textStyle="italic"
             android:visibility="gone"
-            tools:text="3 hours ago"
+            tools:text="15:42"
             tools:visibility="visible" />
 
     </LinearLayout>

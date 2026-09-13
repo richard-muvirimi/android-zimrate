@@ -39,7 +39,7 @@
             android:textColor="@color/widget_text_secondary"
             android:textSize="10sp"
             android:textStyle="italic"
-            tools:text="3 hours ago" />
+            tools:text="15:42" />
 
     </LinearLayout>
 

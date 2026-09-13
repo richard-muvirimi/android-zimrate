@@ -1,11 +1,13 @@
 package com.tyganeutronics.myratecalculator.fragments.rewards
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +33,23 @@ import kotlinx.coroutines.launch
  * rather than quietly losing what was on this phone.
  */
 class FragmentSignIn : BaseFragment(), View.OnClickListener {
+
+    /**
+     * Held so an outcome arriving after the sheet closes still has a context to report with.
+     *
+     * These run on [lifecycleScope] rather than the view's, deliberately: an authentication in
+     * flight has to finish whether or not the user is still looking at it. Which means every
+     * `requireContext()` after one of those suspension points was a crash waiting for somebody
+     * to close the sheet while their sign in was on the wire. Same reason FragmentPurchase keeps
+     * one.
+     */
+    private var appContext: Context? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        appContext = requireContext().applicationContext
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,7 +102,7 @@ class FragmentSignIn : BaseFragment(), View.OnClickListener {
                 // and it happens after the picker, so silence looks like the button is broken.
                 GoogleCredential.Result.Failed -> {
                     busy(false)
-                    toast(getString(R.string.account_error_google))
+                    appContext?.let { toast(it.getString(R.string.account_error_google)) }
                 }
             }
         }
@@ -127,40 +146,51 @@ class FragmentSignIn : BaseFragment(), View.OnClickListener {
             busy(false)
 
             val message = if (sent) R.string.account_reset_sent else R.string.account_reset_failed
-            toast(getString(message, email))
+            appContext?.let { toast(it.getString(message, email)) }
         }
     }
 
     private fun report(outcome: LinkOutcome) {
+        val context = appContext ?: return
+
         busy(false)
 
         when (outcome) {
             is LinkOutcome.Linked -> {
-                toast(getString(R.string.account_linked, label(outcome.user.email)))
+                toast(context.getString(R.string.account_linked, label(outcome.user.email)))
                 if (isAdded) dismiss()
             }
 
             is LinkOutcome.SwitchedAccount -> {
-                toast(getString(R.string.account_switched, label(outcome.user.email)))
+                toast(context.getString(R.string.account_switched, label(outcome.user.email)))
                 if (isAdded) dismiss()
             }
 
             is LinkOutcome.Failed -> when (outcome.error) {
-                LinkError.WEAK_PASSWORD ->
-                    passwordLayout.error = getString(R.string.account_error_password_short)
+                LinkError.WEAK_PASSWORD -> showPasswordError(R.string.account_error_password_short)
 
-                LinkError.WRONG_PASSWORD ->
-                    passwordLayout.error = getString(R.string.account_error_wrong_password)
+                LinkError.WRONG_PASSWORD -> showPasswordError(R.string.account_error_wrong_password)
 
-                LinkError.GENERIC -> toast(getString(R.string.account_error_generic))
+                LinkError.GENERIC -> toast(context.getString(R.string.account_error_generic))
             }
         }
     }
 
-    private fun label(email: String?) = email.orEmpty().ifEmpty { getString(R.string.app_name) }
+    /** Silently does nothing once the field is gone — there is nowhere to show an error. */
+    private fun showPasswordError(@StringRes message: Int) {
+        val context = appContext ?: return
+        if (view == null) return
+
+        passwordLayout.error = context.getString(message)
+    }
+
+    private fun label(email: String?) =
+        email.orEmpty().ifEmpty { appContext?.getString(R.string.app_name).orEmpty() }
 
     private fun busy(busy: Boolean) {
-        if (!isAdded) return
+        // `view`, not isAdded: isAdded stays true between onDestroyView and onDetach, and every
+        // line below goes through requireViewById.
+        if (view == null) return
 
         val loading = requireViewById<ContentLoadingProgressBar>(R.id.account_loading)
         if (busy) loading.show() else loading.hide()
@@ -171,7 +201,9 @@ class FragmentSignIn : BaseFragment(), View.OnClickListener {
     }
 
     private fun toast(message: String) {
-        Toast.makeText(requireContext().applicationContext, message, Toast.LENGTH_LONG).show()
+        val context = appContext ?: return
+
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     private val emailLayout: TextInputLayout

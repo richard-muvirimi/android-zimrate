@@ -114,7 +114,7 @@ class SingleRateProvider : AppWidgetProvider() {
         views.setTextViewText(R.id.txt_single_rate, rateText)
 
         // Hidden until there is a real sync stamp, so the row does not show an empty line.
-        val checked = entity?.lastChecked?.let { WidgetUtils.formatChecked(it) }.orEmpty()
+        val checked = entity?.lastChecked?.let { WidgetUtils.formatChecked(context, it) }.orEmpty()
         views.setTextViewText(R.id.txt_single_date, checked)
         views.setViewVisibility(
             R.id.txt_single_date,

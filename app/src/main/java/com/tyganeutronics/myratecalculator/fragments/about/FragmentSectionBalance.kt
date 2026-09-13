@@ -28,16 +28,22 @@ class FragmentSectionBalance : BaseFragment(), OnClickListener {
         return inflater.inflate(R.layout.fragment_profile_balance, container, false)
     }
 
+    /**
+     * Observers belong here rather than in syncViews, and to the view's lifecycle rather than the
+     * fragment's.
+     *
+     * syncViews runs from onStart, so registering there added another observer every time the
+     * screen was returned to — and with the fragment as owner none of them were ever removed
+     * before onDestroy, so the callbacks piled up and each one fired. viewLifecycleOwner drops
+     * them at onDestroyView instead, which is also what stops a late emission reaching the dead
+     * views these callbacks write to. bindViews runs once per view, so there is exactly one.
+     */
     override fun bindViews() {
         super.bindViews()
 
         calculatorViewModel = ViewModelProvider(this)[RewardViewModel::class.java]
 
         requireViewById<LinearLayoutCompat>(R.id.btn_show_spends_history).setOnClickListener(this)
-    }
-
-    override fun syncViews() {
-        super.syncViews()
 
         val observer = Observer { balance: Long? ->
             requireViewById<AppCompatTextView>(R.id.txt_rewards_balance).apply {
@@ -47,8 +53,7 @@ class FragmentSectionBalance : BaseFragment(), OnClickListener {
             }
         }
 
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        calculatorViewModel.coins.observe(this, observer)
+        calculatorViewModel.coins.observe(viewLifecycleOwner, observer)
     }
 
     override fun onClick(v: View?) {

@@ -52,10 +52,23 @@ object CurrencyMapping {
         WalletContract.UPDATED_AT to entity.updatedAt.orZero(),
     )
 
-    /** True when the server actually moved something worth writing back. */
+    /**
+     * True when the server actually moved something worth writing back.
+     *
+     * [RateEntity.lastChecked] counts, and leaving it out was why a refresh never changed the
+     * date on screen: most refreshes find the same rate, so nothing else here differed, the row
+     * was skipped whole, and the new check stamp went with it. The stamp is the one field the
+     * footnote and the widgets render, so a refresh that cannot update it has nothing to show
+     * for itself.
+     *
+     * Cheap enough to include: the server only advances it once per scrape, so this adds a row
+     * to the write at the server's cadence rather than on every poll — and the watch push and
+     * widget refresh in [RatesModel.save] already run whether or not anything was written.
+     */
     fun differs(incoming: RateEntity, existing: RateEntity): Boolean =
         incoming.rate.compareTo(existing.rate) != 0 ||
             incoming.lastRate.compareTo(existing.lastRate) != 0 ||
+            incoming.lastChecked != existing.lastChecked ||
             incoming.name != existing.name ||
             incoming.url != existing.url
 }

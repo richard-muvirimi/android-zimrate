@@ -39,16 +39,24 @@ class FragmentCoinsBalance : BaseExpandedDialogFragment() {
                 }
             }
         }
+
+        observeBalance()
     }
 
-    private val toolBar: Toolbar
-        get() = requireViewById(R.id.toolbar)
-
-    override fun syncViews() {
-        super.syncViews()
-
-        // Starts as "checking" rather than "exhausted" — the balance is not known until the
-        // observer first fires, and an unread wallet must not be reported as an empty one.
+    /**
+     * Observers belong here rather than in syncViews, and to the view's lifecycle rather than the
+     * fragment's.
+     *
+     * syncViews runs from onStart, so registering there added another observer every time the
+     * screen was returned to — and with the fragment as owner none of them were ever removed
+     * before onDestroy, so the callbacks piled up and each one fired. viewLifecycleOwner drops
+     * them at onDestroyView instead, which is also what stops a late emission reaching the dead
+     * views these callbacks write to. bindViews runs once per view, so there is exactly one.
+     */
+    private fun observeBalance() {
+        // Stays with the observer rather than in syncViews, and that pairing matters: a LiveData
+        // only replays to a new observer, so leaving this on its own in onStart would reset the
+        // line to "checking" on every return and nothing would ever correct it.
         requireViewById<AppCompatTextView>(R.id.txt_rewards_status).text =
             getString(R.string.rewards_coins_loading)
 
@@ -62,10 +70,11 @@ class FragmentCoinsBalance : BaseExpandedDialogFragment() {
             }
         }
 
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        rewardViewModel.coins.observe(this, observer)
-
+        rewardViewModel.coins.observe(viewLifecycleOwner, observer)
     }
+
+    private val toolBar: Toolbar
+        get() = requireViewById(R.id.toolbar)
 
     companion object {
         const val TAG = "CoinsBalanceFragment"

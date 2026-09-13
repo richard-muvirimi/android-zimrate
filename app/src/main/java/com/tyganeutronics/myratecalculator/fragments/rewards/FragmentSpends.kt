@@ -63,7 +63,10 @@ class FragmentSpends : BaseListFragment(), SpendItemInterface {
      * every log along the way insisted it had items.
      */
     private fun deliver() {
-        view?.post { if (isAdded) contentReady() }
+        // Checked again inside the runnable, and on `view` rather than isAdded: the view was
+        // alive when this was posted, which is not the same as being alive when it runs, and
+        // contentReady goes straight at requireViewById.
+        view?.post { if (view != null) contentReady() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,5 +1,6 @@
 package com.tyganeutronics.myratecalculator.fragments.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -130,6 +131,39 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         }
 
         attachSwipeToHide()
+
+        observeWallet()
+    }
+
+    /**
+     * Observers belong here rather than in syncViews, and to the view's lifecycle rather than the
+     * fragment's.
+     *
+     * syncViews runs from onStart, so registering there added another observer every time the
+     * screen was returned to — and with the fragment as owner none of them were ever removed
+     * before onDestroy, so the callbacks piled up and each one fired. viewLifecycleOwner drops
+     * them at onDestroyView instead, which is also what stops a late emission reaching the dead
+     * views these callbacks write to. bindViews runs once per view, so there is exactly one.
+     */
+    private fun observeWallet() {
+        rewardViewModel.coins.observe(viewLifecycleOwner) {
+            invalidateOptionsMenu()
+            maybeAutoFetch()
+        }
+
+        ratesViewModel.rates.observe(viewLifecycleOwner) { rates ->
+            adapter.submitRates(rates)
+            val empty = rates.isEmpty()
+            requireViewById<View>(R.id.layout_empty).visibility =
+                if (empty) View.VISIBLE else View.GONE
+            requireViewById<View>(R.id.rv_rates).visibility =
+                if (empty) View.GONE else View.VISIBLE
+
+            // Posted so the first cards are laid out and can be pointed at.
+            if (!empty) requireViewById<RecyclerView>(R.id.rv_rates).post { maybeShowHelp() }
+
+            maybeAutoFetch()
+        }
     }
 
     /** Deleting is irreversible — there is no server copy to fetch a custom rate back from. */
@@ -166,25 +200,6 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         super.syncViews()
 
         setTitle(R.string.menu_calculator)
-
-        rewardViewModel.coins.observe(this) {
-            invalidateOptionsMenu()
-            maybeAutoFetch()
-        }
-
-        ratesViewModel.rates.observe(this) { rates ->
-            adapter.submitRates(rates)
-            val empty = rates.isEmpty()
-            requireViewById<View>(R.id.layout_empty).visibility =
-                if (empty) View.VISIBLE else View.GONE
-            requireViewById<View>(R.id.rv_rates).visibility =
-                if (empty) View.GONE else View.VISIBLE
-
-            // Posted so the first cards are laid out and can be pointed at.
-            if (!empty) requireViewById<RecyclerView>(R.id.rv_rates).post { maybeShowHelp() }
-
-            maybeAutoFetch()
-        }
     }
 
     /**
@@ -221,10 +236,23 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         didCalculate = false
     }
 
+    /**
+     * Charges for the conversion on the way out, and asks nothing of the user while doing it.
+     *
+     * [hasCoins] and not the old canConsumeCoins, which showed the top up dialog on an empty
+     * balance. A DialogFragment.show here is a fragment transaction, and by the time a fragment's
+     * onStop runs the manager has already set its state-saved flag, so the commit threw
+     * IllegalStateException and took the activity down with it — reproducibly, for anyone who did
+     * a calculation with no coins and then pressed home.
+     *
+     * Nothing is lost by dropping the prompt: the screen is going away, so a dialog raised here
+     * would have had nowhere to appear, and an empty balance is still reported the next time they
+     * refresh or open the coins menu.
+     */
     override fun onStop() {
         super.onStop()
 
-        if (didCalculate && canConsumeCoins()) {
+        if (didCalculate && hasCoins()) {
             SpendModel.consume(
                 requireContext(),
                 1,
@@ -432,27 +460,33 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
 
         setRefreshing(true)
 
+        // Taken before the launch, not inside it. The fetch is a network round trip and the user
+        // is free to leave mid-flight, at which point requireContext() throws — while the work
+        // itself still has to land, because a coin is charged for it. The view-touching calls
+        // below (showSnackbar, setRefreshing) are already no-ops without a view.
+        val context = requireContext().applicationContext
+
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val apiRates = RatesModel.fetch(
-                    RatesModel.preferred(requireContext()),
+                    RatesModel.preferred(context),
                     singleCurrency,
                 )
 
                 if (apiRates.isEmpty()) {
-                    showSnackbar(getString(R.string.update_none))
+                    showSnackbar(context.getString(R.string.update_none))
                 } else {
-                    requireContext().putLongPref(
+                    context.putLongPref(
                         CurrencyContract.LAST_CHECK,
                         System.currentTimeMillis(),
                     )
-                    applyOrOfferRates(apiRates)
+                    applyOrOfferRates(context, apiRates)
 
                     SpendModel.consume(
-                        requireContext(),
+                        context,
                         1,
                         PurchasesContract.TYPES.DATA_FETCH,
-                        getString(R.string.rewards_spend_data_fetch)
+                        context.getString(R.string.rewards_spend_data_fetch)
                     )
                 }
 
@@ -469,8 +503,10 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
      * Applies fresh rates immediately, or — when auto update is off — offers them behind a
      * snackbar, so a rate the user typed is never replaced without them agreeing to it.
      */
-    private fun applyOrOfferRates(apiRates: List<RateEntity>) {
-        if (requireContext().getBooleanPref("auto_update", true)) {
+    private fun applyOrOfferRates(context: Context, apiRates: List<RateEntity>) {
+        // Handed the context rather than asking for one: its only caller is the fetch coroutine,
+        // which may well have outlived the view by the time this runs.
+        if (context.getBooleanPref("auto_update", true)) {
             applyRates(apiRates)
             return
         }
@@ -491,14 +527,6 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
     }
 
     private fun hasCoins(): Boolean = (rewardViewModel.coins.value ?: 0) > 0
-
-    private fun canConsumeCoins(): Boolean {
-        val hasCoins = hasCoins()
-        if (!hasCoins) {
-            (requireActivity() as RewardsActivity).showTopUpDialog()
-        }
-        return hasCoins
-    }
 
     private fun setRefreshing(value: Boolean) {
         view?.findViewById<SwipeRefreshLayout>(R.id.sr_layout)?.isRefreshing = value

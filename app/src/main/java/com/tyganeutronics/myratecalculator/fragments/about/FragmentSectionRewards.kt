@@ -24,8 +24,7 @@ import com.tyganeutronics.myratecalculator.ui.base.BaseFragment
 import com.tyganeutronics.myratecalculator.utils.ads.rewarded.AppoRewardedAdListener
 import com.tyganeutronics.myratecalculator.utils.contracts.RemoteConfigContract
 import com.tyganeutronics.myratecalculator.utils.traits.requireViewById
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
@@ -66,7 +65,10 @@ class FragmentSectionRewards : BaseFragment(), OnClickListener, AdFragmentSubscr
     override fun syncViews() {
         super.syncViews()
 
-        CoroutineScope(Dispatchers.Main).launch {
+        // View scoped, so the streak arriving after the tab is gone is simply dropped. It was
+        // an unscoped CoroutineScope, which nothing cancels, and every line below it reaches for
+        // requireViewById after a suspending wallet read.
+        viewLifecycleOwner.lifecycleScope.launch {
             val streak = SpendModel.daysStreak()
 
             listOf(
