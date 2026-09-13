@@ -80,7 +80,7 @@ class MultipleRateProvider : AppWidgetProvider() {
                         return@forEach
                     }
 
-                    val message = WidgetUtils.formatChecked(stamp)
+                    val message = WidgetUtils.formatChecked(context, stamp)
                     appWidgetManager.updateAppWidget(id, buildViews(context, id, message))
                     WidgetUtils.markRendered(context, id)
                 }

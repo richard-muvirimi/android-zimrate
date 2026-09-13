@@ -189,12 +189,23 @@ class RateViewHolder(
         }
     }
 
+    /**
+     * Relative, and safe to keep relative here: the row is rebound every time the list is drawn,
+     * so the phrase is never older than the frame it is in. The widgets use an absolute stamp for
+     * the opposite reason — see [com.tyganeutronics.myratecalculator.utils.WidgetUtils.formatChecked].
+     *
+     * The flags argument is passed explicitly, and that is the whole point of this overload. The
+     * three-argument form defaults to FORMAT_ABBREV_RELATIVE, which hands off to ICU at
+     * Style.SHORT, and CLDR's short past form in a fair number of locales reads "-5 h" — so
+     * users on those locales were shown a negative number where a sentence was intended.
+     */
     private fun formatSyncDate(lastChecked: Instant): String {
         if (lastChecked == Instant.MIN) return ""
         return DateUtils.getRelativeTimeSpanString(
             lastChecked.toEpochMilli(),
             System.currentTimeMillis(),
             DateUtils.MINUTE_IN_MILLIS,
+            0,
         ).toString()
     }
 }

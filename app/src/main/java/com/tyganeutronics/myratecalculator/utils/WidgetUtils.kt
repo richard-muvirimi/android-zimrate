@@ -56,17 +56,31 @@ object WidgetUtils {
     private fun renderedKey(appWidgetId: Int) = "widget-rendered-$appWidgetId"
 
     /**
-     * Relative "3 hours ago" stamp, matching the footnote on the rates screen. Empty for the
+     * When the rate was last checked, as a clock time today and a date before that. Empty for the
      * Instant.MIN "never checked" sentinel, which is not representable in millis.
+     *
+     * Absolute rather than the relative "3 hours ago" the rates screen shows, because a widget is
+     * not redrawn on a timer — `updatePeriodMillis` is 0 on both providers, so the only redraws
+     * come from a rate being saved. A relative label is computed once and then frozen, which is
+     * how a widget ends up insisting a rate was checked five hours ago two days later. A clock
+     * time stays true however long it sits there.
+     *
+     * Formatted through [DateUtils.formatDateTime] rather than `java.text.DateFormat`, because
+     * only the context-aware one follows the user's 12- versus 24-hour setting; the bare
+     * java.text formatters follow the locale's default and ignore the toggle.
      */
-    fun formatChecked(lastChecked: Instant): String {
+    fun formatChecked(context: Context, lastChecked: Instant): String {
         if (lastChecked <= Instant.EPOCH) return ""
 
-        return DateUtils.getRelativeTimeSpanString(
-            lastChecked.toEpochMilli(),
-            System.currentTimeMillis(),
-            DateUtils.MINUTE_IN_MILLIS,
-        ).toString()
+        val millis = lastChecked.toEpochMilli()
+
+        val flags = if (DateUtils.isToday(millis)) {
+            DateUtils.FORMAT_SHOW_TIME
+        } else {
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NUMERIC_DATE
+        }
+
+        return DateUtils.formatDateTime(context, millis, flags)
     }
 
     /**
