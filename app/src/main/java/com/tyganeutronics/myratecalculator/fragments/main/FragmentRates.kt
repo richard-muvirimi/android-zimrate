@@ -131,6 +131,39 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         }
 
         attachSwipeToHide()
+
+        observeWallet()
+    }
+
+    /**
+     * Observers belong here rather than in syncViews, and to the view's lifecycle rather than the
+     * fragment's.
+     *
+     * syncViews runs from onStart, so registering there added another observer every time the
+     * screen was returned to — and with the fragment as owner none of them were ever removed
+     * before onDestroy, so the callbacks piled up and each one fired. viewLifecycleOwner drops
+     * them at onDestroyView instead, which is also what stops a late emission reaching the dead
+     * views these callbacks write to. bindViews runs once per view, so there is exactly one.
+     */
+    private fun observeWallet() {
+        rewardViewModel.coins.observe(viewLifecycleOwner) {
+            invalidateOptionsMenu()
+            maybeAutoFetch()
+        }
+
+        ratesViewModel.rates.observe(viewLifecycleOwner) { rates ->
+            adapter.submitRates(rates)
+            val empty = rates.isEmpty()
+            requireViewById<View>(R.id.layout_empty).visibility =
+                if (empty) View.VISIBLE else View.GONE
+            requireViewById<View>(R.id.rv_rates).visibility =
+                if (empty) View.GONE else View.VISIBLE
+
+            // Posted so the first cards are laid out and can be pointed at.
+            if (!empty) requireViewById<RecyclerView>(R.id.rv_rates).post { maybeShowHelp() }
+
+            maybeAutoFetch()
+        }
     }
 
     /** Deleting is irreversible — there is no server copy to fetch a custom rate back from. */
@@ -167,25 +200,6 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         super.syncViews()
 
         setTitle(R.string.menu_calculator)
-
-        rewardViewModel.coins.observe(this) {
-            invalidateOptionsMenu()
-            maybeAutoFetch()
-        }
-
-        ratesViewModel.rates.observe(this) { rates ->
-            adapter.submitRates(rates)
-            val empty = rates.isEmpty()
-            requireViewById<View>(R.id.layout_empty).visibility =
-                if (empty) View.VISIBLE else View.GONE
-            requireViewById<View>(R.id.rv_rates).visibility =
-                if (empty) View.GONE else View.VISIBLE
-
-            // Posted so the first cards are laid out and can be pointed at.
-            if (!empty) requireViewById<RecyclerView>(R.id.rv_rates).post { maybeShowHelp() }
-
-            maybeAutoFetch()
-        }
     }
 
     /**
