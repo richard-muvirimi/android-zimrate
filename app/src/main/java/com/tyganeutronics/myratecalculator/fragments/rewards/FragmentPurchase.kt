@@ -175,7 +175,12 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
                     closeWithMessage(R.string.billing_coin_purchase_failed)
                 }
 
-                if (activity !== null) {
+                // `view`, not `activity`: everything below touches views, and the two are not
+                // the same test. A dismissed sheet has run onDestroyView before onDetach, so
+                // there is a window where the host is still there and the view is gone — and
+                // loadingProgressBar goes through requireView(), which throws in exactly that
+                // window. findViewById below is already null-safe; this is the one that was not.
+                if (view !== null) {
 
                     loadingProgressBar.hide()
 

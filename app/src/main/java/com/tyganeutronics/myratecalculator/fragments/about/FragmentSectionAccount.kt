@@ -52,7 +52,8 @@ class FragmentSectionAccount : BaseFragment(), View.OnClickListener {
     }
 
     private fun render() {
-        if (!isAdded) return
+        // Everything below is requireViewById, so the view is the thing to check.
+        if (view == null) return
 
         val signedIn = AuthManager.hasAccount
 

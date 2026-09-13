@@ -1,5 +1,6 @@
 package com.tyganeutronics.myratecalculator.fragments.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -445,27 +446,33 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
 
         setRefreshing(true)
 
+        // Taken before the launch, not inside it. The fetch is a network round trip and the user
+        // is free to leave mid-flight, at which point requireContext() throws — while the work
+        // itself still has to land, because a coin is charged for it. The view-touching calls
+        // below (showSnackbar, setRefreshing) are already no-ops without a view.
+        val context = requireContext().applicationContext
+
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val apiRates = RatesModel.fetch(
-                    RatesModel.preferred(requireContext()),
+                    RatesModel.preferred(context),
                     singleCurrency,
                 )
 
                 if (apiRates.isEmpty()) {
-                    showSnackbar(getString(R.string.update_none))
+                    showSnackbar(context.getString(R.string.update_none))
                 } else {
-                    requireContext().putLongPref(
+                    context.putLongPref(
                         CurrencyContract.LAST_CHECK,
                         System.currentTimeMillis(),
                     )
-                    applyOrOfferRates(apiRates)
+                    applyOrOfferRates(context, apiRates)
 
                     SpendModel.consume(
-                        requireContext(),
+                        context,
                         1,
                         PurchasesContract.TYPES.DATA_FETCH,
-                        getString(R.string.rewards_spend_data_fetch)
+                        context.getString(R.string.rewards_spend_data_fetch)
                     )
                 }
 
@@ -482,8 +489,10 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
      * Applies fresh rates immediately, or — when auto update is off — offers them behind a
      * snackbar, so a rate the user typed is never replaced without them agreeing to it.
      */
-    private fun applyOrOfferRates(apiRates: List<RateEntity>) {
-        if (requireContext().getBooleanPref("auto_update", true)) {
+    private fun applyOrOfferRates(context: Context, apiRates: List<RateEntity>) {
+        // Handed the context rather than asking for one: its only caller is the fetch coroutine,
+        // which may well have outlived the view by the time this runs.
+        if (context.getBooleanPref("auto_update", true)) {
             applyRates(apiRates)
             return
         }
