@@ -220,12 +220,21 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
         navigateToFragment(fragment, FragmentSpends.TAG)
     }
 
+    /**
+     * Showing this is a fragment transaction, so it can only happen while the manager will still
+     * accept one. isFinishing alone was not that test: an activity being backgrounded is not
+     * finishing, and its manager has already saved state, which is the state loss this used to
+     * crash on.
+     *
+     * Anything asking at that point is asking too late to be seen anyway, so dropping it is the
+     * right answer rather than queueing it for a resume the user may never come back to.
+     */
     override fun showTopUpDialog() {
-        if (!isFinishing) {
-            if (supportFragmentManager.findFragmentByTag(FragmentCoinsBalance.TAG) === null) {
-                val fragment = FragmentCoinsBalance()
-                fragment.show(supportFragmentManager, FragmentCoinsBalance.TAG)
-            }
+        if (isFinishing || supportFragmentManager.isStateSaved) return
+
+        if (supportFragmentManager.findFragmentByTag(FragmentCoinsBalance.TAG) === null) {
+            val fragment = FragmentCoinsBalance()
+            fragment.show(supportFragmentManager, FragmentCoinsBalance.TAG)
         }
     }
 

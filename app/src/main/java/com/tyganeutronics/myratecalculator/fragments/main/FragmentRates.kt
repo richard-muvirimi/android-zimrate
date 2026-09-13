@@ -221,10 +221,23 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         didCalculate = false
     }
 
+    /**
+     * Charges for the conversion on the way out, and asks nothing of the user while doing it.
+     *
+     * [hasCoins] and not the old canConsumeCoins, which showed the top up dialog on an empty
+     * balance. A DialogFragment.show here is a fragment transaction, and by the time a fragment's
+     * onStop runs the manager has already set its state-saved flag, so the commit threw
+     * IllegalStateException and took the activity down with it — reproducibly, for anyone who did
+     * a calculation with no coins and then pressed home.
+     *
+     * Nothing is lost by dropping the prompt: the screen is going away, so a dialog raised here
+     * would have had nowhere to appear, and an empty balance is still reported the next time they
+     * refresh or open the coins menu.
+     */
     override fun onStop() {
         super.onStop()
 
-        if (didCalculate && canConsumeCoins()) {
+        if (didCalculate && hasCoins()) {
             SpendModel.consume(
                 requireContext(),
                 1,
@@ -491,14 +504,6 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
     }
 
     private fun hasCoins(): Boolean = (rewardViewModel.coins.value ?: 0) > 0
-
-    private fun canConsumeCoins(): Boolean {
-        val hasCoins = hasCoins()
-        if (!hasCoins) {
-            (requireActivity() as RewardsActivity).showTopUpDialog()
-        }
-        return hasCoins
-    }
 
     private fun setRefreshing(value: Boolean) {
         view?.findViewById<SwipeRefreshLayout>(R.id.sr_layout)?.isRefreshing = value
