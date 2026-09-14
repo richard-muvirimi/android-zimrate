@@ -22,6 +22,19 @@ object ApiContract {
         return "https://zimrate.tyganeutronics.com/api/account"
     }
 
+    /**
+     * Where a paid-for coin purchase is turned into a grant.
+     *
+     * Server side because the handset must not be the thing that decides how many coins it gets.
+     * The old code wrote the grant itself, naming its own amount, which meant anyone able to
+     * reach the database with their own ID token could mint coins without paying. The server
+     * checks the purchase token with Google and writes the row with the Admin SDK, so the
+     * database rules can forbid clients writing purchase rows at all.
+     */
+    fun getPurchaseUrl(): String {
+        return "https://zimrate.tyganeutronics.com/api/wallet/purchase"
+    }
+
     private fun getBaseApiUrl(context: Context): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
             && (context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager).isCharging

@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.appcheck.appCheck
+import com.google.firebase.auth.auth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.remoteConfig
 import com.tyganeutronics.myratecalculator.R
@@ -14,13 +17,18 @@ import com.tyganeutronics.myratecalculator.database.contract.RewardContract
 import com.tyganeutronics.myratecalculator.database.rtdb.Reward
 import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
 import com.tyganeutronics.myratecalculator.utils.DateUtils
+import com.tyganeutronics.myratecalculator.utils.contracts.ApiContract
 import com.tyganeutronics.myratecalculator.utils.contracts.RemoteConfigContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import java.security.MessageDigest
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -203,36 +211,138 @@ object RewardModel {
     }
 
     /**
-     * Credits a coin purchase, keyed on the Play purchase token so the same purchase can only
-     * ever grant once. [com.tyganeutronics.myratecalculator.fragments.rewards.FragmentPurchase]
-     * can reach this more than once for one purchase — onResume re-queries, and a consume that
-     * fails is handed back on the next query — so the key is what makes retrying safe rather
-     * than expensive.
+     * What the server made of a purchase, and with it whether the purchase may be consumed.
      *
-     * Returns true when this call created the grant.
+     * Consuming destroys the entitlement permanently, so it is only ever right once the coins
+     * are known to be in the wallet — hence the split between an outright refusal and a failure
+     * that may yet succeed.
+     */
+    sealed interface PurchaseOutcome {
+        /** Coins are in the wallet. Safe to consume. */
+        data class Credited(val coins: Long) : PurchaseOutcome
+
+        /** A previous attempt already credited this token. Safe to consume. */
+        data object AlreadyCredited : PurchaseOutcome
+
+        /** Nothing was credited. Do not consume — Play hands the purchase back to try again. */
+        data class Failed(val reason: String?) : PurchaseOutcome
+    }
+
+    /**
+     * Asks the server to credit a coin purchase.
+     *
+     * The grant used to be written here, by this handset, naming its own amount — which meant
+     * anyone able to reach the database with their own ID token could mint coins without paying
+     * for them. The purchase token now goes to the server, which checks it with Google and writes
+     * the row with the Admin SDK. The amount comes from the server's catalogue, not from
+     * [BillingContract]; the copy here only labels the buttons.
+     *
+     * [com.tyganeutronics.myratecalculator.fragments.rewards.FragmentPurchase] can reach this
+     * more than once for one purchase — onResume re-queries, and a consume that fails is handed
+     * back on the next query. The server keys the grant on the purchase token, so a repeat is a
+     * no-op there rather than a second grant.
+     *
+     * Requires connectivity, which costs nothing: Play Billing needed it to reach this point
+     * anyway. Daily and advert grants are still written straight to the wallet and still work
+     * with no network at all.
      */
     suspend fun rewardPurchaseCoins(
         context: Context,
         amount: Long,
         purchaseToken: String,
-    ): Boolean {
-        val reward = Reward(
-            key = "",
-            amount = amount,
-            balance = amount,
-            type = RewardContract.TYPES.PURCHASE,
-            description = context.getString(R.string.rewards_award_coins_purchased, amount),
-            expiresAt = expiry(RemoteConfigContract.REWARD_PURCHASE_DAYS),
-            createdAt = Instant.now(),
-        )
+        productId: String,
+    ): PurchaseOutcome {
+        val user = Firebase.auth.currentUser
+            ?: return PurchaseOutcome.Failed("Not signed in")
 
-        val credited = WalletRepository.grantOnce(purchaseKey(purchaseToken), reward)
+        val outcome = try {
+            val idToken = user.getIdToken(false).await().token
+                ?: error("No ID token to authorise the purchase with")
 
-        if (credited) {
+            // Best effort, matching the deletion endpoint: the server verifies App Check in soft
+            // mode, and refusing to credit a paid-for purchase because an integrity token could
+            // not be minted would be the wrong trade.
+            val appCheckToken = runCatching {
+                Firebase.appCheck.getAppCheckToken(false).await().token
+            }.getOrNull()
+
+            withContext(Dispatchers.IO) {
+                // The description is sent so the history row reads in the user's language; the
+                // server clamps it and computes everything that carries value itself.
+                requestCredit(
+                    idToken = idToken,
+                    appCheckToken = appCheckToken,
+                    productId = productId,
+                    purchaseToken = purchaseToken,
+                    description = context.getString(R.string.rewards_award_coins_purchased, amount),
+                )
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Purchase credit failed", e)
+            PurchaseOutcome.Failed(e.message)
+        }
+
+        if (outcome is PurchaseOutcome.Credited) {
             FirebaseAnalytics.getInstance(context).logEvent("reward_purchase_coins", null)
         }
 
-        return credited
+        return outcome
+    }
+
+    /**
+     * Posts the purchase to the server and reads back what it decided.
+     *
+     * Anything other than a 2xx is a [PurchaseOutcome.Failed], deliberately without trying to
+     * sort permanent refusals from transient ones: the cost of treating a permanent refusal as
+     * retryable is a request repeated on the next Play query, while the cost of the reverse is
+     * consuming a purchase that was never credited, which cannot be undone.
+     */
+    private fun requestCredit(
+        idToken: String,
+        appCheckToken: String?,
+        productId: String,
+        purchaseToken: String,
+        description: String,
+    ): PurchaseOutcome {
+        val payload = JSONObject()
+            .put("productId", productId)
+            .put("purchaseToken", purchaseToken)
+            .put("description", description)
+            .toString()
+
+        val connection = (URL(ApiContract.getPurchaseUrl()).openConnection() as HttpURLConnection)
+            .apply {
+                requestMethod = "POST"
+                doOutput = true
+                setRequestProperty("Content-Type", "application/json")
+                setRequestProperty("Authorization", "Bearer $idToken")
+                appCheckToken?.let { setRequestProperty("X-Firebase-AppCheck", it) }
+                connectTimeout = PURCHASE_TIMEOUT_MS
+                readTimeout = PURCHASE_TIMEOUT_MS
+            }
+
+        return try {
+            connection.outputStream.use { it.write(payload.toByteArray(Charsets.UTF_8)) }
+
+            val code = connection.responseCode
+            if (code !in 200..299) {
+                val detail = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                Log.w(TAG, "Purchase refused with $code $detail")
+                return PurchaseOutcome.Failed(detail)
+            }
+
+            val body = JSONObject(
+                connection.inputStream.bufferedReader().use { it.readText() }
+            )
+
+            if (body.optBoolean("credited")) {
+                PurchaseOutcome.Credited(body.optLong("coins"))
+            } else {
+                PurchaseOutcome.AlreadyCredited
+            }
+        } finally {
+            connection.disconnect()
+        }
     }
 
     private suspend fun award(
@@ -265,14 +375,8 @@ object RewardModel {
             .minusSeconds(1)
             .toInstant(ZoneOffset.UTC)
 
-    /**
-     * A node key derived from the purchase token. Hex, because a Realtime Database key cannot
-     * contain `.` `$` `#` `[` `]` or `/` and a raw Play token can.
-     */
-    private fun purchaseKey(purchaseToken: String): String {
-        val digest = MessageDigest.getInstance("SHA-256")
-            .digest(purchaseToken.toByteArray(Charsets.UTF_8))
+    private const val TAG = "RewardModel"
 
-        return "p_" + digest.take(16).joinToString("") { "%02x".format(it) }
-    }
+    /** Matches the deletion endpoint's budget; a purchase is one small round trip either way. */
+    private const val PURCHASE_TIMEOUT_MS = 15_000
 }

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.text.format.DateUtils
+import android.util.Log
 import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
@@ -13,6 +14,7 @@ import com.tyganeutronics.myratecalculator.utils.traits.putBooleanPref
 import com.tyganeutronics.myratecalculator.utils.traits.removePref
 import com.tyganeutronics.myratecalculator.widget.MultipleRateProvider
 import com.tyganeutronics.myratecalculator.widget.SingleRateProvider
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,12 +29,24 @@ object WidgetUtils {
      */
     const val READ_TIMEOUT_MS = 6_000L
 
+    private const val TAG = "WidgetUtils"
+
     /**
      * Outlives any one broadcast on purpose — [android.content.BroadcastReceiver.PendingResult]
      * keeps the process alive for the work, and the receiver instance itself is discarded as
      * soon as onReceive returns.
+     *
+     * The handler is not decoration. A [SupervisorJob] stops a failing child cancelling its
+     * siblings; it does nothing about an exception nobody catches, which goes to the thread's
+     * default handler and takes the process down. That is how a null pending result turned a
+     * widget refresh into a crash on every update, and the next mistake in here would do the
+     * same. A widget that cannot draw should keep showing yesterday's rate, not kill the app.
      */
-    val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    val scope = CoroutineScope(
+        Dispatchers.IO + SupervisorJob() + CoroutineExceptionHandler { _, error ->
+            Log.w(TAG, "Widget render failed", error)
+        }
+    )
 
     /**
      * Whether this widget has ever drawn real data.
