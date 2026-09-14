@@ -299,7 +299,22 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
         // Deliberately not tied to this fragment's lifecycle: money has changed hands, so the
         // grant has to land even if the sheet is dismissed while it is being written.
         billingScope.launch {
-            val credited = RewardModel.rewardPurchaseCoins(context, coins, purchase.purchaseToken)
+            val outcome = RewardModel.rewardPurchaseCoins(
+                context,
+                coins,
+                purchase.purchaseToken,
+                productId,
+            )
+
+            // Consume only once the server says the coins are in the wallet. Anything else —
+            // no connection, a rejected token, a signed-out account — leaves the purchase
+            // unconsumed, so Play hands it back on the next query and this runs again. The old
+            // code consumed unconditionally, which was safe only while the grant was written
+            // locally and could not fail.
+            if (outcome is RewardModel.PurchaseOutcome.Failed) {
+                Log.w(TAG, "Not consuming, purchase was not credited: ${outcome.reason}")
+                return@launch
+            }
 
             billingClient.consumeAsync(
                 ConsumeParams.newBuilder()
@@ -313,11 +328,13 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
                 }
             }
 
-            if (credited) {
+            if (outcome is RewardModel.PurchaseOutcome.Credited) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.billing_coins_credited, coins, orderId),
+                        // The server is authoritative on the amount, so report what it granted
+                        // rather than what the button said.
+                        context.getString(R.string.billing_coins_credited, outcome.coins, orderId),
                         Toast.LENGTH_LONG
                     ).show()
 
