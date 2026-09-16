@@ -194,18 +194,11 @@ class RateViewHolder(
      * so the phrase is never older than the frame it is in. The widgets use an absolute stamp for
      * the opposite reason — see [com.tyganeutronics.myratecalculator.utils.WidgetUtils.formatChecked].
      *
-     * The flags argument is passed explicitly, and that is the whole point of this overload. The
-     * three-argument form defaults to FORMAT_ABBREV_RELATIVE, which hands off to ICU at
-     * Style.SHORT, and CLDR's short past form in a fair number of locales reads "-5 h" — so
-     * users on those locales were shown a negative number where a sentence was intended.
+     * The bare one-argument overload, the same call Time Calculator's history items use. Passing
+     * flags explicitly was what produced "-15h" instead of "15 hours ago"; leave it off.
      */
     private fun formatSyncDate(lastChecked: Instant): String {
-        if (lastChecked == Instant.MIN) return ""
-        return DateUtils.getRelativeTimeSpanString(
-            lastChecked.toEpochMilli(),
-            System.currentTimeMillis(),
-            DateUtils.MINUTE_IN_MILLIS,
-            0,
-        ).toString()
+        if (lastChecked <= Instant.EPOCH) return ""
+        return DateUtils.getRelativeTimeSpanString(lastChecked.toEpochMilli()).toString()
     }
 }
