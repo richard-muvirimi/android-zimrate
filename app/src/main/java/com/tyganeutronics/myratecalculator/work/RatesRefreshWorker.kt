@@ -7,11 +7,14 @@ import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.contract.PurchasesContract
 import com.tyganeutronics.myratecalculator.database.models.RatesModel
 import com.tyganeutronics.myratecalculator.database.models.SpendModel
+import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
+import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
 import com.tyganeutronics.myratecalculator.utils.RatesNotifier
 import com.tyganeutronics.myratecalculator.utils.TokenUtils
 import com.tyganeutronics.myratecalculator.utils.contracts.CurrencyContract
 import com.tyganeutronics.myratecalculator.utils.traits.getBooleanPref
 import com.tyganeutronics.myratecalculator.utils.traits.putLongPref
+import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * Periodic refresh that keeps the home screen widgets and the paired watch current between
@@ -34,10 +37,28 @@ class RatesRefreshWorker(
             return Result.success()
         }
 
+        // Almost always this process was started by WorkManager for this run alone — the whole
+        // point of the schedule is to refresh while the app is closed. AppZimRate.onCreate has
+        // therefore only just kicked sign in off, and neither listener has reported yet, so
+        // every read below would come back unknown and the run would end having done nothing.
+        //
+        // The wait is what moving the store to RTDB made necessary: the balance used to be a
+        // synchronous Room read, so there was never anything to wait on. Awaiting the wallet
+        // also settles the currency side, since both are attached together once there is a uid.
+        val loaded = withTimeoutOrNull(LOAD_TIMEOUT_MS) {
+            WalletRepository.awaitLoaded()
+            CurrencyRepository.awaitLoaded()
+        }
+
+        // Retry rather than success. A run that never saw the wallet decided nothing, and
+        // calling it done would spend the whole period on it.
+        if (loaded == null) return Result.retry()
+
         // An unknown balance is not an empty one. Cancelling the schedule on a read that simply
         // had not arrived would silently stop refreshing for someone with coins to spend, and
-        // they would only find out by noticing stale rates — so skip this run and try the next.
-        val balance = TokenUtils.balance() ?: return Result.success()
+        // they would only find out by noticing stale rates. Loaded above, so this is only still
+        // null if the account went away underneath the run.
+        val balance = TokenUtils.balance() ?: return Result.retry()
 
         if (balance <= 0) {
             RatesNotifier.notifyCoinsExhausted(context)
@@ -66,5 +87,16 @@ class RatesRefreshWorker(
             e.printStackTrace()
             Result.retry()
         }
+    }
+
+    companion object {
+
+        /**
+         * How long to wait for sign in and the first callback from each listener.
+         *
+         * Generous against the ten minutes a worker is given, because nothing this worker does
+         * is worth anything without them, and still short enough to leave the fetch room.
+         */
+        private const val LOAD_TIMEOUT_MS = 60_000L
     }
 }
