@@ -11,7 +11,7 @@ android {
     buildToolsVersion = '37.0.0'
     defaultConfig {
         applicationId "com.tyganeutronics.myratecalculator"
-        minSdk 23
+        minSdk 24
         targetSdk 37
         versionCode 61
         versionName "3.5.2"
@@ -70,26 +70,103 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'androidx.core:core-ktx:1.17.0'
-    implementation 'com.google.android.material:material:1.13.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'androidx.core:core-ktx:1.19.0'
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
 
-    implementation "androidx.core:core-splashscreen:1.0.1"
+    implementation "androidx.core:core-splashscreen:1.2.0"
 
     // Appodeal Ads
-    implementation("com.appodeal.ads:sdk:3.10.0.0") {
-        exclude group: "com.appodeal.ads.sdk.services", module: "adjust"
-        exclude group: "com.appodeal.ads.sdk.services", module: "appsflyer"
-        exclude group: "com.appodeal.ads.sdk.services", module: "firebase"
-        exclude group: "com.appodeal.ads.sdk.services", module: "facebook_analytics"
-        exclude(group: "com.appodeal.ads.sdk.networks", module: "admob")
-        exclude(group: "com.google.android.gms", module: "play-services-ads")
-    }
+    implementation "com.appodeal.ads.sdk:core:4.3.0"
+    // BidMachine
+    implementation "io.bidmachine:ads.networks.meta_audience:6.21.0.1"
+    implementation "io.bidmachine:ads.networks.mintegral:17.1.61.1"
+    implementation "io.bidmachine:ads.networks.my_target:5.47.1.2"
+    implementation "io.bidmachine:ads.networks.vungle:7.7.4.0"
+    // AppLovin MAX
+    implementation "com.applovin.mediation:bidmachine-adapter:3.7.1.0"
+    implementation "com.applovin.mediation:bigoads-adapter:5.9.0.0"
+    implementation "com.applovin.mediation:bytedance-adapter:8.1.0.3.0"
+    implementation "com.applovin.mediation:chartboost-adapter:9.10.2.0"
+    implementation "com.applovin.mediation:facebook-adapter:6.21.0.0"
+    implementation "com.applovin.mediation:fyber-adapter:8.4.6.0"
+    implementation "com.applovin.mediation:inmobi-adapter:11.3.0.1"
+    implementation "com.applovin.mediation:ironsource-adapter:9.4.4.0.0"
+    implementation "com.applovin.mediation:mintegral-adapter:17.1.61.0"
+    implementation "com.applovin.mediation:mobilefuse-adapter:1.11.0.0"
+    implementation "com.applovin.mediation:moloco-adapter:4.3.1.0"
+    implementation "com.applovin.mediation:ogury-presage-adapter:6.2.0.0"
+    implementation "com.applovin.mediation:pubmatic-adapter:4.10.0.0"
+    implementation "com.applovin.mediation:smaato-adapter:22.7.2.3"
+    implementation "com.applovin.mediation:unityads-adapter:4.17.0.0"
+    implementation "com.applovin.mediation:verve-adapter:3.7.1.0"
+    implementation "com.applovin.mediation:vungle-adapter:7.7.4.0"
+    // Bidon
+    implementation "org.bidon:applovin-adapter:13.6.3.0"
+    implementation "org.bidon:bidmachine-adapter:3.7.1.1"
+    implementation "org.bidon:bigoads-adapter:5.9.0.0"
+    implementation "org.bidon:chartboost-adapter:9.10.2.0"
+    implementation "org.bidon:dtexchange-adapter:8.4.6.0"
+    implementation "org.bidon:inmobi-adapter:11.3.0.0"
+    implementation "org.bidon:ironsource-adapter:9.4.4.0"
+    implementation "org.bidon:meta-adapter:6.21.0.0"
+    implementation "org.bidon:mintegral-adapter:17.1.61.0"
+    implementation "org.bidon:mobilefuse-adapter:1.11.0.0"
+    implementation "org.bidon:moloco-adapter:4.3.1.0"
+    implementation "org.bidon:startio-adapter:5.2.4.1"
+    implementation "org.bidon:taurusx-adapter:1.12.2.0"
+    implementation "org.bidon:unityads-adapter:4.17.0.0"
+    implementation "org.bidon:vkads-adapter:5.47.1.0"
+    implementation "org.bidon:vungle-adapter:7.7.4.0"
+    implementation "org.bidon:zmaticoo-adapter:2.0.7.1.0"
+    // Level Play
+    implementation "com.unity3d.ads-mediation:applovin-adapter:5.8.0"
+    implementation "com.unity3d.ads-mediation:bidmachine-adapter:5.7.0"
+    implementation "com.unity3d.ads-mediation:bigo-adapter:5.8.0"
+    implementation "com.unity3d.ads-mediation:facebook-adapter:5.3.0"
+    implementation "com.unity3d.ads-mediation:fyber-adapter:5.9.0"
+    implementation "com.unity3d.ads-mediation:inmobi-adapter:5.7.0"
+    implementation "com.unity3d.ads-mediation:mintegral-adapter:5.18.0"
+    implementation "com.unity3d.ads-mediation:mobilefuse-adapter:5.3.0"
+    implementation "com.unity3d.ads-mediation:moloco-adapter:5.6.0"
+    implementation "com.unity3d.ads-mediation:mytarget-adapter:5.5.0"
+    implementation "com.unity3d.ads-mediation:ogury-adapter:5.2.0"
+    implementation "com.unity3d.ads-mediation:pangle-adapter:5.18.0"
+    implementation "com.unity3d.ads-mediation:unityads-adapter:5.6.0"
+    implementation "com.unity3d.ads-mediation:verve-adapter:5.2.0"
+    implementation "com.unity3d.ads-mediation:vungle-adapter:5.10.0"
+    // Appodeal
+    implementation "com.appodeal.ads.sdk.adapters:applovin:13.6.3.0"
+    implementation "com.appodeal.ads.sdk.adapters:applovin_max:13.6.3.1"
+    implementation "com.appodeal.ads.sdk.adapters:bidmachine:3.7.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:bidon:0.14.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:bigo_ads:5.9.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:chartboost:9.10.2.0"
+    implementation "com.appodeal.ads.sdk.adapters:dt_exchange:8.4.6.0"
+    implementation "com.appodeal.ads.sdk.adapters:iab:1.8.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:inmobi:11.3.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:ironsource:9.4.4.0"
+    implementation "com.appodeal.ads.sdk.adapters:level_play:9.4.4.0"
+    implementation "com.appodeal.ads.sdk.adapters:meta:6.21.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:mintegral:17.1.61.0"
+    implementation "com.appodeal.ads.sdk.adapters:mobilefuse:1.11.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:moloco:4.3.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:my_target:5.47.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:ogury:6.2.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:pubmatic:4.10.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:sentry_analytics:8.44.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:smaato:22.7.2.0"
+    implementation "com.appodeal.ads.sdk.adapters:startio:5.2.4.0"
+    implementation "com.appodeal.ads.sdk.adapters:taurusx:1.12.2.0"
+    implementation "com.appodeal.ads.sdk.adapters:unity_ads:4.17.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:verve:3.7.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:vungle:7.7.4.0"
+    // End Appodeal
 
     //Crashlytics
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:34.5.0')
+    implementation platform('com.google.firebase:firebase-bom:34.19.0')
     // Declare the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
@@ -105,7 +182,7 @@ dependencies {
     implementation 'androidx.credentials:credentials-play-services-auth:1.3.0'
     implementation 'com.google.android.libraries.identity.googleid:googleid:1.1.1'
     // Task.await(), so the auth calls read as sequential code rather than nested callbacks.
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.11.0'
 
     //licenses dialog
     implementation 'de.psdev.licensesdialog:licensesdialog:2.2.0'
@@ -116,7 +193,7 @@ dependencies {
     //multi dex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation 'org.jetbrains:annotations:26.0.2-1'
+    implementation 'org.jetbrains:annotations:26.1.0'
 
     //preferences
     implementation 'androidx.preference:preference-ktx:1.2.1'
@@ -128,13 +205,13 @@ dependencies {
     implementation "com.maltaisn:calcdialog:2.2.2"
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.11.0'
 
     // FlagKit — offline country flag drawables
     implementation("com.github.murgupluoglu:flagkit-android:1.0.2")
 
     // Chrome Custom Tabs — in-app browser
-    implementation("androidx.browser:browser:1.8.0")
+    implementation("androidx.browser:browser:1.10.0")
 
     //play licensing
     def billing_version = '9.1.0'
@@ -150,10 +227,10 @@ dependencies {
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
     // Wearable Data Layer — sync rates to paired watch
-    implementation 'com.google.android.gms:play-services-wearable:19.0.0'
+    implementation 'com.google.android.gms:play-services-wearable:20.0.1'
 
     // Background rate refresh
-    implementation 'androidx.work:work-runtime-ktx:2.10.0'
+    implementation 'androidx.work:work-runtime-ktx:2.11.2'
 }
 
 apollo {
