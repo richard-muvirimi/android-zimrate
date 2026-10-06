@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">Taux de change préféré</string>
-    <string name="preferred_currency_summary">Obtenir la valeur %s</string>
     <string name="preferred_mean">Moyenne</string>
     <string name="preferred_median">Médiane</string>
     <string name="preferred_random">Aléatoire</string>

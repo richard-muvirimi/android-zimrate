@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">Voorkeur wisselkoers</string>
-    <string name="preferred_currency_summary">Haal %s-waarde op</string>
     <string name="preferred_mean">Gemiddeld</string>
     <string name="preferred_median">Mediaan</string>
     <string name="preferred_random">Willekeurig</string>

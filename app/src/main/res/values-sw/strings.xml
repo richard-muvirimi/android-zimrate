@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">Kiwango cha ubadilishaji kipendeleo</string>
-    <string name="preferred_currency_summary">Pata thamani ya %s</string>
     <string name="preferred_mean">Wastani</string>
     <string name="preferred_median">Kati</string>
     <string name="preferred_random">Nasibu</string>

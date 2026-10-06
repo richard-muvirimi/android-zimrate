@@ -3,7 +3,6 @@
     <string name="app_name" translatable="false">ZimRate</string>
 
     <string name="preferred_currency">Preferred Currency Value</string>
-    <string name="preferred_currency_summary">Fetch %s Value</string>
 
     <string name="preferred_mean">Mean</string>
     <string name="preferred_median">Median</string>

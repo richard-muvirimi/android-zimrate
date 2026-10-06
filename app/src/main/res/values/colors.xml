@@ -49,4 +49,17 @@
     <color name="google_btn_background">#FFFFFFFF</color>
     <color name="google_btn_text">#FF1F1F1F</color>
     <color name="google_btn_stroke">#FF747775</color>
+
+    <!--
+        The chosen option on the rates screen's aggregate switch: its label, and at low alpha the
+        pill behind it. colorPrimary is too dark to read on the night surface, so this pairs it
+        with a lighter blue in values-night.
+    -->
+    <color name="aggregate_selected">#FF01579B</color>
+
+    <!--
+        Rate rows, the website calculator's background.elevated: a faint blue tint that lifts the
+        card off the page without a shadow. Dark counterpart in values-night.
+    -->
+    <color name="rate_card_background">#FFE4EDF7</color>
 </resources>

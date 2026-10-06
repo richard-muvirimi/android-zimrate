@@ -38,6 +38,22 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <!--
+        An option on the rates screen's aggregate switch: no stroke or tick, muted until chosen,
+        then a tinted pill inside bg_aggregate_track — the same look as the website's switch.
+    -->
+    <style name="AppTheme.AggregateChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/aggregate_chip_background</item>
+        <item name="android:textColor">@color/aggregate_chip_text</item>
+        <item name="android:textAppearance">@style/AppTheme.AggregateChip.Text</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+
+    <style name="AppTheme.AggregateChip.Text" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--layout_toolbar-->
 
     <style name="AppTheme.Toolbar.Expanded" parent="TextAppearance.MaterialComponents.Headline4">
