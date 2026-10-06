@@ -10,11 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import com.maltaisn.calcdialog.CalcDialog
 import com.tyganeutronics.myratecalculator.R
@@ -25,6 +28,7 @@ import com.tyganeutronics.myratecalculator.database.models.SpendModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RatesViewModel
 import com.tyganeutronics.myratecalculator.database.viewmodels.RewardViewModel
 import com.tyganeutronics.myratecalculator.fragments.FragmentCalculator
+import com.tyganeutronics.myratecalculator.graphql.type.Prefer
 import com.tyganeutronics.myratecalculator.interfaces.ReviewableActivity
 import com.tyganeutronics.myratecalculator.interfaces.RewardModelInterface
 import com.tyganeutronics.myratecalculator.interfaces.RewardsActivity
@@ -132,7 +136,49 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
 
         attachSwipeToHide()
 
+        bindAggregateSwitch()
+
         observeWallet()
+    }
+
+    /**
+     * The aggregate switch. Picking an option is a paid fetch, the same as a pull to refresh, and
+     * the choice is only stored once that fetch's rates are applied — so the switch always names
+     * the aggregate of the rates on screen, and falls back to it when the fetch does not happen.
+     */
+    private fun bindAggregateSwitch() {
+        val group = requireViewById<ChipGroup>(R.id.cg_aggregate)
+
+        resources.getStringArray(R.array.preferred)
+            .zip(resources.getStringArray(R.array.preferred_values))
+            .forEach { (label, value) ->
+                val chip = layoutInflater.inflate(R.layout.item_aggregate_chip, group, false) as Chip
+                chip.id = View.generateViewId()
+                chip.text = label
+                chip.tag = value
+                group.addView(chip)
+            }
+
+        syncAggregateSwitch()
+
+        group.setOnCheckedStateChangeListener { _, checkedIds ->
+            val checked = checkedIds.firstOrNull() ?: return@setOnCheckedStateChangeListener
+            val prefer = Prefer.valueOf((group.findViewById<Chip>(checked).tag as String).uppercase())
+
+            // Also fires when syncAggregateSwitch puts the stored choice back.
+            if (prefer == RatesModel.preferred(requireContext())) return@setOnCheckedStateChangeListener
+
+            firebaseAnalytics.logEvent("switch_aggregate", Bundle())
+            fetchRates(prefer = prefer)
+        }
+    }
+
+    /** Checks the option the rates on screen were fetched with. */
+    private fun syncAggregateSwitch() {
+        val group = view?.findViewById<ChipGroup>(R.id.cg_aggregate) ?: return
+        val stored = RatesModel.preferred(group.context).name.lowercase()
+
+        group.children.firstOrNull { it.tag == stored }?.let { group.check(it.id) }
     }
 
     /**
@@ -451,10 +497,19 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
     /**
      * [promptForCoins] shows the top up dialog when the balance is empty. Refreshes the user
      * did not ask for pass false so an empty balance never nags them on open.
+     *
+     * [prefer] fetches with that aggregate instead of the stored one, which is how the aggregate
+     * switch changes it.
      */
-    private fun fetchRates(singleCurrency: String? = null, promptForCoins: Boolean = true) {
+    private fun fetchRates(
+        singleCurrency: String? = null,
+        promptForCoins: Boolean = true,
+        prefer: Prefer? = null,
+    ) {
         if (!hasCoins()) {
             if (promptForCoins) (requireActivity() as RewardsActivity).showTopUpDialog()
+            // A switch that cannot be paid for goes back to the rates still on screen.
+            syncAggregateSwitch()
             return
         }
 
@@ -465,11 +520,12 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
         // itself still has to land, because a coin is charged for it. The view-touching calls
         // below (showSnackbar, setRefreshing) are already no-ops without a view.
         val context = requireContext().applicationContext
+        val aggregate = prefer ?: RatesModel.preferred(context)
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val apiRates = RatesModel.fetch(
-                    RatesModel.preferred(context),
+                    aggregate,
                     singleCurrency,
                 )
 
@@ -480,7 +536,7 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
                         CurrencyContract.LAST_CHECK,
                         System.currentTimeMillis(),
                     )
-                    applyOrOfferRates(context, apiRates)
+                    applyOrOfferRates(context, apiRates, aggregate)
 
                     SpendModel.consume(
                         context,
@@ -495,6 +551,9 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
                 showSnackbar(e.localizedMessage ?: "Fetch failed")
             } finally {
                 setRefreshing(false)
+                // Back to the stored choice unless these rates were applied under a new one —
+                // failed, empty, or offered and not yet accepted.
+                syncAggregateSwitch()
             }
         }
     }
@@ -503,33 +562,39 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
      * Applies fresh rates immediately, or — when auto update is off — offers them behind a
      * snackbar, so a rate the user typed is never replaced without them agreeing to it.
      */
-    private fun applyOrOfferRates(context: Context, apiRates: List<RateEntity>) {
+    private fun applyOrOfferRates(context: Context, apiRates: List<RateEntity>, prefer: Prefer) {
         // Handed the context rather than asking for one: its only caller is the fetch coroutine,
         // which may well have outlived the view by the time this runs.
         if (context.getBooleanPref("auto_update", true)) {
-            applyRates(apiRates)
+            applyRates(context, apiRates, prefer)
             return
         }
 
         view?.let { root ->
             Snackbar.make(root, R.string.update_available, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.update_apply) { applyRates(apiRates) }
+                .setAction(R.string.update_apply) { applyRates(context, apiRates, prefer) }
                 .show()
         }
     }
 
-    private fun applyRates(apiRates: List<RateEntity>) {
+    private fun applyRates(context: Context, apiRates: List<RateEntity>, prefer: Prefer) {
         ratesViewModel.saveApiRates(apiRates)
+        // Stored with the rates rather than when picked, so the switch never names an aggregate
+        // whose rates are not the ones on screen.
+        RatesModel.setPreferred(context, prefer)
         // Overrides cleared synchronously above — refresh rate fields for currencies
         // not returned by the API (e.g. ZWG when status=false) so stale typed
         // values don't persist on screen.
         adapter.refreshAllRates()
+        syncAggregateSwitch()
     }
 
     private fun hasCoins(): Boolean = (rewardViewModel.coins.value ?: 0) > 0
 
     private fun setRefreshing(value: Boolean) {
         view?.findViewById<SwipeRefreshLayout>(R.id.sr_layout)?.isRefreshing = value
+        // One switch at a time: a second pick mid-fetch would be charged a second coin.
+        view?.findViewById<ChipGroup>(R.id.cg_aggregate)?.children?.forEach { it.isEnabled = !value }
     }
 
     private fun showSnackbar(message: String) {

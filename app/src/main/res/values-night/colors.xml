@@ -23,4 +23,10 @@
     <color name="google_btn_background">#FF131314</color>
     <color name="google_btn_text">#FFE3E3E3</color>
     <color name="google_btn_stroke">#FF8E918F</color>
+
+    <!-- Dark counterpart of the aggregate switch colour. See values/colors.xml. -->
+    <color name="aggregate_selected">#FF7FB3F0</color>
+
+    <!-- Dark counterpart of the rate row colour. See values/colors.xml. -->
+    <color name="rate_card_background">#FF1B2534</color>
 </resources>

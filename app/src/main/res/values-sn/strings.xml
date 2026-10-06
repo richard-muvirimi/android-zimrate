@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">Rate randoda</string>
-    <string name="preferred_currency_summary">Tora rate %s</string>
     <string name="preferred_mean">Yepakati (Mean)</string>
     <string name="preferred_median">Yepakati (Median)</string>
     <string name="preferred_random">Chero (Random)</string>

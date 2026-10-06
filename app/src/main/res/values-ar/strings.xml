@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">سعر الصرف المفضل</string>
-    <string name="preferred_currency_summary">احصل على قيمة %s</string>
     <string name="preferred_mean">المتوسط</string>
     <string name="preferred_median">الوسيط</string>
     <string name="preferred_random">عشوائي</string>

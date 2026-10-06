@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">首选汇率</string>
-    <string name="preferred_currency_summary">获取%s汇率</string>
     <string name="preferred_mean">平均值</string>
     <string name="preferred_median">中位数</string>
     <string name="preferred_random">随机</string>

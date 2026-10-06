@@ -9,6 +9,7 @@ import com.tyganeutronics.myratecalculator.graphql.FetchRatesQuery
 import com.tyganeutronics.myratecalculator.graphql.type.Prefer
 import com.tyganeutronics.myratecalculator.utils.WidgetUtils
 import com.tyganeutronics.myratecalculator.utils.traits.getStringPref
+import com.tyganeutronics.myratecalculator.utils.traits.putStringPref
 import com.tyganeutronics.myratecalculator.wear.WearSyncHelper
 import java.math.BigDecimal
 import java.time.Instant
@@ -22,15 +23,24 @@ import java.time.Instant
  */
 object RatesModel {
 
-    /** The aggregation strategy picked in settings, defaulting to the median. */
+    /**
+     * The aggregation strategy picked on the rates screen, defaulting to the median. Still
+     * stored under its old settings key, so a choice made before the switch moved carries over.
+     */
     fun preferred(context: Context): Prefer {
-        val option = context.getStringPref("preferred_currency", "median").uppercase()
+        val option = context.getStringPref(PREFERRED_KEY, "median").uppercase()
         return try {
             Prefer.valueOf(option)
         } catch (_: IllegalArgumentException) {
             Prefer.MEDIAN
         }
     }
+
+    fun setPreferred(context: Context, prefer: Prefer) {
+        context.putStringPref(PREFERRED_KEY, prefer.name.lowercase())
+    }
+
+    private const val PREFERRED_KEY = "preferred_currency"
 
     /** Queries the server. [singleCurrency] narrows the result to one currency. */
     suspend fun fetch(prefer: Prefer, singleCurrency: String? = null): List<RateEntity> {

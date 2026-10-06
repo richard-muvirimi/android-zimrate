@@ -2,7 +2,6 @@
 <resources>
 
     <string name="preferred_currency">Intengo yemali</string>
-    <string name="preferred_currency_summary">Thola intengo ye%s</string>
     <string name="preferred_mean">Phakathi (Mean)</string>
     <string name="preferred_median">Phakathi (Median)</string>
     <string name="preferred_random">Noma yiphi (Random)</string>

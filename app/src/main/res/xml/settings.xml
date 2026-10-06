@@ -5,15 +5,6 @@
     <PreferenceCategory android:title="@string/menu_settings">
 
         <ListPreference
-            android:defaultValue="median"
-            android:entries="@array/preferred"
-            android:entryValues="@array/preferred_values"
-            android:icon="?attr/ic_dollar"
-            android:key="preferred_currency"
-            android:summary="@string/preferred_currency_summary"
-            android:title="@string/preferred_currency" />
-
-        <ListPreference
             android:entries="@array/update_interval"
             android:entryValues="@array/update_interval_values"
             android:icon="?attr/ic_interval"

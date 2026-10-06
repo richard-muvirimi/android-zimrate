@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- The rates screen's aggregate switch, in the order the website's switch lists them. -->
     <string-array name="preferred">
         <item>@string/preferred_max</item>
-        <item>@string/preferred_min</item>
         <item>@string/preferred_mean</item>
+        <item>@string/preferred_min</item>
         <item>@string/preferred_median</item>
-        <item>@string/preferred_random</item>
         <item>@string/preferred_mode</item>
+        <item>@string/preferred_random</item>
     </string-array>
 
     <string-array name="preferred_values">
         <item>@string/prefer_max</item>
-        <item>@string/prefer_min</item>
         <item>@string/prefer_mean</item>
+        <item>@string/prefer_min</item>
         <item>@string/prefer_median</item>
-        <item>@string/prefer_random</item>
         <item>@string/prefer_mode</item>
+        <item>@string/prefer_random</item>
     </string-array>
 
     <string-array name="update_interval">
