@@ -34,6 +34,7 @@ class RatesAdapter(
     private val onPinClick: (RateEntity) -> Unit,
     private val onRefreshClick: (RateEntity) -> Unit,
     private val onDeleteClick: (RateEntity) -> Unit,
+    private val onHideClick: (RateEntity) -> Unit,
     private val onCalcClick: (entity: RateEntity, field: CalcField, currentValue: BigDecimal) -> Unit,
 ) : ListAdapter<RateListItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
@@ -157,6 +158,7 @@ class RatesAdapter(
                 onPinClick,
                 onRefreshClick,
                 onDeleteClick,
+                onHideClick,
                 onCalcClick,
                 ::notifyAmountsChanged,
             )

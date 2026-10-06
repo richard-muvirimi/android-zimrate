@@ -11,6 +11,7 @@
         <item name="ic_analytics">@drawable/ic_analytics_dark</item>
 
         <item name="ic_refresh">@drawable/ic_refresh_dark</item>
+        <item name="ic_visibility_off">@drawable/ic_visibility_off_dark</item>
         <item name="ic_star_filled">@drawable/ic_star_filled_dark</item>
         <item name="ic_star_outline">@drawable/ic_star_outline_dark</item>
 

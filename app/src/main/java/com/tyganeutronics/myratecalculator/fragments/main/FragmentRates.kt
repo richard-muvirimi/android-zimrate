@@ -104,6 +104,7 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
                 fetchRates(singleCurrency = entity.currency)
             },
             onDeleteClick = { entity -> confirmDeleteCustomRate(entity) },
+            onHideClick = { entity -> hideRate(entity) },
             onCalcClick = { entity, field, currentValue ->
                 calcTargetCurrency = entity.currency
                 calcTargetField = field
@@ -446,19 +447,23 @@ class FragmentRates : BaseFragment(), CalcDialog.CalcDialogCallback {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val pos = viewHolder.bindingAdapterPosition
                 val entity = adapter.entityAt(pos) ?: return
-                ratesViewModel.hideRate(entity)
-
-                view?.let { root ->
-                    Snackbar.make(
-                        root,
-                        getString(R.string.rate_hidden, entity.currency),
-                        Snackbar.LENGTH_LONG
-                    ).setAction(R.string.restore) {
-                        ratesViewModel.restoreRate(entity)
-                    }.show()
-                }
+                hideRate(entity)
             }
         }).attachToRecyclerView(rv)
+    }
+
+    private fun hideRate(entity: RateEntity) {
+        ratesViewModel.hideRate(entity)
+
+        view?.let { root ->
+            Snackbar.make(
+                root,
+                getString(R.string.rate_hidden, entity.currency),
+                Snackbar.LENGTH_LONG
+            ).setAction(R.string.restore) {
+                ratesViewModel.restoreRate(entity)
+            }.show()
+        }
     }
 
     override fun onValueEntered(requestCode: Int, value: java.math.BigDecimal?) {

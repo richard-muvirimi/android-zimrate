@@ -116,6 +116,8 @@
     <!-- Rates list / calculator -->
     <string name="hint_rate">Rate</string>
     <string name="hint_amount">Amount</string>
+    <!-- Leads the rate field: the rate is how many of this currency one dollar buys. -->
+    <string name="prefix_one_dollar">"$1 = "</string>
     <!--
         The currency code, then the country or custom name: ZAR · South Africa. Code first so it
         survives where the label is ellipsized — widgets and the watch both clip this hard.
@@ -132,6 +134,7 @@
     <string name="content_description_flag">Currency flag</string>
     <string name="content_description_pin">Pin currency</string>
     <string name="content_description_refresh">Refresh currency rate</string>
+    <string name="content_description_hide">Hide currency</string>
     <string name="menu_refresh_all">Refresh All</string>
     <string name="prefs_analytics_title">Analytics</string>
     <string name="prefs_analytics_on">Allow collection of anonymous usage statistics</string>
