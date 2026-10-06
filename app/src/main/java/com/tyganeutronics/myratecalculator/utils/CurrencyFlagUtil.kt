@@ -58,6 +58,19 @@ object CurrencyFlagUtil {
     }
 
     /**
+     * Localised currency name, as the web calculator's currencyName() does it: ICU's name for the
+     * currency, else its country. ICU's currency table is thinner than its region table (ZWG only
+     * reached it in 2024), so a currency it cannot name falls through to [countryName].
+     */
+    fun currencyName(currencyCode: String): String {
+        val code = currencyCode.uppercase()
+        return runCatching { Currency.getInstance(code).displayName }
+            .getOrNull()
+            ?.takeIf { it.isNotEmpty() && !it.equals(code, ignoreCase = true) }
+            ?: countryName(currencyCode)
+    }
+
+    /**
      * The label a rate is shown under: "ZAR · South Africa".
      *
      * Pass [name] to override the country name — a custom rate carries the user's own label, and

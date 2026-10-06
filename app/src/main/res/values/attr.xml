@@ -9,6 +9,7 @@
     <attr name="ic_analytics" format="reference" />
 
     <attr name="ic_refresh" format="reference" />
+    <attr name="ic_visibility_off" format="reference" />
     <attr name="ic_star_filled" format="reference" />
     <attr name="ic_star_outline" format="reference" />
 

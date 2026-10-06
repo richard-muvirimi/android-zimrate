@@ -30,6 +30,7 @@ class RateViewHolder(
     private val onPinClick: (RateEntity) -> Unit,
     private val onRefreshClick: (RateEntity) -> Unit,
     private val onDeleteClick: (RateEntity) -> Unit,
+    private val onHideClick: (RateEntity) -> Unit,
     private val onCalcClick: (entity: RateEntity, field: CalcField, currentValue: BigDecimal) -> Unit,
     private val onAmountsChanged: (exceptCurrency: String?) -> Unit,
 ) : RecyclerView.ViewHolder(
@@ -43,6 +44,7 @@ class RateViewHolder(
     private val etAmount: TextInputEditText = itemView.findViewById(R.id.et_amount)
     private val btnPin: ImageButton = itemView.findViewById(R.id.btn_pin)
     private val btnRefresh: ImageButton = itemView.findViewById(R.id.btn_refresh)
+    private val btnHide: ImageButton = itemView.findViewById(R.id.btn_hide)
     private val txtDate: TextView = itemView.findViewById(R.id.txt_date)
 
     var entity: RateEntity? = null
@@ -69,6 +71,7 @@ class RateViewHolder(
         etRate.isEnabled = !isBase
         etRate.alpha = if (isBase) 0.5f else 1.0f
         tilRate.isEndIconVisible = !isBase
+        tilAmount.prefixText = entity.currency
 
         isUpdating = true
         etRate.setText(viewModel.effectiveRate(entity).setScale(2, RoundingMode.HALF_UP).toPlainString())
@@ -97,6 +100,12 @@ class RateViewHolder(
                 itemView.context.getString(R.string.content_description_refresh)
             btnRefresh.setOnClickListener { onRefreshClick(entity) }
         }
+
+        // USD is the base every amount is worked out from, so it cannot be swiped away either.
+        val canHide = entity.currency != "USD"
+        btnHide.isEnabled = canHide
+        btnHide.alpha = if (canHide) 1.0f else 0.5f
+        btnHide.setOnClickListener { onHideClick(entity) }
 
         tilRate.setEndIconOnClickListener {
             val v = etRate.text?.toString()?.toBigDecimalOrNull() ?: BigDecimal.ZERO
@@ -166,7 +175,7 @@ class RateViewHolder(
         val name = if (entity.custom) {
             entity.name.ifEmpty { entity.currency }
         } else {
-            CurrencyFlagUtil.countryName(entity.currency)
+            CurrencyFlagUtil.currencyName(entity.currency)
         }
         txtName.text =
             CurrencyFlagUtil.codeWithName(itemView.context, entity.currency, name)
@@ -181,11 +190,11 @@ class RateViewHolder(
         }
 
         if (entity.url.isNotBlank()) {
-            itemView.findViewById<View>(R.id.ll_footnote).setOnClickListener {
+            itemView.findViewById<View>(R.id.ll_title).setOnClickListener {
                 BrowserUtils.openUrl(it.context, entity.url)
             }
         } else {
-            itemView.findViewById<View>(R.id.ll_footnote).setOnClickListener(null)
+            itemView.findViewById<View>(R.id.ll_title).setOnClickListener(null)
         }
     }
 
