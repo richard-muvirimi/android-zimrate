@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.CheckedTextView
 import android.widget.ListView
 import android.widget.RemoteViews
-import androidx.appcompat.widget.AppCompatButton
+import com.google.android.material.button.MaterialButton
 import com.murgupluoglu.flagkit.FlagKit
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.database.entities.RateEntity
@@ -70,7 +70,7 @@ class WidgetActivity : BaseAppActivity(), View.OnClickListener {
     }
 
     override fun syncViews() {
-        findViewById<AppCompatButton>(R.id.btn_add).setOnClickListener(this)
+        findViewById<MaterialButton>(R.id.btn_add).setOnClickListener(this)
     }
 
     private fun getWidgetManager(): AppWidgetManager = AppWidgetManager.getInstance(this)

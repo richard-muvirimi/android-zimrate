@@ -5,17 +5,12 @@
         <item name="ic_info">@drawable/ic_info</item>
 
         <item name="ic_dollar">@drawable/ic_dollar</item>
-        <item name="ic_auto">@drawable/ic_auto</item>
-        <item name="ic_interval">@drawable/ic_interval</item>
-        <item name="ic_check">@drawable/ic_check</item>
-        <item name="ic_analytics">@drawable/ic_analytics</item>
 
         <item name="ic_refresh">@drawable/ic_refresh</item>
         <item name="ic_visibility_off">@drawable/ic_visibility_off</item>
         <item name="ic_star_filled">@drawable/ic_star_filled</item>
         <item name="ic_star_outline">@drawable/ic_star_outline</item>
 
-        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
 
         <!-- The bars sit on a light surface under enforced edge to edge, so the system
              icons must be dark to stay legible. -->

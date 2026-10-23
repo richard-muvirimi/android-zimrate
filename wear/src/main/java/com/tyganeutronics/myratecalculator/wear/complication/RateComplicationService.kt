@@ -21,9 +21,9 @@ import com.tyganeutronics.myratecalculator.wear.data.WearRateStore
 import com.tyganeutronics.myratecalculator.wear.data.append
 import com.tyganeutronics.myratecalculator.wear.data.displayName
 import com.tyganeutronics.myratecalculator.wear.data.move
-import com.tyganeutronics.myratecalculator.wear.data.label
 import com.tyganeutronics.myratecalculator.wear.presentation.MainActivity
 import com.tyganeutronics.myratecalculator.wear.util.countryCode
+import java.util.Locale
 
 class RateComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -78,17 +78,22 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
     }
 
     /**
-     * The title carries the currency code rather than a country name because a short-text slot
-     * renders only a handful of characters, and a code always fits where "South Africa" would
-     * be cut. The flag is still attached for the faces that draw small images; most do not, so
-     * the title is what actually identifies the currency in practice.
+     * A small slot, so the code goes in the title and the number in the text and the watch face
+     * stacks the two. That stacking is the face's to decide, not ours — and on a slot this narrow
+     * it is also the only way both halves fit at a readable size.
+     *
+     * The flag is still attached for the faces that draw small images; most do not, so the title
+     * is what actually identifies the currency in practice.
      */
     private fun shortText(rate: WearRateModel, tap: PendingIntent? = null) =
         ShortTextComplicationData.Builder(
             // Only the mark, no colour: a complication hands the watch face data, and the face
             // decides how to paint it. The arrow is the one channel a data source controls.
             // No separator either — a short text slot renders very few characters.
-            text = PlainComplicationText.Builder(rate.move().append(rate.rate, "")).build(),
+            text = PlainComplicationText.Builder(
+                rate.move().append(compactRate(rate.rate), "")
+            ).build(),
+            // Spoken in full: the compaction above is a space constraint, not a precision choice.
             contentDescription =
                 PlainComplicationText.Builder("${rate.currency} ${rate.rate}").build(),
         )
@@ -97,28 +102,59 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
             .apply { flagImage(rate)?.let { setSmallImage(it) } }
             .build()
 
+    /**
+     * The wide slot, and the one to pick for a rate that reads across rather than down: the code
+     * and the number share the text line, so the face has a single horizontal string to place.
+     *
+     * The code is on that line rather than only in the title because a long-text slot that is
+     * short on height renders the title away entirely, and a number with no currency next to it
+     * says nothing. The title repeats no part of it — it adds the country.
+     */
     private fun longText(rate: WearRateModel, tap: PendingIntent? = null) =
         LongTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(rate.move().append(rate.rate)).build(),
+            text = PlainComplicationText.Builder(
+                rate.move().append("${rate.currency} ${rate.rate}")
+            ).build(),
             contentDescription =
                 PlainComplicationText.Builder("${rate.currency} ${rate.rate}").build(),
         )
-            .setTitle(
-                PlainComplicationText.Builder(rate.label(applicationContext, shortName(rate)))
-                    .build()
-            )
+            .setTitle(PlainComplicationText.Builder(shortName(rate)).build())
             .setTapAction(tap)
             .apply { flagImage(rate)?.let { setSmallImage(it) } }
             .build()
 
     /**
-     * A currency code means nothing to most people, so the title names where the money is from
-     * as well. The platform localises the country name, so this follows the ten locales the app
-     * ships without needing any new strings.
+     * The rate, narrowed to what a short text slot can actually draw.
+     *
+     * Such a slot renders about seven characters; past that the watch face shrinks or clips what
+     * it was given, which is why a four figure rate came out mangled while a two figure one beside
+     * it looked right. A rate already inside the budget is passed through untouched, so the common
+     * two figure case is exactly the string the phone sent.
+     *
+     * Each step gives up the least it can — a decimal place before an order of magnitude, since
+     * the cents on a rate in the thousands are below what anyone reads off a watch but the
+     * magnitude never is — and the first result that fits wins. Choosing by measured width rather
+     * than by value brackets is what keeps a rate that rounds up across a bracket (999.95, or
+     * 99999.5) from spilling the one extra character that bracket arithmetic let through.
+     */
+    private fun compactRate(rate: String): String {
+        if (rate.length <= MAX_RATE_CHARS) return rate
+        val value = rate.toDoubleOrNull() ?: return rate.take(MAX_RATE_CHARS)
+
+        return NARROWINGS.asSequence()
+            .map { it(value) }
+            .firstOrNull { it.length <= MAX_RATE_CHARS }
+            ?: rate.take(MAX_RATE_CHARS)
+    }
+
+    /**
+     * A currency code means nothing to most people, so the title names where the money is from.
+     * The platform localises the country name, so this follows the ten locales the app ships
+     * without needing any new strings.
      *
      * Complication titles are only a few characters wide, hence the trim back to a word
-     * boundary. Trimmed before the code is attached so the code survives — it is the half that
-     * identifies the rate unambiguously.
+     * boundary. The code is no longer appended here — it sits on the text line, where it cannot
+     * be trimmed away.
      */
     private fun shortName(rate: WearRateModel): String {
         val name = rate.displayName()
@@ -159,6 +195,26 @@ class RateComplicationService : SuspendingComplicationDataSourceService() {
 
         private const val MAX_TITLE_CHARS = 10
         private const val MIN_WORD_CHARS = 4
+
+        /**
+         * Width the rate has to fit in a short text slot. One under the seven such a slot draws,
+         * because the movement mark is appended to it and has to land inside the same budget.
+         */
+        private const val MAX_RATE_CHARS = 6
+
+        /**
+         * Ways to spend fewer characters on a rate, least lossy first. Formatted against
+         * [Locale.US] like the string the phone sends, so a rate that passes through untouched
+         * and one that gets narrowed do not disagree about the decimal separator.
+         */
+        private val NARROWINGS: List<(Double) -> String> = listOf(
+            { v -> "%.1f".format(Locale.US, v) },
+            { v -> "%.0f".format(Locale.US, v) },
+            { v -> "%.1fk".format(Locale.US, v / 1_000) },
+            { v -> "%.0fk".format(Locale.US, v / 1_000) },
+            { v -> "%.1fm".format(Locale.US, v / 1_000_000) },
+            { v -> "%.0fm".format(Locale.US, v / 1_000_000) },
+        )
         private const val FLAG_PX_WIDTH = 96
         private const val FLAG_PX_HEIGHT = 64
 

@@ -1,19 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--
+        Dark counterparts of the Material 3 roles declared in values/colors.xml, from the same
+        generated palette. colorPrimaryLight aliases md_primary, so it follows this file without
+        needing an override of its own.
+    -->
+    <color name="md_primary">#A3C9FF</color>
+    <color name="md_on_primary">#00315C</color>
+    <color name="md_primary_container">#004882</color>
+    <color name="md_on_primary_container">#D3E4FF</color>
+    <color name="md_secondary">#BCC7DB</color>
+    <color name="md_on_secondary">#263141</color>
+    <color name="md_secondary_container">#3C4758</color>
+    <color name="md_on_secondary_container">#D8E3F8</color>
+    <color name="md_tertiary">#D9BDE3</color>
+    <color name="md_on_tertiary">#3C2947</color>
+    <color name="md_tertiary_container">#543F5E</color>
+    <color name="md_on_tertiary_container">#F5D9FF</color>
+    <color name="md_error">#FFB4AB</color>
+    <color name="md_on_error">#690005</color>
+    <color name="md_error_container">#93000A</color>
+    <color name="md_on_error_container">#FFDAD6</color>
+    <color name="md_background">#1A1C1E</color>
+    <color name="md_on_background">#E3E2E6</color>
+    <color name="md_surface">#1A1C1E</color>
+    <color name="md_on_surface">#E3E2E6</color>
+    <color name="md_surface_variant">#43474E</color>
+    <color name="md_on_surface_variant">#C3C6CF</color>
+    <color name="md_outline">#8D9199</color>
+    <color name="md_outline_variant">#43474E</color>
+    <color name="md_inverse_surface">#E3E2E6</color>
+    <color name="md_inverse_on_surface">#2F3033</color>
+    <color name="md_inverse_primary">#1660A5</color>
+    <color name="md_surface_container_lowest">#0D0E11</color>
+    <color name="md_surface_container_low">#1A1C1E</color>
+    <color name="md_surface_container">#1E2022</color>
+    <color name="md_surface_container_high">#292A2D</color>
+    <color name="md_surface_container_highest">#333538</color>
+
     <!-- Dark counterparts of the widget colours declared in values/colors.xml. -->
     <color name="widget_background">#FF1C1B1F</color>
     <color name="widget_stroke">#33FFFFFF</color>
     <color name="widget_text_primary">#FFFFFFFF</color>
     <color name="widget_text_secondary">#B3FFFFFF</color>
 
-    <!-- Dark counterparts of the glance bubble colours declared in values/colors.xml. -->
-    <color name="glance_bubble_rose">#FF3B2523</color>
-    <color name="glance_bubble_fell">#FF1D3324</color>
-    <color name="glance_bubble_flat">#FF1F2A38</color>
-    <color name="glance_base_stroke">#FF7FB3F0</color>
-    <color name="glance_trend_rose">#FFEF9A9A</color>
-    <color name="glance_trend_fell">#FFA5D6A7</color>
+    <!--
+        Dark counterparts of the glance bubble colours declared in values/colors.xml, generated
+        the same way: one chroma and one tone across all three, only the hue differing.
+        glance_base_stroke and aggregate_selected are aliases of md_primary and need no entry.
+    -->
+    <color name="glance_bubble_rose">#FF4E322F</color>
+    <color name="glance_bubble_fell">#FF2E3D2B</color>
+    <color name="glance_bubble_flat">#FF2F3A4A</color>
+    <color name="glance_trend_rose">#FFFFB4AB</color>
+    <color name="glance_trend_fell">#FF9CD593</color>
 
     <!-- Dark counterpart of the prompt focal declared in values/colors.xml. -->
     <color name="prompt_focal">#FF121212</color>
@@ -24,9 +65,6 @@
     <color name="google_btn_text">#FFE3E3E3</color>
     <color name="google_btn_stroke">#FF8E918F</color>
 
-    <!-- Dark counterpart of the aggregate switch colour. See values/colors.xml. -->
-    <color name="aggregate_selected">#FF7FB3F0</color>
-
     <!-- Dark counterpart of the rate row colour. See values/colors.xml. -->
-    <color name="rate_card_background">#FF1B2534</color>
+    <color name="rate_card_background">#FF262A31</color>
 </resources>

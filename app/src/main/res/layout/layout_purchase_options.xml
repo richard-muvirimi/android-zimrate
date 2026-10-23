@@ -16,9 +16,9 @@
             android:layout_weight="1"
             android:gravity="end">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/purchase_coins_tiny"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_8"
@@ -37,9 +37,9 @@
             android:layout_weight="1"
             android:gravity="start">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/purchase_coins_small"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_8"
@@ -65,9 +65,9 @@
             android:layout_weight="1"
             android:gravity="end">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/purchase_coins_medium"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_8"
@@ -86,9 +86,9 @@
             android:layout_weight="1"
             android:gravity="start">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/purchase_coins_large"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_8"
@@ -114,9 +114,9 @@
             android:layout_weight="1"
             android:gravity="end">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/purchase_coins_huge"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_8"
@@ -135,9 +135,9 @@
             android:layout_weight="1"
             android:gravity="start">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/purchase_coins_gigantic"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_8"

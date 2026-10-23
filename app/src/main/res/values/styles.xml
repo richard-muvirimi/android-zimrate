@@ -3,18 +3,62 @@
 
     <!-- Base application theme. -->
 
-    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <!--
+        Material 3. Every colour role is mapped explicitly from the generated palette in
+        values/colors.xml rather than left to the library default, so a widget that reaches for a
+        role it was never given before — a tonal button, a filled card, the switch track — lands
+        on the brand palette instead of Material's baseline purple.
+    -->
+    <style name="BaseTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/md_primary</item>
+        <item name="colorOnPrimary">@color/md_on_primary</item>
+        <item name="colorPrimaryContainer">@color/md_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/md_on_primary_container</item>
+        <item name="colorSecondary">@color/md_secondary</item>
+        <item name="colorOnSecondary">@color/md_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/md_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/md_on_secondary_container</item>
+        <item name="colorTertiary">@color/md_tertiary</item>
+        <item name="colorOnTertiary">@color/md_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/md_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/md_on_tertiary_container</item>
+        <item name="colorError">@color/md_error</item>
+        <item name="colorOnError">@color/md_on_error</item>
+        <item name="colorErrorContainer">@color/md_error_container</item>
+        <item name="colorOnErrorContainer">@color/md_on_error_container</item>
+        <item name="android:colorBackground">@color/md_background</item>
+        <item name="colorOnBackground">@color/md_on_background</item>
+        <item name="colorSurface">@color/md_surface</item>
+        <item name="colorOnSurface">@color/md_on_surface</item>
+        <item name="colorSurfaceVariant">@color/md_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/md_on_surface_variant</item>
+        <item name="colorOutline">@color/md_outline</item>
+        <item name="colorOutlineVariant">@color/md_outline_variant</item>
+        <item name="colorSurfaceInverse">@color/md_inverse_surface</item>
+        <item name="colorOnSurfaceInverse">@color/md_inverse_on_surface</item>
+        <item name="colorPrimaryInverse">@color/md_inverse_primary</item>
+        <item name="colorSurfaceContainerLowest">@color/md_surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/md_surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/md_surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/md_surface_container_highest</item>
+
+        <!-- Brand blue, kept for the pre-API-21 status bar slot the platform still reads. -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimaryLight</item>
+        <!-- The AppCompat widgets and the preference screen read colorAccent, not colorPrimary. -->
+        <item name="colorAccent">@color/md_primary</item>
         <!--
-            Material components read colorSecondary rather than the AppCompat colorAccent above.
-            Left unset it resolves to the Material default teal, which is not in this palette —
-            the FAB was the first component to show it up.
+            An accent that stays legible in both themes. Now just the primary role, which already
+            flips tone between day and night; see the note in values/colors.xml.
         -->
-        <item name="colorSecondary">@color/colorPrimaryLight</item>
-        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
+
         <item name="calcDialogStyle">@style/AppTheme.CalcDialog</item>
+        <!--
+            Material 3 does not set preferenceTheme, so without this the preference library falls
+            back to its own default overlay and the settings rows lose the category styling below.
+        -->
+        <item name="preferenceTheme">@style/ThemeOverlay.Zimrate.Preference</item>
     </style>
 
     <style name="Theme.App.Starting" parent="AppTheme" />
@@ -30,6 +74,19 @@
     </style>
 
     <!--
+        Settings. The category headings take the primary colour, which is the Material 3 settings
+        idiom and the thing that makes a long preference list scannable.
+    -->
+    <style name="ThemeOverlay.Zimrate.Preference" parent="PreferenceThemeOverlay">
+        <item name="preferenceCategoryTitleTextAppearance">@style/TextAppearance.Zimrate.PreferenceCategory</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Zimrate.PreferenceCategory" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
         A percentage corner size stays a circle at any diameter, which the glance bubbles need
         because each one is sized at bind time.
     -->
@@ -42,7 +99,7 @@
         An option on the rates screen's aggregate switch: no stroke or tick, muted until chosen,
         then a tinted pill inside bg_aggregate_track — the same look as the website's switch.
     -->
-    <style name="AppTheme.AggregateChip" parent="Widget.MaterialComponents.Chip.Choice">
+    <style name="AppTheme.AggregateChip" parent="Widget.Material3.Chip.Filter">
         <item name="chipBackgroundColor">@color/aggregate_chip_background</item>
         <item name="android:textColor">@color/aggregate_chip_text</item>
         <item name="android:textAppearance">@style/AppTheme.AggregateChip.Text</item>
@@ -50,22 +107,26 @@
         <item name="checkedIconVisible">false</item>
     </style>
 
-    <style name="AppTheme.AggregateChip.Text" parent="TextAppearance.MaterialComponents.Body2">
+    <style name="AppTheme.AggregateChip.Text" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textStyle">bold</item>
     </style>
 
     <!--layout_toolbar-->
 
-    <style name="AppTheme.Toolbar.Expanded" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="AppTheme.Toolbar.Expanded" parent="TextAppearance.Material3.HeadlineMedium">
 
     </style>
 
-    <style name="AppTheme.Toolbar.Collapsed" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="AppTheme.Toolbar.Collapsed" parent="TextAppearance.Material3.TitleLarge">
 
     </style>
 
     <!--calculator-->
 
+    <!--
+        The calculator dialog comes from a library that styles its own widgets off AppCompat, so
+        these parents stay as they are; they pick the new palette up through colorPrimaryLight.
+    -->
     <style name="AppTheme.CalcDialog" parent="CalcDialogStyle">
         <item name="calcOperationBtnStyle">@style/AppTheme.CalcDialog.Button</item>
         <item name="calcEraseBtnStyle">@style/AppTheme.CalcDialog.CalcEraseBtnStyle</item>
@@ -104,31 +165,12 @@
         <item name="android:textColor">?attr/colorPrimaryLight</item>
     </style>
 
-    <!--Widgets-->
-    <style name="AppTheme.TextInputLayout" parent="@style/Widget.Design.TextInputLayout">
-        <item name="startIconTint">?attr/colorPrimaryLight</item>
-        <item name="counterMaxLength">@integer/maxvalue</item>
-        <item name="android:paddingBottom">@dimen/padding_8</item>
-        <item name="startIconDrawable">@drawable/ic_calculator</item>
-        <item name="helperTextTextColor">?attr/colorPrimaryLight</item>
-    </style>
-
-    <!--Edit text app style-->
-    <style name="AppTheme.EditText" parent="@style/Widget.AppCompat.EditText">
-        <!--<item name="android:background">@android:color/transparent</item>-->
-    </style>
-
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Borderless">
-        <item name="drawableTint">?attr/colorPrimaryLight</item>
-    </style>
-
-
     <!--
         Google sign-in button. Shape, colours and the logo are Google's to specify, not ours.
         iconTint is explicitly cleared: Material tints an icon to the text colour by default,
         which would flatten the four-colour G to a single shade and breach the guidelines.
     -->
-    <style name="Widget.ZimRate.Button.Google" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Widget.ZimRate.Button.Google" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:textColor">@color/google_btn_text</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:letterSpacing">0</item>

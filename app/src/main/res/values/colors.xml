@@ -1,8 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
+        Material 3 colour roles, generated from the brand blue #01579b with
+        material-color-utilities (CorePalette.of + the standard light-scheme tones), the same
+        algorithm Material Theme Builder runs. Dark counterparts in values-night. Every role the
+        theme maps in values/styles.xml is declared here, so a widget that reaches for a role
+        never falls through to the Material default.
+    -->
+    <color name="md_primary">#1660A5</color>
+    <color name="md_on_primary">#FFFFFF</color>
+    <color name="md_primary_container">#D3E4FF</color>
+    <color name="md_on_primary_container">#001C38</color>
+    <color name="md_secondary">#545F70</color>
+    <color name="md_on_secondary">#FFFFFF</color>
+    <color name="md_secondary_container">#D8E3F8</color>
+    <color name="md_on_secondary_container">#111C2B</color>
+    <color name="md_tertiary">#6D5677</color>
+    <color name="md_on_tertiary">#FFFFFF</color>
+    <color name="md_tertiary_container">#F5D9FF</color>
+    <color name="md_on_tertiary_container">#261430</color>
+    <color name="md_error">#BA1A1A</color>
+    <color name="md_on_error">#FFFFFF</color>
+    <color name="md_error_container">#FFDAD6</color>
+    <color name="md_on_error_container">#410002</color>
+    <color name="md_background">#FDFCFF</color>
+    <color name="md_on_background">#1A1C1E</color>
+    <color name="md_surface">#FDFCFF</color>
+    <color name="md_on_surface">#1A1C1E</color>
+    <color name="md_surface_variant">#DFE2EB</color>
+    <color name="md_on_surface_variant">#43474E</color>
+    <color name="md_outline">#73777F</color>
+    <color name="md_outline_variant">#C3C6CF</color>
+    <color name="md_inverse_surface">#2F3033</color>
+    <color name="md_inverse_on_surface">#F1F0F4</color>
+    <color name="md_inverse_primary">#A3C9FF</color>
+    <color name="md_surface_container_lowest">#FFFFFF</color>
+    <color name="md_surface_container_low">#F4F3F7</color>
+    <color name="md_surface_container">#EEEDF1</color>
+    <color name="md_surface_container_high">#E8E8EB</color>
+    <color name="md_surface_container_highest">#E3E2E6</color>
+
+    <!--
+        Brand blue, as on the website. Not a theme role: it is also the Chrome Custom Tab toolbar
+        and the launcher icon background, neither of which resolves theme attributes.
+    -->
     <color name="colorPrimaryDark">#002f6c</color>
     <color name="colorPrimary">#01579b</color>
-    <color name="colorPrimaryLight">#4f83cc</color>
+
+    <!--
+        Was a hand-picked lighter blue by day and plain white by night. colorPrimary in Material 3
+        already flips that way on its own — tone 40 by day, tone 80 by night — so this is now an
+        alias of the role and the per-theme overrides in values-night and values-notnight are gone.
+        Kept as a name because the illustrations and the swipe-refresh spinner reference it
+        directly, and as an attr because several layouts resolve ?attr/colorPrimaryLight.
+    -->
+    <color name="colorPrimaryLight">@color/md_primary</color>
+
     <color name="light_grey">#FFECECEC</color>
 
     <!--
@@ -19,19 +72,28 @@
         per USD, so a rise means that currency got weaker — hence warm for up, not the other way
         round. The arrow in each bubble carries the same meaning, because colour alone is no use
         to a red green colour blind reader. Dark counterparts in values-night.
+
+        The three are peers, so they are generated at one chroma and one tone with only the hue
+        changing — red for a rise, green for a fall, the brand blue for neither. Picked by eye
+        they had drifted to three different lightnesses, which made a row of them look uneven and
+        read as though the pale one mattered less.
     -->
-    <color name="glance_bubble_rose">#FFFBE3E0</color>
-    <color name="glance_bubble_fell">#FFE0F2E4</color>
+    <color name="glance_bubble_rose">#FFFFE2DE</color>
+    <color name="glance_bubble_fell">#FFDBEDD4</color>
     <!--
         Not a grey. Most rates are not moving most of the time, so this is what the screen looks
         like nearly always, and a flat grey read as broken rather than calm. It carries no meaning
         beyond "did not move" — the two colours that do mean something sit either side of it.
     -->
-    <color name="glance_bubble_flat">#FFE7EEF7</color>
-    <!-- Ring on the bubble everything else is being converted from. -->
-    <color name="glance_base_stroke">#FF01579B</color>
-    <color name="glance_trend_rose">#FFC62828</color>
-    <color name="glance_trend_fell">#FF2E7D32</color>
+    <color name="glance_bubble_flat">#FFDDE9FE</color>
+    <!-- Ring on the bubble everything else is being converted from: the brand colour itself. -->
+    <color name="glance_base_stroke">@color/md_primary</color>
+    <!--
+        The arrows, likewise one chroma and one tone apart from hue. 6.1:1 against their own
+        bubble by day and 6.8:1 by night, so the mark stays legible at glance size.
+    -->
+    <color name="glance_trend_rose">#FF903831</color>
+    <color name="glance_trend_fell">#FF1E6121</color>
 
     <!--
         The circle a tap target prompt cuts out of its scrim. The target is redrawn on top of it
@@ -52,14 +114,16 @@
 
     <!--
         The chosen option on the rates screen's aggregate switch: its label, and at low alpha the
-        pill behind it. colorPrimary is too dark to read on the night surface, so this pairs it
-        with a lighter blue in values-night.
+        pill behind it. The primary role already lightens for night, which is what the hand
+        written pair here used to do.
     -->
-    <color name="aggregate_selected">#FF01579B</color>
+    <color name="aggregate_selected">@color/md_primary</color>
 
     <!--
         Rate rows, the website calculator's background.elevated: a faint blue tint that lifts the
-        card off the page without a shadow. Dark counterpart in values-night.
+        card off the page without a shadow. The brand hue at low chroma, one tone step off the
+        page surface — enough to separate the row, not enough to compete with it. Dark counterpart
+        in values-night.
     -->
-    <color name="rate_card_background">#FFE4EDF7</color>
+    <color name="rate_card_background">#FFEBEEF7</color>
 </resources>

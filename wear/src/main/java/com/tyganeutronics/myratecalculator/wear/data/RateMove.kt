@@ -11,8 +11,8 @@ package com.tyganeutronics.myratecalculator.wear.data
  * Colours match the dark values the phone uses; a tile draws on its own dark surface either way.
  */
 enum class RateMove(val color: Int?, val mark: String) {
-    ROSE(0xFFEF9A9A.toInt(), "▲"),
-    FELL(0xFFA5D6A7.toInt(), "▼"),
+    ROSE(0xFFFFB4AB.toInt(), "▲"),
+    FELL(0xFF9CD593.toInt(), "▼"),
     FLAT(null, ""),
 }
 

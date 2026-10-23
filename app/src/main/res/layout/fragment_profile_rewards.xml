@@ -35,7 +35,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_1"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -46,7 +47,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight"
                     tools:text="0" />
 
@@ -55,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -70,7 +71,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_2"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -81,7 +83,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight"
                     tools:text="0" />
 
@@ -90,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_2"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -105,7 +107,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_3"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -116,7 +119,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight"
                     tools:text="0" />
 
@@ -125,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_3"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -140,7 +143,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_4"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -151,7 +155,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight"
                     tools:text="0" />
 
@@ -160,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_4"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -182,7 +186,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_5"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -193,7 +198,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight"
                     tools:text="0" />
 
@@ -202,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_5"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -217,7 +222,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_6"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -229,7 +235,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -237,7 +243,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_6"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -252,7 +258,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_border_primary_light"
+                android:id="@+id/rewards_tile_day_7"
+                android:background="@drawable/bg_reward_day"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -263,7 +270,7 @@
                     android:drawableEnd="@drawable/ic_reward"
                     android:drawablePadding="@dimen/padding_4"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     app:drawableTint="?attr/colorPrimaryLight"
                     tools:text="0" />
 
@@ -272,7 +279,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/rewards_day_7"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -286,7 +293,7 @@
         android:layout_marginVertical="@dimen/padding_16"
         android:gravity="center_horizontal"
         android:text="@string/rewards_awards_info"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -298,9 +305,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_trigger_purchase_award"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -319,7 +326,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rewards_history_purchases_cta"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     android:textColor="@color/colorPrimaryLight" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -327,7 +334,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:text="@string/menu_history"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -341,16 +348,16 @@
             android:layout_marginVertical="@dimen/padding_16"
             android:gravity="center_horizontal"
             android:text="@string/rewards_coins_purchase_alt"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_trigger_earn_award"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -369,7 +376,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rewards_history_awards_cta"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     android:textColor="@color/colorPrimaryLight"
                     android:textStyle="bold" />
 
@@ -378,7 +385,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:text="@string/menu_history"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
