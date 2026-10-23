@@ -6,11 +6,11 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isGone
 import com.appodeal.ads.Appodeal
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.remoteConfig
@@ -44,7 +44,7 @@ class FragmentSectionRewards : BaseFragment(), OnClickListener, AdFragmentSubscr
     }
 
     override fun requireShowAdButton(): Button {
-        return requireViewById<AppCompatButton>(R.id.btn_trigger_earn_award)
+        return requireViewById<MaterialButton>(R.id.btn_trigger_earn_award)
     }
 
     override fun onCreateView(
@@ -59,7 +59,7 @@ class FragmentSectionRewards : BaseFragment(), OnClickListener, AdFragmentSubscr
         super.bindViews()
 
         requireViewById<LinearLayoutCompat>(R.id.btn_show_award_history).setOnClickListener(this)
-        requireViewById<AppCompatButton>(R.id.btn_trigger_earn_award).setOnClickListener(this)
+        requireViewById<MaterialButton>(R.id.btn_trigger_earn_award).setOnClickListener(this)
         requireViewById<LinearLayoutCompat>(R.id.btn_show_purchases_history).setOnClickListener(this)
 
         bindPurchase()
@@ -83,7 +83,7 @@ class FragmentSectionRewards : BaseFragment(), OnClickListener, AdFragmentSubscr
      * has given up.
      */
     private fun bindPurchase() {
-        val purchase = requireViewById<AppCompatButton>(R.id.btn_trigger_purchase_award)
+        val purchase = requireViewById<MaterialButton>(R.id.btn_trigger_purchase_award)
 
         if (!BaseUtils.isPlayBuild) {
             purchase.isGone = true
@@ -104,21 +104,26 @@ class FragmentSectionRewards : BaseFragment(), OnClickListener, AdFragmentSubscr
             val streak = SpendModel.daysStreak()
 
             listOf(
-                R.id.rewards_amount_day_1,
-                R.id.rewards_amount_day_2,
-                R.id.rewards_amount_day_3,
-                R.id.rewards_amount_day_4,
-                R.id.rewards_amount_day_5,
-                R.id.rewards_amount_day_6,
-                R.id.rewards_amount_day_7,
-            ).forEachIndexed { index, id ->
-                requireViewById<AppCompatTextView>(id).apply {
+                R.id.rewards_amount_day_1 to R.id.rewards_tile_day_1,
+                R.id.rewards_amount_day_2 to R.id.rewards_tile_day_2,
+                R.id.rewards_amount_day_3 to R.id.rewards_tile_day_3,
+                R.id.rewards_amount_day_4 to R.id.rewards_tile_day_4,
+                R.id.rewards_amount_day_5 to R.id.rewards_tile_day_5,
+                R.id.rewards_amount_day_6 to R.id.rewards_tile_day_6,
+                R.id.rewards_amount_day_7 to R.id.rewards_tile_day_7,
+            ).forEachIndexed { index, (amountId, tileId) ->
+                val claimed = streak[index]
+
+                requireViewById<AppCompatTextView>(amountId).apply {
                     text = RewardModel.dayClockInReward(index).toString()
 
-                    val drawable =
-                        if (streak[index]) R.drawable.ic_rewarded else R.drawable.ic_reward
+                    val drawable = if (claimed) R.drawable.ic_rewarded else R.drawable.ic_reward
                     setCompoundDrawablesWithIntrinsicBounds(0, 0, drawable, 0)
                 }
+
+                // Fills the whole tile rather than swapping the gift glyph alone, which was too
+                // small a difference to pick a claimed day out of a row of seven.
+                requireViewById<View>(tileId).isActivated = claimed
             }
         }
 

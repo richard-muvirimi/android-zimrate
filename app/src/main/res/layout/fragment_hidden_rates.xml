@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_16"
         android:text="@string/menu_hidden_rates"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         android:textStyle="bold" />
 
     <TextView

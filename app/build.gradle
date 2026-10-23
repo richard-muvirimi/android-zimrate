@@ -16,7 +16,6 @@ android {
         versionCode 64
         versionName "3.8.0"
         multiDexEnabled true
-        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

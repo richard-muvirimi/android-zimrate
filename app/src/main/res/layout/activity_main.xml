@@ -34,7 +34,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         app:elevation="@dimen/padding_8">

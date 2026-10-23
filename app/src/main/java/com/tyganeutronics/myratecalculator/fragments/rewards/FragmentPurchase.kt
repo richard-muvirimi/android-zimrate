@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.widget.ContentLoadingProgressBar
@@ -29,6 +28,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryProductDetailsParams.Product
 import com.android.billingclient.api.QueryPurchasesParams
+import com.google.android.material.button.MaterialButton
 import com.tyganeutronics.myratecalculator.R
 import com.tyganeutronics.myratecalculator.auth.AuthManager
 import com.tyganeutronics.myratecalculator.database.models.RewardModel
@@ -189,7 +189,7 @@ class FragmentPurchase : BaseFragment(), View.OnClickListener, PurchasesUpdatedL
                         Log.i(TAG, productDetails.toString())
 
                         BillingContract.mapSkuToViewId(productDetails.productId)?.let {
-                            findViewById<AppCompatButton>(it)?.let { button ->
+                            findViewById<MaterialButton>(it)?.let { button ->
                                 TooltipCompat.setTooltipText(button, productDetails.description)
 
                                 button.text = getString(

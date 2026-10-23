@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="maxvalue">15</integer>
 
     <!--
         Columns in the rates list. Qualified on available width rather than smallest width so

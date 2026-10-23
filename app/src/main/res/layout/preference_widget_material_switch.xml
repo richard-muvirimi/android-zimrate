@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Widget layout for the switch rows in xml/settings.xml, in place of the SwitchCompat the
+    preference library ships. Material 3 wires only the old, thin switch into switchStyle; the
+    pill shaped one is a separate widget and has to be named to be used.
+
+    The id is the one SwitchPreferenceCompat looks up to bind and toggle the row, so it cannot be
+    renamed. MaterialSwitch extends SwitchCompat, which is what the preference expects to find.
+-->
+<com.google.android.material.materialswitch.MaterialSwitch xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/switchWidget"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:clickable="false"
+    android:focusable="false" />

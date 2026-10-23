@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/list_search_nothing_found"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             android:textColor="@color/colorPrimaryLight" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Which day tile this is. FragmentSectionRewards sets isActivated from the streak, so the seven
+    tiles stay identical in the layout and only the state differs.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_reward_day_claimed" android:state_activated="true" />
+    <item android:drawable="@drawable/bg_reward_day_pending" />
+</selector>

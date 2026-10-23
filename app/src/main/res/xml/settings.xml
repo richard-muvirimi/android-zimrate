@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Icons here are plain drawables, tinted to colorOnSurfaceVariant by FragmentSectionSettings
+    rather than swapped for a hand-darkened twin per theme.
+-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -7,39 +11,47 @@
         <ListPreference
             android:entries="@array/update_interval"
             android:entryValues="@array/update_interval_values"
-            android:icon="?attr/ic_interval"
+            android:icon="@drawable/ic_interval"
             android:key="update_interval"
             android:summary="%s"
             android:title="@string/update_interval"
             app:defaultValue="24" />
 
-        <CheckBoxPreference
+        <!--
+            Switches rather than checkboxes: these take effect the moment they are tapped, which
+            is what a switch says and a checkbox does not. The key and the stored boolean are
+            unchanged, so settings saved by an earlier version still read back.
+        -->
+        <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:icon="?attr/ic_auto"
+            android:icon="@drawable/ic_auto"
             android:key="auto_update"
             android:summaryOff="@string/auto_update_summary_off"
             android:summaryOn="@string/auto_update_summary_on"
-            android:title="@string/auto_update" />
+            android:title="@string/auto_update"
+            android:widgetLayout="@layout/preference_widget_material_switch" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:icon="?attr/ic_check"
+            android:icon="@drawable/ic_check"
             android:key="check_update"
             android:summaryOff="@string/auto_check_summary_off"
             android:summaryOn="@string/auto_check_summary_on"
-            android:title="@string/auto_check" />
+            android:title="@string/auto_check"
+            android:widgetLayout="@layout/preference_widget_material_switch" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefs_misc">
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:icon="?attr/ic_analytics"
+            android:icon="@drawable/ic_analytics"
             android:key="analytics"
             android:summaryOff="@string/prefs_analytics_off"
             android:summaryOn="@string/prefs_analytics_on"
-            android:title="@string/prefs_analytics_title" />
+            android:title="@string/prefs_analytics_title"
+            android:widgetLayout="@layout/preference_widget_material_switch" />
 
     </PreferenceCategory>
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    A check-in day not yet earned. Lighter than the card it sits on rather than merely outlined:
+    the card is a filled Material 3 surface, so a hairline on its own is almost the same colour as
+    the thing behind it and the tiles disappear.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <padding
+        android:bottom="@dimen/padding_4"
+        android:left="@dimen/padding_4"
+        android:right="@dimen/padding_4"
+        android:top="@dimen/padding_4" />
+    <corners android:radius="@dimen/padding_8" />
+    <solid android:color="?attr/colorSurfaceContainerLowest" />
+    <stroke
+        android:width="1dp"
+        android:color="?attr/colorOutlineVariant" />
+
+</shape>
