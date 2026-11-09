@@ -7,4 +7,13 @@
     <string name="updated_at">Kuvuselelwe %s</string>
     <string name="pick_currency">Khetha imali yesikhombisi</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="about">Mayelana</string>
+    <string name="author">Umbhali</string>
+    <string name="version">Inguqulo %s</string>
+    <string name="rates_source_title">Izintengo ezivela</string>
+    <string name="licenses">Amalayisensi womthombo ovulekile</string>
+    <string name="more_rates">+%1$d ezinye</string>
+    <string name="privacy_policy_title">Inqubomgomo yobumfihlo</string>
+    <string name="opened_on_phone">Kuvulwe ocingweni lwakho</string>
+    <string name="phone_unreachable">Akukhonakalanga ukufika ocingweni lwakho. Qinisekisa ukuthi luxhumene.</string>
 </resources>

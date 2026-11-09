@@ -122,4 +122,8 @@
     <string name="notification_coins_exhausted_title">تم إيقاف التحديثات في الخلفية مؤقتًا</string>
     <string name="notification_coins_exhausted_body">نفدت عملاتك، لذا لم تعد الأسعار تُحدَّث في الخلفية. اشحن رصيدك للبدء من جديد.</string>
 
+    <string name="content_description_hide">إخفاء العملة</string>
+    <string name="privacy_policy_title">سياسة الخصوصية</string>
+    <string name="widget_loading">جارٍ التحميل…</string>
+    <string name="widget_unavailable">افتح ZimRate</string>
 </resources>

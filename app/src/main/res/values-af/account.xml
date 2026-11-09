@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Skrap rekening</string>
+    <string name="account_delete_confirm">Skrap alles</string>
+    <string name="account_delete_failed">Kon nie jou rekening skrap nie. Kontroleer jou verbinding en probeer weer.</string>
+    <string name="account_delete_message">Dit verwyder jou munte en hul geskiedenis, waaraan jy hulle bestee het, jou gestoorde en eie geldeenhede, en jou aanmelding permanent.\n\nMunte waarvoor jy betaal het, is ingesluit en kan nie herstel of terugbetaal word nie. Dit kan nie ongedaan gemaak word nie.</string>
+    <string name="account_delete_title">Skrap rekening en data?</string>
+    <string name="account_deleted">Jou rekening en data is geskrap.</string>
+    <string name="account_detail_anonymous">Jou munte is net op hierdie foon. Meld aan om hulle te behou as jy van foon verander.</string>
+    <string name="account_detail_signed_in">Jou munte en koerse word in hierdie rekening gestoor.</string>
+    <string name="account_email_hint">E-posadres</string>
+    <string name="account_error_email">Voer \'n geldige e-posadres in</string>
+    <string name="account_error_generic">Kon nie aanmeld nie. Kontroleer jou verbinding en probeer weer.</string>
+    <string name="account_error_google">Google-aanmelding kon nie voltooi word nie. Probeer eerder e-pos, of probeer later weer.</string>
+    <string name="account_error_password_short">Gebruik minstens 6 karakters</string>
+    <string name="account_error_wrong_password">Daardie e-pos het reeds \'n rekening en die wagwoord stem nie daarmee ooreen nie</string>
+    <string name="account_forgot">Wagwoord vergeet</string>
+    <string name="account_google">Gaan voort met Google</string>
+    <string name="account_linked">Aangemeld as %s. Jou munte het saamgekom.</string>
+    <string name="account_not_signed_in">Nie aangemeld nie</string>
+    <string name="account_or">of</string>
+    <string name="account_password_hint">Wagwoord</string>
+    <string name="account_required_to_buy">Meld eers aan sodat jou munte nie verlore kan raak nie</string>
+    <string name="account_reset_failed">Kon nie \'n terugstel-e-pos na %s stuur nie</string>
+    <string name="account_reset_sent">Wagwoordterugstelling na %s gestuur</string>
+    <string name="account_section_title">Rekening</string>
+    <string name="account_sign_out">Meld af</string>
+    <string name="account_submit">Gaan voort</string>
+    <string name="account_switched">Aangemeld as %s. Daardie rekening het reeds bestaan, dus is jou munte en koerse daarheen geskuif.</string>
+    <string name="account_title">Meld aan</string>
+    <string name="account_why">Jou munte en koerse word in jou rekening gestoor, sodat hulle jou na \'n nuwe foon volg. Om munte te koop, het jy \'n rekening nodig sodat hulle nooit verlore kan raak nie.</string>
+</resources>

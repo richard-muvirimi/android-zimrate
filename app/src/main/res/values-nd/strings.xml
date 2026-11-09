@@ -125,4 +125,8 @@
     <string name="notification_coins_exhausted_title">Ukuvuselela ngemuva kumisiwe</string>
     <string name="notification_coins_exhausted_body">AmaCoin akho aphelile, ngakho amazinga kawasavuselelwa ngemuva. Engezelela ukuze kuqhubeke.</string>
 
+    <string name="content_description_hide">Fihla imali</string>
+    <string name="privacy_policy_title">Inqubomgomo yobumfihlo</string>
+    <string name="widget_loading">Iyalayisha…</string>
+    <string name="widget_unavailable">Vula iZimRate</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_migrating">Ihre Münzen werden aktualisiert…</string>
+    <string name="setup_offline">ZimRate muss sich einmal verbinden, um Ihr Konto einzurichten.\n\nIhre Münzen sind sicher — stellen Sie eine Internetverbindung her und tippen Sie auf Erneut versuchen.</string>
+    <string name="setup_retry">Erneut versuchen</string>
+    <string name="setup_working">ZimRate wird eingerichtet…</string>
+</resources>

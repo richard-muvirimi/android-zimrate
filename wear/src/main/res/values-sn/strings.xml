@@ -7,4 +7,13 @@
     <string name="updated_at">Zvavandudzwa %s</string>
     <string name="pick_currency">Sarudza mari yechiratidzo</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="about">Ndezvei</string>
+    <string name="author">Munyori</string>
+    <string name="version">Chiburwa %s</string>
+    <string name="rates_source_title">MaRates arikubva</string>
+    <string name="licenses">Ma License</string>
+    <string name="more_rates">+%1$d zvimwe</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="opened_on_phone">Zvavhurwa pafoni yako</string>
+    <string name="phone_unreachable">Hatina kuwana foni yako. Tarisa kuti yakabatana.</string>
 </resources>

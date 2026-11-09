@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Recharge de pièces</string>
     <string name="rewards_coins_available">Tout semble en ordre, vous pouvez utiliser les options suivantes pour recharger votre solde de pièces.</string>
     <string name="rewards_coins_exhausted">Votre solde de pièces semble épuisé, vous pouvez utiliser les options suivantes pour le recharger.</string>
+    <string name="menu_coins_loading">Pièces</string>
+    <string name="rewards_coins_loading">Vérification de votre solde…</string>
+    <string name="rewards_sort_note">Celles qui expirent le plus tôt d\'abord — les pièces sont dépensées dans cet ordre.</string>
 </resources>

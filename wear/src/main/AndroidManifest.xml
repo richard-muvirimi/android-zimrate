@@ -31,6 +31,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Version, author and open source notices -->
+        <activity
+            android:name=".presentation.AboutActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.DeviceDefault" />
+
         <!-- Receives rate data pushed from the phone -->
         <service
             android:name=".data.WearDataLayerService"

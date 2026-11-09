@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Konto löschen</string>
+    <string name="account_delete_confirm">Alles löschen</string>
+    <string name="account_delete_failed">Ihr Konto konnte nicht gelöscht werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.</string>
+    <string name="account_delete_message">Damit werden Ihre Münzen und deren Verlauf, wofür Sie sie ausgegeben haben, Ihre gespeicherten und eigenen Währungen sowie Ihre Anmeldung dauerhaft entfernt.\n\nGekaufte Münzen sind eingeschlossen und können weder wiederhergestellt noch erstattet werden. Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="account_delete_title">Konto und Daten löschen?</string>
+    <string name="account_deleted">Ihr Konto und Ihre Daten wurden gelöscht.</string>
+    <string name="account_detail_anonymous">Ihre Münzen befinden sich nur auf diesem Telefon. Melden Sie sich an, um sie bei einem Telefonwechsel zu behalten.</string>
+    <string name="account_detail_signed_in">Ihre Münzen und Kurse werden in diesem Konto gespeichert.</string>
+    <string name="account_email_hint">E-Mail-Adresse</string>
+    <string name="account_error_email">Geben Sie eine gültige E-Mail-Adresse ein</string>
+    <string name="account_error_generic">Anmeldung fehlgeschlagen. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.</string>
+    <string name="account_error_google">Die Google-Anmeldung konnte nicht abgeschlossen werden. Versuchen Sie es stattdessen per E-Mail oder später erneut.</string>
+    <string name="account_error_password_short">Verwenden Sie mindestens 6 Zeichen</string>
+    <string name="account_error_wrong_password">Für diese E-Mail-Adresse gibt es bereits ein Konto, und das Passwort stimmt nicht überein</string>
+    <string name="account_forgot">Passwort vergessen</string>
+    <string name="account_google">Weiter mit Google</string>
+    <string name="account_linked">Angemeldet als %s. Ihre Münzen wurden übernommen.</string>
+    <string name="account_not_signed_in">Nicht angemeldet</string>
+    <string name="account_or">oder</string>
+    <string name="account_password_hint">Passwort</string>
+    <string name="account_required_to_buy">Melden Sie sich zuerst an, damit Ihre Münzen nicht verloren gehen können</string>
+    <string name="account_reset_failed">Es konnte keine E-Mail zum Zurücksetzen an %s gesendet werden</string>
+    <string name="account_reset_sent">E-Mail zum Zurücksetzen des Passworts an %s gesendet</string>
+    <string name="account_section_title">Konto</string>
+    <string name="account_sign_out">Abmelden</string>
+    <string name="account_submit">Weiter</string>
+    <string name="account_switched">Angemeldet als %s. Dieses Konto existierte bereits, daher wurden Ihre Münzen und Kurse dorthin verschoben.</string>
+    <string name="account_title">Anmelden</string>
+    <string name="account_why">Ihre Münzen und Kurse werden in Ihrem Konto gespeichert, sodass sie Ihnen auf ein neues Telefon folgen. Zum Kauf von Münzen ist ein Konto nötig, damit sie nie verloren gehen.</string>
+</resources>

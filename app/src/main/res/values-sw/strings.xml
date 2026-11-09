@@ -122,4 +122,8 @@
     <string name="notification_coins_exhausted_title">Masasisho ya chinichini yamesitishwa</string>
     <string name="notification_coins_exhausted_body">Sarafu zako zimeisha, hivyo viwango havisasishwi tena chinichini. Ongeza salio ili kuanza tena.</string>
 
+    <string name="content_description_hide">Ficha sarafu</string>
+    <string name="privacy_policy_title">Sera ya Faragha</string>
+    <string name="widget_loading">Inapakia…</string>
+    <string name="widget_unavailable">Fungua ZimRate</string>
 </resources>

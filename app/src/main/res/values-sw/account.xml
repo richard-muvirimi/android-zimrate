@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Futa akaunti</string>
+    <string name="account_delete_confirm">Futa kila kitu</string>
+    <string name="account_delete_failed">Imeshindwa kufuta akaunti yako. Angalia muunganisho wako na ujaribu tena.</string>
+    <string name="account_delete_message">Hatua hii inaondoa kabisa sarafu zako na historia yake, ulichozitumia, sarafu ulizohifadhi na ulizounda, pamoja na uingiaji wako.\n\nSarafu ulizolipia zimejumuishwa na haziwezi kurejeshwa wala kurudishiwa pesa. Hatua hii haiwezi kutenduliwa.</string>
+    <string name="account_delete_title">Futa akaunti na data?</string>
+    <string name="account_deleted">Akaunti yako na data zimefutwa.</string>
+    <string name="account_detail_anonymous">Sarafu zako ziko kwenye simu hii pekee. Ingia ili uzihifadhi ukibadilisha simu.</string>
+    <string name="account_detail_signed_in">Sarafu na viwango vyako vimehifadhiwa kwenye akaunti hii.</string>
+    <string name="account_email_hint">Barua pepe</string>
+    <string name="account_error_email">Weka barua pepe sahihi</string>
+    <string name="account_error_generic">Imeshindwa kuingia. Angalia muunganisho wako na ujaribu tena.</string>
+    <string name="account_error_google">Kuingia kwa Google hakukukamilika. Jaribu barua pepe badala yake, au ujaribu tena baadaye.</string>
+    <string name="account_error_password_short">Tumia angalau herufi 6</string>
+    <string name="account_error_wrong_password">Barua pepe hiyo tayari ina akaunti na nenosiri halilingani nayo</string>
+    <string name="account_forgot">Umesahau nenosiri</string>
+    <string name="account_google">Endelea na Google</string>
+    <string name="account_linked">Umeingia kama %s. Sarafu zako zimekuja nawe.</string>
+    <string name="account_not_signed_in">Hujaingia</string>
+    <string name="account_or">au</string>
+    <string name="account_password_hint">Nenosiri</string>
+    <string name="account_required_to_buy">Ingia kwanza ili sarafu zako zisipotee</string>
+    <string name="account_reset_failed">Imeshindwa kutuma barua pepe ya kuweka upya kwa %s</string>
+    <string name="account_reset_sent">Maelekezo ya kuweka upya nenosiri yametumwa kwa %s</string>
+    <string name="account_section_title">Akaunti</string>
+    <string name="account_sign_out">Ondoka</string>
+    <string name="account_submit">Endelea</string>
+    <string name="account_switched">Umeingia kama %s. Akaunti hiyo ilikuwepo tayari, kwa hivyo sarafu na viwango vyako vimehamishiwa humo.</string>
+    <string name="account_title">Ingia</string>
+    <string name="account_why">Sarafu na viwango vyako vinahifadhiwa kwenye akaunti yako, kwa hivyo vinakufuata kwenye simu mpya. Kununua sarafu kunahitaji akaunti ili zisipotee kamwe.</string>
+</resources>

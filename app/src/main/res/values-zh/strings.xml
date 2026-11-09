@@ -122,4 +122,8 @@
     <string name="notification_coins_exhausted_title">后台更新已暂停</string>
     <string name="notification_coins_exhausted_body">你的金币已用完，汇率不再在后台刷新。充值后即可继续。</string>
 
+    <string name="content_description_hide">隐藏货币</string>
+    <string name="privacy_policy_title">隐私政策</string>
+    <string name="widget_loading">正在加载…</string>
+    <string name="widget_unavailable">打开 ZimRate</string>
 </resources>

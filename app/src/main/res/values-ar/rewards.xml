@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">شحن العملات</string>
     <string name="rewards_coins_available">يبدو أن كل شيء جاهز، يمكنك استخدام الخيارات التالية لشحن رصيدك من العملات.</string>
     <string name="rewards_coins_exhausted">يبدو أنك استنفدت رصيدك من العملات، يمكنك استخدام الخيارات التالية لشحن رصيدك.</string>
+    <string name="menu_coins_loading">العملات</string>
+    <string name="rewards_coins_loading">جارٍ التحقق من رصيدك…</string>
+    <string name="rewards_sort_note">الأقرب انتهاءً أولاً — تُنفق العملات بهذا الترتيب.</string>
 </resources>

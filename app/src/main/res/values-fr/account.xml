@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Supprimer le compte</string>
+    <string name="account_delete_confirm">Tout supprimer</string>
+    <string name="account_delete_failed">Impossible de supprimer votre compte. Vérifiez votre connexion et réessayez.</string>
+    <string name="account_delete_message">Cette action supprime définitivement vos pièces et leur historique, ce à quoi vous les avez dépensées, vos devises enregistrées et personnalisées, ainsi que votre connexion.\n\nLes pièces que vous avez achetées sont incluses et ne peuvent être ni restaurées ni remboursées. Cette action est irréversible.</string>
+    <string name="account_delete_title">Supprimer le compte et les données ?</string>
+    <string name="account_deleted">Votre compte et vos données ont été supprimés.</string>
+    <string name="account_detail_anonymous">Vos pièces sont uniquement sur ce téléphone. Connectez-vous pour les conserver si vous changez de téléphone.</string>
+    <string name="account_detail_signed_in">Vos pièces et vos taux sont enregistrés dans ce compte.</string>
+    <string name="account_email_hint">Adresse e-mail</string>
+    <string name="account_error_email">Saisissez une adresse e-mail valide</string>
+    <string name="account_error_generic">Connexion impossible. Vérifiez votre connexion et réessayez.</string>
+    <string name="account_error_google">La connexion avec Google n\'a pas pu aboutir. Essayez plutôt par e-mail, ou réessayez plus tard.</string>
+    <string name="account_error_password_short">Utilisez au moins 6 caractères</string>
+    <string name="account_error_wrong_password">Cette adresse e-mail a déjà un compte et le mot de passe ne correspond pas</string>
+    <string name="account_forgot">Mot de passe oublié</string>
+    <string name="account_google">Continuer avec Google</string>
+    <string name="account_linked">Connecté en tant que %s. Vos pièces vous ont suivi.</string>
+    <string name="account_not_signed_in">Non connecté</string>
+    <string name="account_or">ou</string>
+    <string name="account_password_hint">Mot de passe</string>
+    <string name="account_required_to_buy">Connectez-vous d\'abord pour que vos pièces ne puissent pas être perdues</string>
+    <string name="account_reset_failed">Impossible d\'envoyer un e-mail de réinitialisation à %s</string>
+    <string name="account_reset_sent">Réinitialisation du mot de passe envoyée à %s</string>
+    <string name="account_section_title">Compte</string>
+    <string name="account_sign_out">Se déconnecter</string>
+    <string name="account_submit">Continuer</string>
+    <string name="account_switched">Connecté en tant que %s. Ce compte existait déjà, vos pièces et vos taux y ont donc été transférés.</string>
+    <string name="account_title">Se connecter</string>
+    <string name="account_why">Vos pièces et vos taux sont enregistrés dans votre compte et vous suivent sur un nouveau téléphone. L\'achat de pièces nécessite un compte pour qu\'elles ne soient jamais perdues.</string>
+</resources>

@@ -7,4 +7,13 @@
     <string name="updated_at">Ilisasishwa %s</string>
     <string name="pick_currency">Chagua sarafu ya kionyeshi</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="about">Kuhusu</string>
+    <string name="author">Mwandishi</string>
+    <string name="version">Toleo %s</string>
+    <string name="rates_source_title">Viwango kutoka</string>
+    <string name="licenses">Leseni za Chanzo Huria</string>
+    <string name="more_rates">+%1$d zaidi</string>
+    <string name="privacy_policy_title">Sera ya Faragha</string>
+    <string name="opened_on_phone">Imefunguliwa kwenye simu yako</string>
+    <string name="phone_unreachable">Imeshindwa kufikia simu yako. Hakikisha imeunganishwa.</string>
 </resources>

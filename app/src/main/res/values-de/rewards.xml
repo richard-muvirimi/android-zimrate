@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Münzen aufladen</string>
     <string name="rewards_coins_available">Sie scheinen bestens ausgestattet zu sein. Mit den folgenden Optionen können Sie Ihr Münzguthaben aufladen.</string>
     <string name="rewards_coins_exhausted">Ihr Münzguthaben scheint aufgebraucht zu sein. Mit den folgenden Optionen können Sie Ihr Münzguthaben aufladen.</string>
+    <string name="menu_coins_loading">Münzen</string>
+    <string name="rewards_coins_loading">Ihr Guthaben wird geprüft…</string>
+    <string name="rewards_sort_note">Zuerst ablaufende zuerst — Münzen werden in dieser Reihenfolge ausgegeben.</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_migrating">A atualizar as suas moedas…</string>
+    <string name="setup_offline">O ZimRate precisa de se ligar uma vez para configurar a sua conta.\n\nAs suas moedas estão seguras — ligue-se à internet e toque em Tentar novamente.</string>
+    <string name="setup_retry">Tentar novamente</string>
+    <string name="setup_working">A configurar o ZimRate…</string>
+</resources>

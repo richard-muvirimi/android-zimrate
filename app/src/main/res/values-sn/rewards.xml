@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Wedzera maCoin</string>
     <string name="rewards_coins_available">Zvese zvakarongeka, unogona kuwedzera maCoin ako pazasi.</string>
     <string name="rewards_coins_exhausted">MaCoin ako apera, unogona kuwedzera maCoin ako pazasi.</string>
+    <string name="menu_coins_loading">MaCoin</string>
+    <string name="rewards_coins_loading">Kutarisa bharanzi yako…</string>
+    <string name="rewards_sort_note">Anotanga kupera ndiwo anotanga — maCoin anoshandiswa nenhevedzano iyi.</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_migrating">正在更新你的金币…</string>
+    <string name="setup_offline">ZimRate 需要联网一次来设置你的账户。\n\n你的金币很安全 — 请连接互联网，然后点按“重试”。</string>
+    <string name="setup_retry">重试</string>
+    <string name="setup_working">正在设置 ZimRate…</string>
+</resources>
