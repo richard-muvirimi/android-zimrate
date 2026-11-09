@@ -67,6 +67,10 @@ class MainActivity : BaseAppActivity(), NavigationBarView.OnItemSelectedListener
 
         if (savedInstanceState == null) {
             selectHomeFragment()
+        } else {
+            // Recreated (a theme or language change, a rotation): the tab comes back without
+            // passing through onNavigationItemSelected, and the layout's FAB starts out shown.
+            syncAddRateFab()
         }
 
         fetchRemoteConfigs()
