@@ -36,6 +36,8 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.CompactChip
 import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
@@ -92,6 +94,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RatesScreen(rates: List<WearRateModel>, focused: String? = null) {
     val listState = rememberScalingLazyListState()
+    val context = LocalContext.current
 
     LaunchedEffect(focused, rates) {
         if (focused == null) return@LaunchedEffect
@@ -153,6 +156,15 @@ fun RatesScreen(rates: List<WearRateModel>, focused: String? = null) {
                         )
                     }
                 }
+            }
+
+            // Last, after the rates or the empty-state hint, so it never pushes either down.
+            item {
+                CompactChip(
+                    onClick = { context.startActivity(Intent(context, AboutActivity::class.java)) },
+                    label = { Text(stringResource(R.string.about)) },
+                    colors = ChipDefaults.secondaryChipColors(),
+                )
             }
         }
     }

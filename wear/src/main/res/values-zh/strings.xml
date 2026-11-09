@@ -7,4 +7,13 @@
     <string name="updated_at">更新于%s</string>
     <string name="pick_currency">选择复杂功能显示的货币</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="about">关于</string>
+    <string name="author">作者</string>
+    <string name="version">版本 %s</string>
+    <string name="rates_source_title">汇率来源</string>
+    <string name="licenses">开源许可证</string>
+    <string name="more_rates">另有 %1$d 项</string>
+    <string name="privacy_policy_title">隐私政策</string>
+    <string name="opened_on_phone">已在手机上打开</string>
+    <string name="phone_unreachable">无法连接到你的手机。请检查手机是否已连接。</string>
 </resources>

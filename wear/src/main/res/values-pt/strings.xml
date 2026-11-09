@@ -7,4 +7,13 @@
     <string name="updated_at">Atualizado %s</string>
     <string name="pick_currency">Escolha a moeda para a complicação</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="about">Sobre</string>
+    <string name="author">Autor</string>
+    <string name="version">Versão %s</string>
+    <string name="rates_source_title">Taxas de</string>
+    <string name="licenses">Licenças de código aberto</string>
+    <string name="more_rates">+%1$d mais</string>
+    <string name="privacy_policy_title">Política de privacidade</string>
+    <string name="opened_on_phone">Aberto no seu telemóvel</string>
+    <string name="phone_unreachable">Não foi possível contactar o seu telemóvel. Verifique se está ligado.</string>
 </resources>

@@ -122,4 +122,8 @@
     <string name="notification_coins_exhausted_title">Mises à jour en arrière-plan en pause</string>
     <string name="notification_coins_exhausted_body">Vos pièces sont épuisées, les taux ne sont donc plus actualisés en arrière-plan. Rechargez pour recommencer.</string>
 
+    <string name="content_description_hide">Masquer la devise</string>
+    <string name="privacy_policy_title">Politique de confidentialité</string>
+    <string name="widget_loading">Chargement…</string>
+    <string name="widget_unavailable">Ouvrir ZimRate</string>
 </resources>

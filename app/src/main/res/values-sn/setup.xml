@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_migrating">Kugadzirisa maCoin ako…</string>
+    <string name="setup_offline">ZimRate inoda kubatana neinternet kamwe chete kuti igadzire account yako.\n\nMaCoin ako akachengeteka — batanidza internet wobva wadzvanya Edza zvakare.</string>
+    <string name="setup_retry">Edza zvakare</string>
+    <string name="setup_working">Kugadzirira ZimRate…</string>
+</resources>

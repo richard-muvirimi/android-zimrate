@@ -122,4 +122,8 @@
     <string name="notification_coins_exhausted_title">Actualizaciones en segundo plano en pausa</string>
     <string name="notification_coins_exhausted_body">Se te han acabado las monedas, por lo que las tasas ya no se actualizan en segundo plano. Recarga para volver a empezar.</string>
 
+    <string name="content_description_hide">Ocultar moneda</string>
+    <string name="privacy_policy_title">Política de privacidad</string>
+    <string name="widget_loading">Cargando…</string>
+    <string name="widget_unavailable">Abrir ZimRate</string>
 </resources>

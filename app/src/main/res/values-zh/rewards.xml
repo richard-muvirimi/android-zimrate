@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">金币充值</string>
     <string name="rewards_coins_available">看起来一切就绪，你可以使用以下方式为金币余额充值。</string>
     <string name="rewards_coins_exhausted">你的金币余额似乎已用完，你可以使用以下方式为金币余额充值。</string>
+    <string name="menu_coins_loading">金币</string>
+    <string name="rewards_coins_loading">正在查询余额…</string>
+    <string name="rewards_sort_note">最先到期的排在最前 — 金币按此顺序消费。</string>
 </resources>

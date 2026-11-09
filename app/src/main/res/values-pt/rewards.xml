@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Carregamento de moedas</string>
     <string name="rewards_coins_available">Parece que está tudo em ordem, pode usar as opções seguintes para carregar o seu saldo de moedas.</string>
     <string name="rewards_coins_exhausted">Parece que esgotou o seu saldo de moedas, pode usar as opções seguintes para o carregar.</string>
+    <string name="menu_coins_loading">Moedas</string>
+    <string name="rewards_coins_loading">A verificar o seu saldo…</string>
+    <string name="rewards_sort_note">As que expiram primeiro vêm primeiro — as moedas são gastas por esta ordem.</string>
 </resources>

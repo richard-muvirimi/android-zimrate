@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_migrating">Mise à jour de vos pièces…</string>
+    <string name="setup_offline">ZimRate doit se connecter une fois pour configurer votre compte.\n\nVos pièces sont en sécurité — connectez-vous à internet et touchez Réessayer.</string>
+    <string name="setup_retry">Réessayer</string>
+    <string name="setup_working">Configuration de ZimRate…</string>
+</resources>

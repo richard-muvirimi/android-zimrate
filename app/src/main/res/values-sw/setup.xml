@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_migrating">Inasasisha sarafu zako…</string>
+    <string name="setup_offline">ZimRate inahitaji kuunganishwa mara moja ili kuweka akaunti yako.\n\nSarafu zako ziko salama — unganisha kwenye intaneti kisha gusa Jaribu tena.</string>
+    <string name="setup_retry">Jaribu tena</string>
+    <string name="setup_working">Inaweka ZimRate…</string>
+</resources>

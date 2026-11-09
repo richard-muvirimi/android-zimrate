@@ -125,4 +125,8 @@
     <string name="notification_coins_exhausted_title">Kuvandudza kwemashure kwamiswa</string>
     <string name="notification_coins_exhausted_body">MaCoin ako apera, saka marates haachavandudzwi kumashure. Wedzera kuti zvitangezve.</string>
 
+    <string name="content_description_hide">Vanza mari</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="widget_loading">Kurodha…</string>
+    <string name="widget_unavailable">Vhura ZimRate</string>
 </resources>

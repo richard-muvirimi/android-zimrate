@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Recarga de monedas</string>
     <string name="rewards_coins_available">Parece que lo tienes todo listo, puedes usar las siguientes opciones para recargar tu saldo de monedas.</string>
     <string name="rewards_coins_exhausted">Parece que has agotado tu saldo de monedas, puedes usar las siguientes opciones para recargarlo.</string>
+    <string name="menu_coins_loading">Monedas</string>
+    <string name="rewards_coins_loading">Comprobando tu saldo…</string>
+    <string name="rewards_sort_note">Primero las que caducan antes — las monedas se gastan en este orden.</string>
 </resources>

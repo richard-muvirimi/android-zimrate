@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Eliminar cuenta</string>
+    <string name="account_delete_confirm">Eliminar todo</string>
+    <string name="account_delete_failed">No se pudo eliminar tu cuenta. Comprueba tu conexión e inténtalo de nuevo.</string>
+    <string name="account_delete_message">Esto elimina de forma permanente tus monedas y su historial, en qué las has gastado, tus monedas guardadas y personalizadas, y tu inicio de sesión.\n\nSe incluyen las monedas que pagaste, que no se pueden restaurar ni reembolsar. Esta acción no se puede deshacer.</string>
+    <string name="account_delete_title">¿Eliminar la cuenta y los datos?</string>
+    <string name="account_deleted">Tu cuenta y tus datos se han eliminado.</string>
+    <string name="account_detail_anonymous">Tus monedas solo están en este teléfono. Inicia sesión para conservarlas si cambias de teléfono.</string>
+    <string name="account_detail_signed_in">Tus monedas y tipos se guardan en esta cuenta.</string>
+    <string name="account_email_hint">Correo electrónico</string>
+    <string name="account_error_email">Introduce un correo electrónico válido</string>
+    <string name="account_error_generic">No se pudo iniciar sesión. Comprueba tu conexión e inténtalo de nuevo.</string>
+    <string name="account_error_google">No se pudo completar el inicio de sesión con Google. Prueba con el correo electrónico o inténtalo más tarde.</string>
+    <string name="account_error_password_short">Usa al menos 6 caracteres</string>
+    <string name="account_error_wrong_password">Ese correo ya tiene una cuenta y la contraseña no coincide</string>
+    <string name="account_forgot">Olvidé la contraseña</string>
+    <string name="account_google">Continuar con Google</string>
+    <string name="account_linked">Sesión iniciada como %s. Tus monedas vinieron contigo.</string>
+    <string name="account_not_signed_in">Sin iniciar sesión</string>
+    <string name="account_or">o</string>
+    <string name="account_password_hint">Contraseña</string>
+    <string name="account_required_to_buy">Inicia sesión primero para que tus monedas no se pierdan</string>
+    <string name="account_reset_failed">No se pudo enviar un correo de restablecimiento a %s</string>
+    <string name="account_reset_sent">Restablecimiento de contraseña enviado a %s</string>
+    <string name="account_section_title">Cuenta</string>
+    <string name="account_sign_out">Cerrar sesión</string>
+    <string name="account_submit">Continuar</string>
+    <string name="account_switched">Sesión iniciada como %s. Esa cuenta ya existía, así que tus monedas y tipos se han trasladado a ella.</string>
+    <string name="account_title">Iniciar sesión</string>
+    <string name="account_why">Tus monedas y tipos se guardan en tu cuenta, así que te siguen a un teléfono nuevo. Para comprar monedas necesitas una cuenta, así nunca se pierden.</string>
+</resources>

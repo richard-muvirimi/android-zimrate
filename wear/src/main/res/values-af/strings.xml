@@ -7,4 +7,13 @@
     <string name="updated_at">Opgedateer %s</string>
     <string name="pick_currency">Kies geldeenheid vir komplikasie</string>
     <string name="currency_code_with_name">%1$s · %2$s</string>
+    <string name="about">Oor</string>
+    <string name="author">Outeur</string>
+    <string name="version">Weergawe %s</string>
+    <string name="rates_source_title">Koerse van</string>
+    <string name="licenses">Oopbron-lisensies</string>
+    <string name="more_rates">+%1$d meer</string>
+    <string name="privacy_policy_title">Privaatheidsbeleid</string>
+    <string name="opened_on_phone">Op jou foon oopgemaak</string>
+    <string name="phone_unreachable">Kon nie jou foon bereik nie. Kontroleer dat dit gekoppel is.</string>
 </resources>

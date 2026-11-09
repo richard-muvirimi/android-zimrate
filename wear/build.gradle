@@ -30,6 +30,7 @@ android {
 
     buildFeatures {
         compose true
+        buildConfig true
     }
 
     androidResources {
@@ -62,6 +63,9 @@ dependencies {
 
     // Wearable Data Layer (phone ↔ watch sync)
     implementation 'com.google.android.gms:play-services-wearable:19.0.0'
+
+    // Opens the About screen's links in the paired phone's browser
+    implementation 'androidx.wear:wear-remote-interactions:1.1.0'
 
     // Complications
     implementation 'androidx.wear.watchface:watchface-complications-data-source-ktx:1.2.1'

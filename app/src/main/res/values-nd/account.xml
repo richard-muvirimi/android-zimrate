@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Susa iakhawunti</string>
+    <string name="account_delete_confirm">Susa konke</string>
+    <string name="account_delete_failed">Akukhonakalanga ukususa iakhawunti yakho. Qinisekisa ukuxhumana kwakho uzame futhi.</string>
+    <string name="account_delete_message">Lokhu kususa unomphela amaCoin akho lomlando wawo, lokho owawasebenzisela khona, imali yakho egcinweyo leyakho oyenzileyo, kanye lokungena kwakho.\n\nAmaCoin owawathengayo ayafakwa njalo awenelisi ukubuyiselwa loba ukubuyiselwa imali. Lokhu akulakuguqulwa.</string>
+    <string name="account_delete_title">Susa iakhawunti lemininingwane?</string>
+    <string name="account_deleted">Iakhawunti yakho lemininingwane kususiwe.</string>
+    <string name="account_detail_anonymous">AmaCoin akho akulolu ucingo kuphela. Ngena ukuze uwagcine nxa uguqula ucingo.</string>
+    <string name="account_detail_signed_in">AmaCoin akho lezintengo kugcinwe kule akhawunti.</string>
+    <string name="account_email_hint">Ikheli le-imeyili</string>
+    <string name="account_error_email">Faka ikheli le-imeyili eliqondileyo</string>
+    <string name="account_error_generic">Akukhonakalanga ukungena. Qinisekisa ukuxhumana kwakho uzame futhi.</string>
+    <string name="account_error_google">Ukungena nge-Google akuphelelanga. Zama nge-imeyili, loba uzame futhi muva.</string>
+    <string name="account_error_password_short">Sebenzisa okungenani izinhlamvu ezi-6</string>
+    <string name="account_error_wrong_password">Le imeyili isilayo iakhawunti njalo iphasiwedi kayifanani layo</string>
+    <string name="account_forgot">Ngikhohlwe iphasiwedi</string>
+    <string name="account_google">Qhubeka nge-Google</string>
+    <string name="account_linked">Ungene njengo-%s. AmaCoin akho eze lawe.</string>
+    <string name="account_not_signed_in">Kawungenanga</string>
+    <string name="account_or">loba</string>
+    <string name="account_password_hint">Iphasiwedi</string>
+    <string name="account_required_to_buy">Ngena kuqala ukuze amaCoin akho angalahleki</string>
+    <string name="account_reset_failed">Akukhonakalanga ukuthumela i-imeyili yokusetha kabutsha ku-%s</string>
+    <string name="account_reset_sent">Ukusetha kabutsha iphasiwedi kuthunyelwe ku-%s</string>
+    <string name="account_section_title">Iakhawunti</string>
+    <string name="account_sign_out">Phuma</string>
+    <string name="account_submit">Qhubeka</string>
+    <string name="account_switched">Ungene njengo-%s. Leyo akhawunti yayivele ikhona, ngakho amaCoin akho lezintengo kuthuthelwe kuyo.</string>
+    <string name="account_title">Ngena</string>
+    <string name="account_why">AmaCoin akho lezintengo kugcinwe kuakhawunti yakho, ngakho kukulandela ocingweni olutsha. Ukuthenga amaCoin kudinga iakhawunti ukuze angalahleki loba nini.</string>
+</resources>

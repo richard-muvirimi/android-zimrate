@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Munte oplaai</string>
     <string name="rewards_coins_available">Dit lyk of jy reg is; jy kan die volgende opsies gebruik om jou muntbalans te herlaai.</string>
     <string name="rewards_coins_exhausted">Dit lyk of jou muntbalans op is; jy kan die volgende opsies gebruik om jou muntbalans te herlaai.</string>
+    <string name="menu_coins_loading">Munte</string>
+    <string name="rewards_coins_loading">Kontroleer tans jou saldo…</string>
+    <string name="rewards_sort_note">Eerste om te verval eerste — munte word in hierdie volgorde bestee.</string>
 </resources>

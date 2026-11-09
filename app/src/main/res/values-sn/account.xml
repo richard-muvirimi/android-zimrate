@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Dzima account</string>
+    <string name="account_delete_confirm">Dzima zvese</string>
+    <string name="account_delete_failed">Hatina kukwanisa kudzima account yako. Tarisa internet yako uedze zvakare.</string>
+    <string name="account_delete_message">Izvi zvinobvisa zvachose maCoin ako nenhoroondo yawo, zvawakaashandisira, mari dzawakachengeta nedzawakazvigadzirira, uye kupinda kwako.\n\nMaCoin awakabhadharira anosanganisirwa uye haagone kudzorerwa kana kudzorerwa mari. Izvi hazvigone kudzoserwa.</string>
+    <string name="account_delete_title">Dzima account nedata?</string>
+    <string name="account_deleted">Account yako nedata zvadzimwa.</string>
+    <string name="account_detail_anonymous">MaCoin ako ari pafoni ino chete. Pinda kuti uachengete kana ukachinja foni.</string>
+    <string name="account_detail_signed_in">MaCoin ako nemarates zvakachengetwa muaccount iyi.</string>
+    <string name="account_email_hint">Email</string>
+    <string name="account_error_email">Isa email yakanaka</string>
+    <string name="account_error_generic">Hatina kukwanisa kukupinza. Tarisa internet yako uedze zvakare.</string>
+    <string name="account_error_google">Kupinda neGoogle hakuna kupera. Edza neemail, kana uedze zvakare gare gare.</string>
+    <string name="account_error_password_short">Shandisa mavara anokwana 6</string>
+    <string name="account_error_wrong_password">Email iyoyo yatova neaccount uye password haienderane nayo</string>
+    <string name="account_forgot">Ndakanganwa password</string>
+    <string name="account_google">Enderera neGoogle</string>
+    <string name="account_linked">Wapinda se%s. MaCoin ako auya newe.</string>
+    <string name="account_not_signed_in">Hauna kupinda</string>
+    <string name="account_or">kana</string>
+    <string name="account_password_hint">Password</string>
+    <string name="account_required_to_buy">Tanga wapinda kuti maCoin ako asarasika</string>
+    <string name="account_reset_failed">Hatina kukwanisa kutumira email yekuchinja password ku%s</string>
+    <string name="account_reset_sent">Email yekuchinja password yatumirwa ku%s</string>
+    <string name="account_section_title">Account</string>
+    <string name="account_sign_out">Buda</string>
+    <string name="account_submit">Enderera</string>
+    <string name="account_switched">Wapinda se%s. Account iyoyo yaivepo kare, saka maCoin ako nemarates zvaendeswa ikoko.</string>
+    <string name="account_title">Pinda</string>
+    <string name="account_why">MaCoin ako nemarates zvinochengetwa muaccount yako, saka zvinokutevera kufoni itsva. Kutenga maCoin kunoda account kuti asazombosarasika.</string>
+</resources>

@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Kuongeza sarafu</string>
     <string name="rewards_coins_available">Inaonekana uko tayari, unaweza kutumia chaguo zifuatazo kuongeza salio lako la sarafu.</string>
     <string name="rewards_coins_exhausted">Inaonekana salio lako la sarafu limeisha, unaweza kutumia chaguo zifuatazo kuliongeza.</string>
+    <string name="menu_coins_loading">Sarafu</string>
+    <string name="rewards_coins_loading">Inakagua salio lako…</string>
+    <string name="rewards_sort_note">Zinazoisha muda mapema kwanza — sarafu hutumika kwa mpangilio huu.</string>
 </resources>

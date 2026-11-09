@@ -122,4 +122,8 @@
     <string name="notification_coins_exhausted_title">Hintergrundaktualisierung pausiert</string>
     <string name="notification_coins_exhausted_body">Ihre Münzen sind aufgebraucht, daher werden die Kurse nicht mehr im Hintergrund aktualisiert. Laden Sie auf, um fortzufahren.</string>
 
+    <string name="content_description_hide">Währung ausblenden</string>
+    <string name="privacy_policy_title">Datenschutzerklärung</string>
+    <string name="widget_loading">Wird geladen…</string>
+    <string name="widget_unavailable">ZimRate öffnen</string>
 </resources>

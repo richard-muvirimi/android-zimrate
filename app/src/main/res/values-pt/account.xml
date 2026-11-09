@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_delete">Eliminar conta</string>
+    <string name="account_delete_confirm">Eliminar tudo</string>
+    <string name="account_delete_failed">Não foi possível eliminar a sua conta. Verifique a sua ligação e tente novamente.</string>
+    <string name="account_delete_message">Isto remove permanentemente as suas moedas e o respetivo histórico, aquilo em que as gastou, as suas moedas guardadas e personalizadas, e o seu início de sessão.\n\nAs moedas que pagou estão incluídas e não podem ser restauradas nem reembolsadas. Esta ação não pode ser anulada.</string>
+    <string name="account_delete_title">Eliminar conta e dados?</string>
+    <string name="account_deleted">A sua conta e os seus dados foram eliminados.</string>
+    <string name="account_detail_anonymous">As suas moedas estão apenas neste telemóvel. Inicie sessão para as manter se mudar de telemóvel.</string>
+    <string name="account_detail_signed_in">As suas moedas e taxas estão guardadas nesta conta.</string>
+    <string name="account_email_hint">Endereço de email</string>
+    <string name="account_error_email">Introduza um endereço de email válido</string>
+    <string name="account_error_generic">Não foi possível iniciar sessão. Verifique a sua ligação e tente novamente.</string>
+    <string name="account_error_google">Não foi possível concluir o início de sessão com o Google. Experimente o email ou tente mais tarde.</string>
+    <string name="account_error_password_short">Use pelo menos 6 caracteres</string>
+    <string name="account_error_wrong_password">Esse email já tem uma conta e a palavra-passe não corresponde</string>
+    <string name="account_forgot">Esqueci-me da palavra-passe</string>
+    <string name="account_google">Continuar com o Google</string>
+    <string name="account_linked">Sessão iniciada como %s. As suas moedas vieram consigo.</string>
+    <string name="account_not_signed_in">Sessão não iniciada</string>
+    <string name="account_or">ou</string>
+    <string name="account_password_hint">Palavra-passe</string>
+    <string name="account_required_to_buy">Inicie sessão primeiro para que as suas moedas não se percam</string>
+    <string name="account_reset_failed">Não foi possível enviar um email de reposição para %s</string>
+    <string name="account_reset_sent">Reposição da palavra-passe enviada para %s</string>
+    <string name="account_section_title">Conta</string>
+    <string name="account_sign_out">Terminar sessão</string>
+    <string name="account_submit">Continuar</string>
+    <string name="account_switched">Sessão iniciada como %s. Essa conta já existia, por isso as suas moedas e taxas foram transferidas para ela.</string>
+    <string name="account_title">Iniciar sessão</string>
+    <string name="account_why">As suas moedas e taxas estão guardadas na sua conta, por isso acompanham-no para um novo telemóvel. Comprar moedas requer uma conta para que nunca se percam.</string>
+</resources>

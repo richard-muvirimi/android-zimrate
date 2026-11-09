@@ -47,4 +47,7 @@
     <string name="rewards_coins_title">Ukwengezelela amaCoin</string>
     <string name="rewards_coins_available">Kubonakala ulungile, ungasebenzisa lezi indlela ukwengezelela amaCoin akho.</string>
     <string name="rewards_coins_exhausted">Kubonakala amaCoin akho aphelile, ungasebenzisa lezi indlela ukuwengezelela.</string>
+    <string name="menu_coins_loading">AmaCoin</string>
+    <string name="rewards_coins_loading">Kuhlolwa ibhalansi yakho…</string>
+    <string name="rewards_sort_note">Aphela kuqala avela kuqala — amaCoin asetshenziswa ngalolu hlelo.</string>
 </resources>
