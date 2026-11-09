@@ -129,4 +129,10 @@
     <string name="privacy_policy_title">Inqubomgomo yobumfihlo</string>
     <string name="widget_loading">Iyalayisha…</string>
     <string name="widget_unavailable">Vula iZimRate</string>
+    <string name="pref_appearance">Ukubukeka</string>
+    <string name="pref_theme">Itimu</string>
+    <string name="pref_language">Ulimi</string>
+    <string name="theme_system">Okwesistimu</string>
+    <string name="theme_light">Okukhanyayo</string>
+    <string name="theme_dark">Okumnyama</string>
 </resources>

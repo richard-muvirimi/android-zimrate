@@ -126,4 +126,10 @@
     <string name="privacy_policy_title">Sera ya Faragha</string>
     <string name="widget_loading">Inapakia…</string>
     <string name="widget_unavailable">Fungua ZimRate</string>
+    <string name="pref_appearance">Mwonekano</string>
+    <string name="pref_theme">Mandhari</string>
+    <string name="pref_language">Lugha</string>
+    <string name="theme_system">Chaguomsingi la mfumo</string>
+    <string name="theme_light">Mwanga</string>
+    <string name="theme_dark">Giza</string>
 </resources>

@@ -126,4 +126,10 @@
     <string name="privacy_policy_title">Política de privacidad</string>
     <string name="widget_loading">Cargando…</string>
     <string name="widget_unavailable">Abrir ZimRate</string>
+    <string name="pref_appearance">Apariencia</string>
+    <string name="pref_theme">Tema</string>
+    <string name="pref_language">Idioma</string>
+    <string name="theme_system">Predeterminado del sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
 </resources>

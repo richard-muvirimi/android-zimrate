@@ -126,4 +126,10 @@
     <string name="privacy_policy_title">سياسة الخصوصية</string>
     <string name="widget_loading">جارٍ التحميل…</string>
     <string name="widget_unavailable">افتح ZimRate</string>
+    <string name="pref_appearance">المظهر</string>
+    <string name="pref_theme">المظهر العام</string>
+    <string name="pref_language">اللغة</string>
+    <string name="theme_system">الإعداد الافتراضي للنظام</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
 </resources>

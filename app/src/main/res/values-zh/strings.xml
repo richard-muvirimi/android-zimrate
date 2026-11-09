@@ -126,4 +126,10 @@
     <string name="privacy_policy_title">隐私政策</string>
     <string name="widget_loading">正在加载…</string>
     <string name="widget_unavailable">打开 ZimRate</string>
+    <string name="pref_appearance">外观</string>
+    <string name="pref_theme">主题</string>
+    <string name="pref_language">语言</string>
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
 </resources>

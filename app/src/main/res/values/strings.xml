@@ -159,4 +159,10 @@
     <string name="app_update_downloaded">An update has just been downloaded.</string>
     <string name="app_update_update">Restart</string>
 
+    <string name="pref_appearance">Appearance</string>
+    <string name="pref_theme">Theme</string>
+    <string name="pref_language">Language</string>
+    <string name="theme_system">System default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 </resources>
