@@ -126,4 +126,10 @@
     <string name="privacy_policy_title">Privaatheidsbeleid</string>
     <string name="widget_loading">Laai tans…</string>
     <string name="widget_unavailable">Maak ZimRate oop</string>
+    <string name="pref_appearance">Voorkoms</string>
+    <string name="pref_theme">Tema</string>
+    <string name="pref_language">Taal</string>
+    <string name="theme_system">Stelselverstek</string>
+    <string name="theme_light">Lig</string>
+    <string name="theme_dark">Donker</string>
 </resources>

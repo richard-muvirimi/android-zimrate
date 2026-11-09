@@ -4,12 +4,16 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.os.LocaleListCompat
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.color.MaterialColors
 import com.tyganeutronics.myratecalculator.BuildConfig
 import com.tyganeutronics.myratecalculator.R
+import com.tyganeutronics.myratecalculator.utils.Appearance
 import com.tyganeutronics.myratecalculator.utils.BrowserUtils
 import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
 import de.psdev.licensesdialog.LicensesDialog
@@ -23,14 +27,16 @@ class FragmentSectionSettings : PreferenceFragmentCompat(),
         addPreferencesFromResource(R.xml.settings)
 
         // One drawable per icon, tinted to the theme here, in place of the hand darkened twin
-        // each of these used to carry for night. Only these four: the author and launcher icons
+        // each of these used to carry for night. Only these: the author and launcher icons
         // further down the screen are full colour artwork and a tint would flatten them.
         val tint = MaterialColors.getColor(
             requireContext(),
             com.google.android.material.R.attr.colorOnSurfaceVariant,
             0
         )
-        listOf("update_interval", "auto_update", "check_update", "analytics").forEach { key ->
+        listOf(
+            "update_interval", "auto_update", "check_update", Appearance.KEY, "language", "analytics"
+        ).forEach { key ->
             findPreference<Preference>(key)?.apply {
                 icon = icon?.mutate()?.also { DrawableCompat.setTint(it, tint) }
             }
@@ -52,6 +58,10 @@ class FragmentSectionSettings : PreferenceFragmentCompat(),
         if (key == "check_update" || key == "update_interval") {
             RatesRefreshScheduler.sync(requireContext())
         }
+        // Recreates the open screens in the new theme
+        if (key == Appearance.KEY) {
+            Appearance.apply(preferences?.getString(key, null))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +81,18 @@ class FragmentSectionSettings : PreferenceFragmentCompat(),
         )
 
         findPreference<Preference>(getString(R.string.license))?.onPreferenceClickListener = this
+
+        findPreference<ListPreference>("language")?.apply {
+            value = AppCompatDelegate.getApplicationLocales()[0]?.language.orEmpty()
+            setOnPreferenceChangeListener { _, tag ->
+                // Recreates the open screens in the new language
+                AppCompatDelegate.setApplicationLocales(
+                    if ((tag as String).isEmpty()) LocaleListCompat.getEmptyLocaleList()
+                    else LocaleListCompat.forLanguageTags(tag)
+                )
+                true
+            }
+        }
 
         listOf(
             getString(R.string.pref_dev_name),

@@ -16,6 +16,7 @@ import com.tyganeutronics.myratecalculator.auth.AuthManager
 import com.tyganeutronics.myratecalculator.database.rtdb.CurrencyRepository
 import com.tyganeutronics.myratecalculator.database.rtdb.WalletRepository
 import com.tyganeutronics.myratecalculator.migration.SetupState
+import com.tyganeutronics.myratecalculator.utils.Appearance
 import com.tyganeutronics.myratecalculator.utils.PreferenceMigrations
 import com.tyganeutronics.myratecalculator.utils.contracts.ApiContract
 import com.tyganeutronics.myratecalculator.work.RatesRefreshScheduler
@@ -39,6 +40,11 @@ class AppZimRate : MultiDexApplication(), Configuration.Provider {
 
         this.setUpApollo()
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+
+        // The settings' theme, before any screen is drawn
+        Appearance.apply(
+            PreferenceManager.getDefaultSharedPreferences(this).getString(Appearance.KEY, null)
+        )
 
         // Must run before the schedule is built — it can change update_interval.
         PreferenceMigrations.run(this)

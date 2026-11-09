@@ -28,6 +28,54 @@
         <item>@string/update_daily</item>
     </string-array>
 
+    <string-array name="theme_names">
+        <item>@string/theme_system</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+    </string-array>
+
+    <string-array name="theme_values" translatable="false">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <!--
+        Each language in its own name, the way the system's language picker lists them, so a
+        reader can find theirs whatever the app is currently showing. Only the first item is
+        translated, through its string.
+    -->
+    <string-array name="language_names" translatable="false">
+        <item>@string/theme_system</item>
+        <item>English</item>
+        <item>Afrikaans</item>
+        <item>العربية</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Français</item>
+        <item>isiNdebele</item>
+        <item>Português</item>
+        <item>chiShona</item>
+        <item>Kiswahili</item>
+        <item>中文</item>
+    </string-array>
+
+    <!-- Empty follows the phone's language. Matches the values-* folders. -->
+    <string-array name="language_values" translatable="false">
+        <item />
+        <item>en</item>
+        <item>af</item>
+        <item>ar</item>
+        <item>de</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>nd</item>
+        <item>pt</item>
+        <item>sn</item>
+        <item>sw</item>
+        <item>zh</item>
+    </string-array>
+
     <string-array name="update_interval_values" translatable="false">
         <item>1</item>
         <item>2</item>

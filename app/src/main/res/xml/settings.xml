@@ -42,6 +42,33 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_appearance">
+
+        <ListPreference
+            android:entries="@array/theme_names"
+            android:entryValues="@array/theme_values"
+            android:icon="@drawable/ic_theme"
+            android:key="theme"
+            android:summary="%s"
+            android:title="@string/pref_theme"
+            app:defaultValue="system" />
+
+        <!--
+            Not stored here: AppCompat's per-app language keeps it (the system does on Android 13
+            and later, AppLocalesMetadataHolderService before that). FragmentSectionSettings
+            reads the current one into the list.
+        -->
+        <ListPreference
+            android:entries="@array/language_names"
+            android:entryValues="@array/language_values"
+            android:icon="@drawable/ic_language"
+            android:key="language"
+            android:persistent="false"
+            android:summary="%s"
+            android:title="@string/pref_language" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/prefs_misc">
 
         <SwitchPreferenceCompat
