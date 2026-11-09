@@ -13,8 +13,8 @@ android {
         applicationId "com.tyganeutronics.myratecalculator"
         minSdk 24
         targetSdk 37
-        versionCode 67
-        versionName "3.10.0"
+        versionCode 68
+        versionName "3.10.1"
         multiDexEnabled true
     }
 
